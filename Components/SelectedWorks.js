@@ -94,7 +94,7 @@ const SelectedWorks = () => {
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="scroll-item space-y-6 border-b border-custom-pink pb-8"
+                className="scroll-item space-y-6  border-custom-pink pb-8"
               >
                 {/* Image */}
                 {typeof project.image === "string" ? (

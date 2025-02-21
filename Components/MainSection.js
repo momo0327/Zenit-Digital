@@ -5,46 +5,43 @@ import { gsap } from "gsap";
 const MainSection = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Select all the h1 elements with the class "main-heading"
-      const headings = document.querySelectorAll(".main-heading");
+      const headings = document.querySelectorAll(".text-wrapper .main-heading");
 
-      // Initially set the elements to be invisible and positioned lower
-      gsap.set(headings, {
-        opacity: 0,  // Start invisible
-        y: 100,      // Move downwards by 100px
+      gsap.set(headings, { 
+        y: 160, // Start hidden below
       });
 
-      // Animate each heading separately with a stagger effect
       gsap.to(headings, {
-        opacity: 1,   // Fade in
-        y: 0,         // Move to original position
-        duration: 1.5, // Animation duration
-        ease: "power4.out",
-        delay:1.1,
-        stagger: 0.3, // Delay between animations for each heading
+        y: 0, // Move up into view
+        duration: 2.4,
+        ease: "power4.inOut",
+        delay: 0.0015,
       });
     }
   }, []);
 
   return (
-    <div>
-      {/* Header Section */}
-      <div className="text-center py-10">
+    <div className="text-center py-10">
+      {/* Wrapper with overflow hidden to act as the mask */}
+      <div className="text-wrapper overflow-hidden inline-block">
         <h1 className="main-heading text-9xl font-extrabold text-custom-blue leading-normal">
           ZENIT DIGITAL
         </h1>
+      </div>
 
-        {/* Text with outline effect */}
+      <div className="text-wrapper overflow-hidden inline-block">
         <div
-          className="main-heading text-9xl font-extrabold text-transparent bg-clip-text bg-gradient-to-routline-none"
+          className="main-heading text-9xl font-extrabold text-transparent bg-clip-text"
           style={{
-            WebkitTextStroke: "4px black", // Text stroke effect for Webkit browsers
-            textStroke: "4px black", // Standard text stroke
+            WebkitTextStroke: "4px black",
+            textStroke: "4px black",
           }}
         >
           ZENIT DIGITAL
         </div>
+      </div>
 
+      <div className="text-wrapper overflow-hidden inline-block">
         <h1 className="main-heading text-9xl font-extrabold text-custom-blue leading-normal">
           ZENIT DIGITAL
         </h1>
