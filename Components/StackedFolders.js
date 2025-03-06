@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Services = () => {
   const servicesRef = useRef(null);
   const sectionsRef = useRef([]);
+  const titleRef = useRef(null);
   
   // Updated service data to match the images
   const serviceData = [
@@ -53,17 +54,22 @@ const Services = () => {
     const ctx = gsap.context(() => {
       const sections = sectionsRef.current;
       const servicesContainer = servicesRef.current;
+      const firstSection = sections[0];
       
-      // Create a timeline for pinning the entire section
+      // Only start pinning and animation when first service section is reached
       const mainTl = gsap.timeline({
         scrollTrigger: {
-          trigger: servicesContainer,
-          start: "top top",
-          end: "bottom bottom",
-          pin: true,
+          trigger: firstSection,
+          start: "top center", // Start when the first section reaches center of viewport
+          end: "+=300%", // Increase scroll distance
+          pin: servicesContainer, // Pin the entire container
           pinSpacing: true,
           scrub: 1,
-          markers: false
+          markers: false,
+          onEnter: () => {
+            // Ensure first section is fully visible on enter
+            gsap.to(sections[0], { opacity: 1, y: 0, duration: 0.3 });
+          }
         }
       });
       
@@ -72,12 +78,13 @@ const Services = () => {
         const sectionContent = section.querySelector('.section-content');
         const sectionSubservices = section.querySelector('.subservices');
         
-        // Show first section fully, hide others
         if (index === 0) {
+          // First section starts visible but with content hidden until scrolled to
           gsap.set(section, { opacity: 1 });
           gsap.set(sectionContent, { opacity: 1, height: 'auto' });
           gsap.set(sectionSubservices, { opacity: 1, height: 'auto' });
         } else {
+          // Hide other sections completely
           gsap.set(section, { opacity: 0, y: 100 });
           gsap.set(sectionContent, { opacity: 0, height: 0 });
           gsap.set(sectionSubservices, { opacity: 0, height: 0 });
@@ -109,9 +116,9 @@ const Services = () => {
             duration: 0.3
           }, 0);
           
-          // Move current section header to stacked position
+          // Move current section header to stacked position with better spacing
           sectionTl.to(sectionHeader, {
-            y: -60 * index,
+            y: -80 * index, // Increased from -60 to -80 for more space
             duration: 0.3,
             paddingTop: 0,
             paddingBottom: 0
@@ -136,6 +143,24 @@ const Services = () => {
         }
       });
       
+      // For the last section, ensure it stays visible longer
+      if (sections.length > 0) {
+        mainTl.add(() => {}, "+=0.5"); // Add a pause at the end
+      }
+      
+      // Separate animation for title to ensure it remains visible
+      gsap.from(titleRef.current, {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: servicesContainer,
+          start: "top bottom",
+          end: "top center",
+          scrub: true
+        }
+      });
+      
     }, servicesRef);
     
     return () => ctx.revert();
@@ -147,7 +172,7 @@ const Services = () => {
       className="services-container relative py-32 min-h-screen bg-black text-white"
     >
       <div className="container mx-auto px-4">
-        <h1 className="mb-24 text-4xl">
+        <h1 ref={titleRef} className="mb-24 text-4xl">
           <AnimatedTitle title='SERVICES' />
         </h1>
         
