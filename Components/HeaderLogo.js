@@ -49,6 +49,7 @@ const HeaderLogo = () => {
       data-text="var(--custom-blue)"
       data-button-bg="var(--custom-blue)"
       data-button-text="white"
+      data-nav-text="var(--custom-blue)"
     >
       {/* Background Image */}
       <Image
@@ -66,9 +67,9 @@ const HeaderLogo = () => {
       </div>
 
       {/* SCROLL TEXT & LINE - Bottom Right, Vertically Aligned */}
-      <div className="scroll-container absolute bottom-10 right-6 flex flex-col items-center opacity-0">
+      <div className="scroll-container absolute bottom-10 right-4 flex flex-col items-center opacity-0">
         {/* Scroll Text */}
-        <span className="text-md font-medium text-custom-blue rotate-90">
+        <span className="text-lg font-medium text-custom-blue rotate-90">
           Scroll
         </span>
 

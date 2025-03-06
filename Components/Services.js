@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AnimatedTitle from './AnimatedTitle'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +24,35 @@ const Services = () => {
         });
       });
     }
+
+    
   }, []);
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        const section = document.querySelector(".selected-works-section");
+        const titleLetters = document.querySelectorAll(".title-letter");
+  
+        if (titleLetters.length > 0) {
+          // Set initial position below the viewport (y: 160)
+          gsap.set(titleLetters, { y: 160 });
+  
+          // Animate the letters with stagger (no fade-in effect)
+          gsap.to(titleLetters, {
+            y: 0, // Move up into view
+            duration: 1,
+            stagger: 0.08,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          });
+        }
+  
+      }
+    }, []);
 
   return (
     <section
@@ -32,9 +61,24 @@ const Services = () => {
       data-text="var(--custom-green)"
       data-button-bg="var(--custom-green)"
       data-button-text="var(--custom-lightGreen)"
+      data-nav-text="var(--custom-green)"
     >
-      {/* Service 1 */}
+          {/* <h1 className="overflow-hidden inline-block mt-28 ml-8  text-9xl font-bold ">
+            {Array.from("SERVICES").map((letter, index) => (
+              <span key={index} className="title-letter inline-block">
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
+          </h1> */}
+
+          <h1 className="mt-28">
+            <AnimatedTitle title='SERVICES'/>
+          </h1>
+          
+          
+           {/* Service 1 */}
       <div className="service-section h-screen flex items-center relative">
+
         <span className="text-9xl font-bold text-gray-300 absolute left-16">
           01
         </span>

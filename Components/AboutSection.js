@@ -94,7 +94,8 @@ const AboutSection = () => {
       <section
         className="about-section h-screen flex items-center justify-center"
         data-bg="var(--custom-blue)"
-        data-text="var(--custom-pink)"
+        data-text="white"
+        data-nav-text="var(--custom-pink)"
         data-button-bg="var(--custom-pink)"
         data-button-text="var(--custom-blue)"
       >

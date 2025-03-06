@@ -32,6 +32,7 @@ const Navbar = () => {
         const textColor = section.getAttribute("data-text") || "black";
         const buttonBgColor = section.getAttribute("data-button-bg") || "var(--custom-blue)";
         const buttonTextColor = section.getAttribute("data-button-text") || "white";
+        const navTextColor = section.getAttribute("data-nav-text") || "black";
 
         ScrollTrigger.create({
           trigger: section,
@@ -42,6 +43,9 @@ const Navbar = () => {
             if (navbar) {
               navbar.style.backgroundColor = bgColor;
               navbar.style.color = textColor;
+              navbar.querySelectorAll("li, .logo").forEach(el => {
+                el.style.color = navTextColor;
+              });
             }
         
             if (button) {
@@ -57,10 +61,14 @@ const Navbar = () => {
               const prevTextColor = prevSection.getAttribute("data-text") || "black";
               const prevButtonBgColor = prevSection.getAttribute("data-button-bg") || "var(--custom-blue)";
               const prevButtonTextColor = prevSection.getAttribute("data-button-text") || "white";
+              const prevNavTextColor = prevSection.getAttribute("data-nav-text") || "white";
         
               if (navbar) {
                 navbar.style.backgroundColor = prevBgColor;
                 navbar.style.color = prevTextColor;
+                navbar.querySelectorAll("li, .logo").forEach(el => {
+                  el.style.color = prevNavTextColor;
+                });
               }
         
               if (button) {
@@ -70,9 +78,6 @@ const Navbar = () => {
             }
           }
         });
-        
-          
-      
       });
     }
   }, []);

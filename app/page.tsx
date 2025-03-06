@@ -10,7 +10,7 @@ import Services from "../components/Services";
 import Test from "../components/test";
 import Footer from "../components/Footer";
 import TextScroll from "../components/TextScroll";
-
+import TestMain from '../Components/TestMain'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,7 +45,7 @@ export default function Page() {
   }, []);
 
   return (
-    <main>
+    <main >
       <HeaderLogo />
       <AboutSection />
       <SelectedWorks/>
@@ -53,6 +53,7 @@ export default function Page() {
       <TextScroll/>
       <Test/>
       <Footer/>
+     
     </main>
   );
 }

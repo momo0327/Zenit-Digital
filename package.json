@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "aceternity-ui": "^0.2.2",
+    "gsap": "^3.12.7",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "splittext": "^2.0.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.26.0",

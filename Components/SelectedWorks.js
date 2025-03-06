@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,12 +14,27 @@ const SelectedWorks = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const section = document.querySelector(".selected-works-section");
+      const titleLetters = document.querySelectorAll(".title-letter");
 
-      gsap.set(section, {
-        opacity: 0,
-        y: 100, // Initially moved down
-      });
+      if (titleLetters.length > 0) {
+        // Set initial position below the viewport (y: 160)
+        gsap.set(titleLetters, { y: 160 });
 
+        // Animate the letters with stagger (no fade-in effect)
+        gsap.to(titleLetters, {
+          y: 0, // Move up into view
+          duration: 1,
+          stagger: 0.04,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+
+      // Add scroll animation for the section itself
       gsap.to(section, {
         opacity: 1,
         y: 0,
@@ -27,21 +42,9 @@ const SelectedWorks = () => {
         ease: "power4.out",
         scrollTrigger: {
           trigger: section,
-          start: "top 80%", // Animation starts when 80% of section is in view
+          start: "top 80%",
           toggleActions: "play none none none",
         },
-      });
-
-      const images = document.querySelectorAll(".scroll-item");
-
-      images.forEach((item, index) => {
-        ScrollTrigger.create({
-          trigger: item,
-          start: "top center",
-          end: "bottom center",
-          onEnter: () => setCurrentImage(index + 1),
-          onEnterBack: () => setCurrentImage(index + 1),
-        });
       });
     }
   }, []);
@@ -72,13 +75,28 @@ const SelectedWorks = () => {
 
   return (
     <section
-      className="selected-works-section opacity-0"
+      className="selected-works-section opacity-0 relative pt-40"
       data-bg="var(--custom-blue)"
       data-text="var(--custom-pink)"
       data-button-bg="var(--custom-pink)"
       data-button-text="var(--custom-blue)"
+      data-nav-text="var(--custom-pink)"
     >
-      <div className="scroll-container flex">
+      {/* Title Section */}
+      <div className="title-container absolute top-0 left-8 z-10">
+        {/* Wrapper with overflow-hidden to mask the text */}
+        <div className="overflow-hidden inline-block">
+          <h1 className="text-9xl font-bold text-custom-pink">
+            {Array.from("SELECTED WORKS").map((letter, index) => (
+              <span key={index} className="title-letter inline-block">
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
+          </h1>
+        </div>
+      </div>
+
+      <div className="scroll-container flex mt-40">
         {/* Left Fixed Text */}
         <div className="text-section w-1/2 sticky top-0 h-screen flex items-center">
           <div className="text-content px-8">
@@ -94,7 +112,7 @@ const SelectedWorks = () => {
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="scroll-item space-y-6  border-custom-pink pb-8"
+                className="scroll-item space-y-6 border-custom-pink pb-8"
               >
                 {/* Image */}
                 {typeof project.image === "string" ? (
