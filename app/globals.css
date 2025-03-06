@@ -11,42 +11,34 @@
   --custom-lightGreen: #0FB190;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff; /* Change this to white */
-    --foreground: #171717; /* Or any visible color */
-  }
-}
-
 body {
-  /* color: var(--foreground);
-  background: var(--background); */
   font-family: Arial, Helvetica, sans-serif;
   transition: background-color 0.5s ease, color 0.5s ease;
-
 }
 
+/* Utility classes for custom colors */
+.text-custom-blue { color: var(--custom-blue); }
+.text-custom-pink { color: var(--custom-pink); }
+.text-custom-green { color: var(--custom-green); }
+.text-custom-lightGreen { color: var(--custom-lightGreen); }
 
-.custom-blue {
-  background-color: var(--custom-blue);
-}
+.bg-custom-blue { background-color: var(--custom-blue); }
+.bg-custom-pink { background-color: var(--custom-pink); }
+.bg-custom-green { background-color: var(--custom-green); }
+.bg-custom-lightGreen { background-color: var(--custom-lightGreen); }
 
-.custom-pink {
-  color: var(--custom-pink);
-}
-
-
-.custom-green {
-  color: var(--custom-green);
-}
-
-
-.custom-lightGreen {
-  color: var(--custom-lightGreen);
-}
-
-
-
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Stacked folders responsive styles */
+@media (max-width: 640px) {
+  .stacked-folders {
+    padding: 1rem;
+  }
+  
+  .stacked-folders > div {
+    margin-bottom: 0.5rem;
+  }
 }

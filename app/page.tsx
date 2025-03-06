@@ -11,6 +11,7 @@ import Test from "../components/test";
 import Footer from "../components/Footer";
 import TextScroll from "../components/TextScroll";
 import TestMain from '../Components/TestMain'
+import StackedFolders from "@/Components/StackedFolders";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,7 +50,8 @@ export default function Page() {
       <HeaderLogo />
       <AboutSection />
       <SelectedWorks/>
-      <Services/>
+      <StackedFolders/>
+      {/* <Services/> */}
       <TextScroll/>
       <Test/>
       <Footer/>
