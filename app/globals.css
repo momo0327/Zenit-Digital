@@ -34,11 +34,11 @@ html {
 
 /* Stacked folders responsive styles */
 @media (max-width: 640px) {
-  .stacked-folders {
+  /* .stacked-folders {
     padding: 1rem;
   }
   
   .stacked-folders > div {
     margin-bottom: 0.5rem;
-  }
+  } */
 }
