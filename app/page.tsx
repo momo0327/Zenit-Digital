@@ -11,7 +11,7 @@ import Test from "../components/test";
 import Footer from "../components/Footer";
 import TextScroll from "../components/TextScroll";
 import TestMain from '../Components/TestMain'
-import StackedFolders from "@/Components/StackedFolders";
+import StackedFolders from "../Components/StackedFolders/StackedFolders";
 
 gsap.registerPlugin(ScrollTrigger);
 
