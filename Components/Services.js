@@ -77,7 +77,7 @@ const Services = () => {
           
           
            {/* Service 1 */}
-      <div className="service-section h-screen flex items-center relative">
+      <div className="service-section w-fullh-screen flex bg-red-500 items-center relative">
 
         <span className="text-9xl font-bold text-gray-300 absolute left-16">
           01
@@ -93,7 +93,7 @@ const Services = () => {
       </div>
 
       {/* Service 2 */}
-      <div className="service-section h-screen flex items-center bg-white relative">
+      <div className="service-section h-screen flex items-center bg-black relative">
        
         <span className="text-9xl font-bold text-gray-300 absolute left-16">
           02

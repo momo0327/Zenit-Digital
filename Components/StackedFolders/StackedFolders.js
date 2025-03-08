@@ -75,26 +75,37 @@ const StackedFolders = () => {
     // Set up initial positions and animations for each card
     sections.forEach((section, index) => {
       if (index === 0) {
-        // First card stays visible at position 0
+        // First card starts visible at position 0
         gsap.set(section, {
           y: 0,
           opacity: 1,
-          zIndex: sections.length - index,
+          zIndex: 10, // Fixed z-index for first card
         });
-        // No animation for first card - it stays in place
+
+        // Add animation to move first card down when second card comes in
+        animation.to(
+          section,
+          {
+            y: 100, // Move down when scrolling
+            opacity: 0.7,
+            duration: 0.5,
+            ease: "power1.out",
+          },
+          0.2
+        );
       } else if (index === 1) {
         // Second card starts below and slightly visible
         gsap.set(section, {
           y: cardHeight * 0.5, // Start stacked below
           opacity: 0.5, // Second card slightly visible
-          zIndex: sections.length - index,
+          zIndex: 20, // Higher z-index than first card
         });
 
-        // When scrolling, move second card up to stack under the first card and stop there
+        // When scrolling, move second card up to cover the first card
         animation.to(
           section,
           {
-            y: 100, // Slightly below first card
+            y: 200, // Move up to cover first card
             opacity: 1,
             duration: 0.5,
             ease: "power1.out",
@@ -217,8 +228,24 @@ const StackedFolders = () => {
                 width: "100%",
               }}
             >
-              <div className="service-header flex justify-between items-center border-t border-gray-800 py-6">
-                <span className="service-number text-4xl md:text-6xl text-gray-600 font-light">
+              <div
+                className={`service-header flex justify-between items-center border-t py-6 ${
+                  service.id === "01"
+                    ? "bg-red-600 text-white border-red-700"
+                    : service.id === "02"
+                    ? "bg-blue-600 text-white border-blue-700"
+                    : "border-gray-800"
+                }`}
+              >
+                <span
+                  className={`service-number text-4xl md:text-6xl font-light ${
+                    service.id === "01"
+                      ? "text-white"
+                      : service.id === "02"
+                      ? "text-white"
+                      : "text-gray-600"
+                  }`}
+                >
                   ({service.id})
                 </span>
                 <h2 className="service-title text-3xl md:text-5xl font-bold">
@@ -231,7 +258,15 @@ const StackedFolders = () => {
                 </div>
               </div>
 
-              <div className="section-content mt-10 mb-6">
+              <div
+                className={`section-content mt-10 mb-6 ${
+                  service.id === "01"
+                    ? "bg-red-600 text-white"
+                    : service.id === "02"
+                    ? "bg-blue-600 text-white"
+                    : ""
+                }`}
+              >
                 <div className="grid grid-cols-12 gap-4">
                   <div className="col-span-12 md:col-span-7 md:col-start-6">
                     <p className="text-lg md:text-xl max-w-2xl mb-4">
@@ -244,16 +279,40 @@ const StackedFolders = () => {
                 </div>
               </div>
 
-              <div className="subservices mb-16">
+              <div
+                className={`subservices mb-16 ${
+                  service.id === "01"
+                    ? "bg-red-600 text-white"
+                    : service.id === "02"
+                    ? "bg-blue-600 text-white"
+                    : ""
+                }`}
+              >
                 <div className="grid grid-cols-12 gap-4">
                   <div className="col-span-12 md:col-span-7 md:col-start-6">
-                    <div className="divide-y divide-gray-800">
+                    <div
+                      className={`divide-y ${
+                        service.id === "01"
+                          ? "divide-red-700"
+                          : service.id === "02"
+                          ? "divide-blue-700"
+                          : "divide-gray-800"
+                      }`}
+                    >
                       {service.subServices.map((subService) => (
                         <div
                           key={subService.id}
                           className="py-4 flex items-center"
                         >
-                          <span className="text-gray-500 mr-4">
+                          <span
+                            className={`mr-4 ${
+                              service.id === "01"
+                                ? "text-red-200"
+                                : service.id === "02"
+                                ? "text-blue-200"
+                                : "text-gray-500"
+                            }`}
+                          >
                             {subService.id}
                           </span>
                           <span className="text-xl md:text-2xl font-medium">
