@@ -85,8 +85,8 @@ const StackedFolders = () => {
       } else if (index === 1) {
         // Second card starts below and slightly visible
         gsap.set(section, {
-          y: cardHeight * 2, // Start stacked below
-          opacity: 1, // Second card slightly visible
+          y: cardHeight * 0.5, // Start stacked below
+          opacity: 0.5, // Second card slightly visible
           zIndex: sections.length - index,
         });
 
@@ -94,7 +94,7 @@ const StackedFolders = () => {
         animation.to(
           section,
           {
-            y: 20, // Slightly below first card
+            y: 100, // Slightly below first card
             opacity: 1,
             duration: 0.5,
             ease: "power1.out",
@@ -113,7 +113,7 @@ const StackedFolders = () => {
         animation.to(
           section,
           {
-            y: 40, // Position below second card
+            y: 200, // Position below second card
             opacity: 1,
             duration: 0.5,
             ease: "power1.out",
