@@ -1,17 +1,18 @@
 "use client";
-
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedTitle from "../../components/AnimatedTitle";
 import { useHeaderStore } from "@/store/headerStore";
+import ServiceCard from "./ServiceCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const StackedFolders = () => {
   const servicesRef = useRef(null);
-  const sectionsRef = useRef([]);
+  const servicesListRef = useRef(null);
   const titleRef = useRef(null);
+  const sectionsRef = useRef([]);
   const animationRef = useRef(null);
   const setHeaderTheme = useHeaderStore((state) => state.setTheme);
 
@@ -29,6 +30,7 @@ const StackedFolders = () => {
         { id: "02", title: "Motion & Animations" },
         { id: "03", title: "3D Development" },
       ],
+      bgColor: "bg-red-500", // Background color for first card
     },
     {
       id: "02",
@@ -42,147 +44,117 @@ const StackedFolders = () => {
         { id: "02", title: "Wireframing" },
         { id: "03", title: "UX Writing" },
       ],
+      bgColor: "bg-red-500", // Background color for second card
     },
-    {
-      id: "03",
-      title: "SEO",
-      description: "Your website deserves to be seen.",
-      content:
-        "I optimize your online presence to elevate your visibility in search results, helping your business attract the right audience and stand out in the digital landscape.",
-      subServices: [
-        { id: "01", title: "Technical SEO" },
-        { id: "02", title: "On-Page Optimization" },
-        { id: "03", title: "SEO Audits & Analysis" },
-      ],
-    },
+    // {
+    //   id: "03",
+    //   title: "SEO",
+    //   description: "Your website deserves to be seen.",
+    //   content:
+    //     "I optimize your online presence to elevate your visibility in search results, helping your business attract the right audience and stand out in the digital landscape.",
+    //   subServices: [
+    //     { id: "01", title: "Technical SEO" },
+    //     { id: "02", title: "On-Page Optimization" },
+    //     { id: "03", title: "SEO Audits & Analysis" },
+    //   ],
+    //   bgColor: "bg-red-500", // Background color for third card
+    // },
   ];
+
+  // Function to register section refs from ServiceCard component
+  const registerSectionRef = (index, element) => {
+    sectionsRef.current[index] = element;
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
+    
     const sections = sectionsRef.current;
     const container = servicesRef.current;
-
-    if (!sections.length) return;
-
+    const servicesList = servicesListRef.current;
+    
+    if (!sections.length || !servicesList) return;
+    
     // Create a new timeline for the animations
     const animation = gsap.timeline();
     animationRef.current = animation;
-
-    // Get the height of the first card to use as reference
-    const cardHeight = sections[0].offsetHeight;
-
-    // Set up initial positions and animations for each card
-    sections.forEach((section, index) => {
+    
+    // Reversed array to make sure cards with higher indices animate first
+    // This is crucial for the stacking effect with z-index
+    const reversedSections = [...sections].reverse();
+    
+    // Animate from bottom to top (from highest index to lowest)
+    reversedSections.forEach((section, i) => {
+      const index = sections.length - 1 - i; // Convert back to original index
+      
       if (index === 0) {
-        // First card starts visible at position 0
-        gsap.set(section, {
-          y: 0,
-          opacity: 1,
-          zIndex: 10, // Fixed z-index for first card
-        });
-
-        // Add animation to move first card down when second card comes in
+        // First card stays in place
+        return;
+      }
+      
+      // For cards 2 and beyond
+      // Find the header height of the previous card
+      const prevCardHeader = sections[index-1].querySelector(".service-header");
+      const headerHeight = prevCardHeader ? prevCardHeader.offsetHeight : 0;
+      const headerMargin = 10; // Add a small margin between headers
+      
+      // Position card right below previous card's header
+      animation.to(
+        section,
+        {
+          y: `${headerHeight + headerMargin}px`,
+          duration: 0.8,
+          ease: "power2.out",
+        },
+        index * 0.3
+      );
+      
+      // For third card and beyond, animate content appearance
+      if (index > 1) {
+        const content = section.querySelector(".section-content");
+        const subservices = section.querySelector(".subservices");
+        const header = section.querySelector(".service-header");
+        
         animation.to(
-          section,
+          [content, subservices],
           {
-            y: 100, // Move down when scrolling
-            opacity: 0.7,
+            y: 0,
+            opacity: 1,
+            display: "block",
             duration: 0.5,
             ease: "power1.out",
           },
-          0.2
+          index * 0.3 + 0.2
         );
-      } else if (index === 1) {
-        // Second card starts below and slightly visible
-        gsap.set(section, {
-          y: cardHeight * 0.5, // Start stacked below
-          opacity: 0.5, // Second card slightly visible
-          zIndex: 20, // Higher z-index than first card
-        });
-
-        // When scrolling, move second card up to cover the first card
+        
         animation.to(
-          section,
+          header,
           {
-            y: 200, // Move up to cover first card
+            y: 0,
             opacity: 1,
             duration: 0.5,
             ease: "power1.out",
           },
-          0.2
+          index * 0.3 + 0.1
         );
-      } else if (index === 2) {
-        // Third card starts further below and invisible
-        gsap.set(section, {
-          y: cardHeight * 0.5 * index,
-          opacity: 0,
-          zIndex: sections.length - index,
-        });
-
-        // When scrolling, third card moves up to stack under the second card
-        animation.to(
-          section,
-          {
-            y: 200, // Position below second card
-            opacity: 1,
-            duration: 0.5,
-            ease: "power1.out",
-          },
-          index * 0.2
-        );
-      } else {
-        // Fourth and subsequent cards (if any)
-        gsap.set(section, {
-          y: cardHeight * 0.5 * index,
-          opacity: 0,
-          zIndex: sections.length - index,
-        });
-
-        // When scrolling, move up to position under third card
-        animation.to(
-          section,
-          {
-            y: 60, // Position below third card
-            opacity: 1,
-            duration: 0.5,
-            ease: "power1.out",
-          },
-          index * 0.2
-        );
-
-        // Move the previous card out when the next one comes in
-        // But don't touch the first three cards
-        if (index > 3) {
-          animation.to(
-            sections[index - 1],
-            {
-              y: -200, // Move out of view
-              opacity: 0,
-              duration: 0.4,
-              ease: "power1.in",
-            },
-            index * 0.2 + 0.1
-          );
-        }
       }
     });
-
+    
     // Set up the ScrollTrigger
     ScrollTrigger.create({
-      trigger: container,
-      start: "top top",
-      end: `bottom+=${window.innerHeight * sections.length}`, // More explicit scroll distance
+      trigger: servicesList,
+      start: "top-=80 top",
+      end: `bottom+=${window.innerHeight * sections.length}`,
       pin: true,
       animation: animation,
-      scrub: 1.5, // Smooth scrubbing effect - this value controls the animation speed
+      scrub: 1.5,
       pinSpacing: true,
       anticipatePin: 1,
-      markers: true, // Enable markers temporarily to debug
+      markers: true,
       onEnter: () => setHeaderTheme("dark"),
       onLeaveBack: () => setHeaderTheme("light"),
     });
-
+    
     // Title animation
     gsap.from(titleRef.current, {
       y: 50,
@@ -195,7 +167,7 @@ const StackedFolders = () => {
         scrub: 0.5,
       },
     });
-
+    
     return () => {
       if (animationRef.current) {
         animationRef.current.kill();
@@ -213,118 +185,20 @@ const StackedFolders = () => {
         <h1 ref={titleRef} className="mb-16 text-4xl">
           <AnimatedTitle title="SERVICES" />
         </h1>
-
-        <div className="services-list relative">
+        <div 
+          ref={servicesListRef} 
+          className="services-list relative"
+          style={{ height: "80vh" }} // Give the container a fixed height
+        >
           {serviceData.map((service, index) => (
-            <div
+            <ServiceCard
               key={service.id}
-              ref={(el) => (sectionsRef.current[index] = el)}
-              className="service-section relative"
-              style={{
-                position: "absolute", // Position absolutely for stacking
-                top: 0,
-                left: 0,
-                right: 0,
-                width: "100%",
-              }}
-            >
-              <div
-                className={`service-header flex justify-between items-center border-t py-6 ${
-                  service.id === "01"
-                    ? "bg-red-600 text-white border-red-700"
-                    : service.id === "02"
-                    ? "bg-blue-600 text-white border-blue-700"
-                    : "border-gray-800"
-                }`}
-              >
-                <span
-                  className={`service-number text-4xl md:text-6xl font-light ${
-                    service.id === "01"
-                      ? "text-white"
-                      : service.id === "02"
-                      ? "text-white"
-                      : "text-gray-600"
-                  }`}
-                >
-                  ({service.id})
-                </span>
-                <h2 className="service-title text-3xl md:text-5xl font-bold">
-                  {service.title}
-                </h2>
-                <div className="service-icon">
-                  {service.id === "01" && <span className="text-2xl">★</span>}
-                  {service.id === "02" && <span className="text-2xl">⬢</span>}
-                  {service.id === "03" && <span className="text-2xl">⬟</span>}
-                </div>
-              </div>
-
-              <div
-                className={`section-content mt-10 mb-6 ${
-                  service.id === "01"
-                    ? "bg-red-600 text-white"
-                    : service.id === "02"
-                    ? "bg-blue-600 text-white"
-                    : ""
-                }`}
-              >
-                <div className="grid grid-cols-12 gap-4">
-                  <div className="col-span-12 md:col-span-7 md:col-start-6">
-                    <p className="text-lg md:text-xl max-w-2xl mb-4">
-                      {service.description}
-                    </p>
-                    <p className="text-base md:text-lg max-w-2xl">
-                      {service.content}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className={`subservices mb-16 ${
-                  service.id === "01"
-                    ? "bg-red-600 text-white"
-                    : service.id === "02"
-                    ? "bg-blue-600 text-white"
-                    : ""
-                }`}
-              >
-                <div className="grid grid-cols-12 gap-4">
-                  <div className="col-span-12 md:col-span-7 md:col-start-6">
-                    <div
-                      className={`divide-y ${
-                        service.id === "01"
-                          ? "divide-red-700"
-                          : service.id === "02"
-                          ? "divide-blue-700"
-                          : "divide-gray-800"
-                      }`}
-                    >
-                      {service.subServices.map((subService) => (
-                        <div
-                          key={subService.id}
-                          className="py-4 flex items-center"
-                        >
-                          <span
-                            className={`mr-4 ${
-                              service.id === "01"
-                                ? "text-red-200"
-                                : service.id === "02"
-                                ? "text-blue-200"
-                                : "text-gray-500"
-                            }`}
-                          >
-                            {subService.id}
-                          </span>
-                          <span className="text-xl md:text-2xl font-medium">
-                            {subService.title}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              service={service}
+              index={index}
+              sectionsLength={serviceData.length}
+              registerSectionRef={registerSectionRef}
+              bgColor={service.bgColor}
+            />
           ))}
         </div>
       </div>

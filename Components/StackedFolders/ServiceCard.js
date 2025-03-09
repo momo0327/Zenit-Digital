@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 
@@ -7,6 +8,7 @@ const ServiceCard = ({
   index,
   sectionsLength,
   registerSectionRef,
+  bgColor = "bg-red-500",
 }) => {
   const sectionRef = useRef(null);
 
@@ -19,18 +21,26 @@ const ServiceCard = ({
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    // Set initial positioning and z-index
+    // The key fix: reverse the order for z-index completely
+    // Lower index numbers should have LOWER z-index values
     gsap.set(sectionRef.current, {
-      position: "relative",
-      zIndex: sectionsLength - index,
+      position: "absolute", // All cards absolute for proper stacking
+      top: 0,
+      left: 0,
+      width: "100%",
+      zIndex: index, // Lower index = lower z-index, so higher indexed cards will appear ON TOP
     });
 
-    const content = sectionRef.current.querySelector(".section-content");
-    const subservices = sectionRef.current.querySelector(".subservices");
-    const header = sectionRef.current.querySelector(".service-header");
-
-    // Handle initial states based on whether this is the first card
+    // For the first card, we want it fully visible at the start
     if (index === 0) {
+      gsap.set(sectionRef.current, {
+        y: 0 // Position at the top
+      });
+      
+      const content = sectionRef.current.querySelector(".section-content");
+      const subservices = sectionRef.current.querySelector(".subservices");
+      const header = sectionRef.current.querySelector(".service-header");
+      
       gsap.set([content, subservices], {
         opacity: 1,
         display: "block",
@@ -38,12 +48,32 @@ const ServiceCard = ({
       });
       gsap.set(header, { y: 0, opacity: 1 });
     } else {
-      gsap.set([content, subservices], {
-        opacity: 0,
-        display: "none",
-        y: 30,
+      // All other cards start below the viewport
+      gsap.set(sectionRef.current, { 
+        y: '100%', // Start positioned below
       });
-      gsap.set(header, { y: 30, opacity: 0 });
+      
+      const content = sectionRef.current.querySelector(".section-content");
+      const subservices = sectionRef.current.querySelector(".subservices");
+      const header = sectionRef.current.querySelector(".service-header");
+      
+      if (index === 1) {
+        // Second card - header visible initially
+        gsap.set(header, { y: 0, opacity: 1 });
+        gsap.set([content, subservices], {
+          opacity: 1,
+          display: "block",
+          y: 0,
+        });
+      } else {
+        // Third+ cards - invisible for now
+        gsap.set([content, subservices], {
+          opacity: 0,
+          display: "none",
+          y: 30,
+        });
+        gsap.set(header, { y: 30, opacity: 0 });
+      }
     }
 
     // Add hover animations for interactive elements
@@ -76,9 +106,19 @@ const ServiceCard = ({
   }, [index, sectionsLength]);
 
   return (
-    <div ref={sectionRef} className="service-section relative">
+    <div 
+      ref={sectionRef} 
+      className={`service-section w-full ${bgColor} text-white`}
+      style={{ 
+        position: "absolute", 
+        top: 0, 
+        left: 0, 
+        width: "100%", 
+        zIndex: index // Ensure this is directly set in the style for more specificity
+      }}
+    >
       <div className="service-header flex justify-between items-center border-t border-gray-800 py-6">
-        <span className="service-number text-4xl md:text-6xl text-gray-600 font-light">
+        <span className="service-number text-4xl md:text-6xl text-gray-300 font-light">
           ({service.id})
         </span>
         <h2 className="service-title text-3xl md:text-5xl font-bold">
@@ -90,7 +130,6 @@ const ServiceCard = ({
           {service.id === "03" && <span className="text-2xl">⬟</span>}
         </div>
       </div>
-
       <div className="section-content mt-10 mb-6">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7 md:col-start-6">
@@ -101,14 +140,13 @@ const ServiceCard = ({
           </div>
         </div>
       </div>
-
       <div className="subservices mb-16">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7 md:col-start-6">
-            <div className="divide-y divide-gray-800">
+            <div className="divide-y divide-gray-700">
               {service.subServices.map((subService) => (
                 <div key={subService.id} className="py-4 flex items-center">
-                  <span className="text-gray-500 mr-4">{subService.id}</span>
+                  <span className="text-gray-300 mr-4">{subService.id}</span>
                   <span className="text-xl md:text-2xl font-medium">
                     {subService.title}
                   </span>
