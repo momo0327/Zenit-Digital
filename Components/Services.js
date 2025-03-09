@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,8 +21,23 @@ const Services = () => {
           pinSpacing: false,
           scrub: true,
         });
+
+        if (index > 0) {
+          gsap.to(sections[index - 1], {
+            y: index * -100, // Moves up but stays visible
+            opacity: 0.7,
+            scrollTrigger: {
+              trigger: section,
+              start: "top top",
+              end: "top top",
+              scrub: true,
+            },
+          });
+        }
       });
     }
+
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, []);
 
   return (
@@ -34,23 +49,23 @@ const Services = () => {
       data-button-text="var(--custom-lightGreen)"
     >
       {/* Service 1 */}
-      <div className="service-section h-screen flex items-center relative">
-        <span className="text-9xl font-bold text-gray-300 absolute left-16">
+      <div className="service-section h-screen bg-black flex items-center relative">
+        <span className="text-9xl font-bold  text-white absolute left-16">
           01
         </span>
         <div className="flex flex-col gap-4 ml-auto pr-16 text-right">
-          <h2 className="service-heading text-7xl font-bold mb-4 t">
+          <h2 className="service-heading text-white text-7xl font-bold mb-4 t">
             Web Development
           </h2>
-          <p className="text-lg max-w-lg text-gray-600">
-            Crafting seamless, engaging websites to elevate your digital presence.
+          <p className="text-lg max-w-lg text-white">
+            Crafting seamless, engaging websites to elevate your digital
+            presence.
           </p>
         </div>
       </div>
 
       {/* Service 2 */}
       <div className="service-section h-screen flex items-center bg-white relative">
-       
         <span className="text-9xl font-bold text-gray-300 absolute left-16">
           02
         </span>
@@ -59,7 +74,8 @@ const Services = () => {
             App Development
           </h2>
           <p className="text-lg max-w-lg text-gray-600">
-            Transforming ideas into innovative mobile solutions that connect and engage.
+            Transforming ideas into innovative mobile solutions that connect and
+            engage.
           </p>
         </div>
       </div>
@@ -74,7 +90,8 @@ const Services = () => {
             UI/UX Design
           </h2>
           <p className="text-lg max-w-lg text-gray-600">
-            Designing intuitive and elegant interfaces that elevate the user experience.
+            Designing intuitive and elegant interfaces that elevate the user
+            experience.
           </p>
         </div>
       </div>

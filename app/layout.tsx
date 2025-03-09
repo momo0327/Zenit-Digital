@@ -1,8 +1,9 @@
-import "./globals.css"; // Import the CSS file for global styles
+import { Metadata } from 'next';
+import Script from 'next/script';
+import './globals.css';
 import Navbar from "../components/Navbar";
-import Script from "next/script"; // Import Script component from Next.js
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Zenit Digital",
   description: "Landing page for Zenit Digital",
 };
@@ -15,8 +16,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Cookiebot Script */}
-        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="74ed7c8b-7181-40f8-9019-c8770f9209f8" data-blockingmode="auto" type="text/javascript"></script>
+        <Script
+          id="cookiebot"
+          strategy="afterInteractive"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="74ed7c8b-7181-40f8-9019-c8770f9209f8"
+          data-blockingmode="auto"
+        />
       </head>
       <body>
         <Navbar />

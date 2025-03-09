@@ -1,31 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --custom-blue: #00002E; 
-  --custom-pink: #A494F3;
-  --custom-green: #09282A;
-  --custom-lightGreen: #0FB190;
+  --background: #0e0e0e; /* dark background from screenshot */
+  --foreground: #eaeaea; /* off-white foreground text from screenshot */
+  --custom-blue: #00002e;
+  --custom-pink: #a494f3;
+  --custom-green: #09282a;
+  --custom-lightGreen: #0fb190;
+  
+  /* Secondary colors */
+  --secondary-50: #f9fafb;
+  --secondary-75: #f2f4f7;
+  --secondary-200: #e5e7eb;
+  --secondary-300: #333333;
+  --secondary-400: #0e0e0e;
+
+  /* Accent colors */
+  --accent-400: #eaeaea;
+  --accent-500: #f59e0b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff; /* Change this to white */
-    --foreground: #171717; /* Or any visible color */
+    --background: #0e0e0e; /* Updated to match the dark background */
+    --foreground: #eaeaea; /* Updated to match the off-white text */
   }
 }
 
 body {
-  /* color: var(--foreground);
-  background: var(--background); */
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Arial", sans-serif;
+  /* font-family: 'Inter', sans-serif; */
+  color: var(--foreground);
+  background: var(--background);
   transition: background-color 0.5s ease, color 0.5s ease;
-
 }
-
 
 .custom-blue {
   background-color: var(--custom-blue);
@@ -35,18 +47,19 @@ body {
   color: var(--custom-pink);
 }
 
-
 .custom-green {
   color: var(--custom-green);
 }
-
 
 .custom-lightGreen {
   color: var(--custom-lightGreen);
 }
 
-
-
 html {
   scroll-behavior: smooth;
+}
+
+.animated-text {
+  overflow: hidden;
+  display: inline-block;
 }
