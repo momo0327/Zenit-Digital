@@ -51,14 +51,21 @@ const HeaderLogo = () => {
       data-button-text="white"
     >
       {/* Background Image */}
-      <Image
-        src={image}
-        alt="Zenit Digital Background"
-        className="absolute z-0 background-image"
-        width={700}
-        height={300}
-        objectFit="contain"
-      />
+      
+
+<div className="absolute w-[85%] h-[200rem] md:w-full lg:w-full md:h-full lg:h-full flex items-center justify-center">
+        <div className="w-[90%]  md:w-full h-full flex items-center justify-center ">
+          <Image
+            src={image}
+            alt="Zenit Digital Background"
+            className="absolute z-0 background-image"
+            width={700}
+            height={300}
+            style={{ objectFit: "contain" }}
+            priority
+          />
+        </div>
+      </div>
 
       {/* Main Content */}
       <div className="text-center z-20">
@@ -68,7 +75,7 @@ const HeaderLogo = () => {
       {/* SCROLL TEXT & LINE - Bottom Right, Vertically Aligned */}
       <div className="scroll-container absolute bottom-10 right-6 flex flex-col items-center opacity-0">
         {/* Scroll Text */}
-        <span className="text-md font-medium text-custom-blue rotate-90">
+        <span className="text-lg font-medium text-custom-blue rotate-90">
           Scroll
         </span>
 

@@ -2,16 +2,18 @@
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import HeaderLogo from "../components/HeaderLogo";
 import AboutSection from "../components/AboutSection";
 import SelectedWorks from "../components/SelectedWorks";
-import Services from "../components/Services";
 import Service from "../Components/StackedFolders/Service";
 import Test from "../components/test";
 import Footer from "../components/Footer";
 import TextScroll from "../components/TextScroll";
 import Cookiebot from "../Components/Cookiebot";
+import  Testimonials from "../components/Testimonials";
+import Page2 from "../components/Page2";  
+import TestHeader from "../components/TestHeader";
+// import Home from "../components/Home";
 
 export default function Page() {
   useEffect(() => {
@@ -48,13 +50,15 @@ export default function Page() {
   return (
     <main>
       <Cookiebot />
-      <HeaderLogo />
+      {/* <HeaderLogo /> */}
+      <TestHeader />  
       <AboutSection />
       <SelectedWorks />
-      {/* <Services /> */}
-      <Service /> {/* Inserted new Service component */}
+      <Service />
       <TextScroll />
+      {/* <Testimonials /> */}
       <Test />
+      {/* <Page2/> */}
       <Footer />
     </main>
   );

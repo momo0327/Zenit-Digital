@@ -32,8 +32,8 @@
 }
 
 body {
-  font-family: "Arial", sans-serif;
-  /* font-family: 'Inter', sans-serif; */
+  /* font-family: "Arial", sans-serif; */
+  font-family: 'Inter', sans-serif;
   color: var(--foreground);
   background: var(--background);
   transition: background-color 0.5s ease, color 0.5s ease;

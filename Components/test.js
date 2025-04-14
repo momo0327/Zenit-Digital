@@ -1,50 +1,51 @@
-//test fil 
+import React from 'react';
 
-
-
-'use client';
-import React from "react";
-
-const test = () => {
+function Test() {
   return (
     <section
-    data-bg="var(--custom-green)" // Background color
-    data-text="var(--custom-lightGreen)" // Text color
-    data-button-bg="var(--custom-lightGreen)" 
-    data-button-text="var(--custom-green)"
-  >
-    <div className="scroll-container flex">
-      {/* Left Fixed Text */}
-      <div className="text-section w-1/2 sticky top-0 h-screen flex items-center">
-        <div className="text-content px-8">
-          <h1 className="text-9xl font-bold mb-4">Our Selected Works</h1>
-     
+      className="min-h-screen flex flex-col"
+      data-bg="white"
+      data-text="var(--custom-green)"
+      data-button-bg="var(--custom-green)"
+      data-button-text="var(--custom-lightGreen)"
+      data-nav-text="var(--custom-lightGreen)"
+    >
+      {/* Main Content */}
+      <div className="flex flex-col lg:flex-row flex-1 px-6 sm:px-10 lg:px-16 pt-8 lg:pt-12 gap-8">
+        {/* Left Section */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center">
+          <h1 className="text-4xl lg:text-7xl font-medium mb-4 sm:mb-6">
+            Need to <span className="text-custom-lightGreen">Grow</span> your digital presence? We are here to help you!
+          </h1>
+          <p className="text-custom-green text-base sm:text-lg mt-2 sm:mt-4">
+            Book a free 45 min consultation
+          </p>
+          <div className="mt-4 sm:mt-6">
+            <button className="bg-custom-green text-custom-lightGreen px-6 sm:px-8 py-3 rounded-lg font-bold flex items-center">
+              Let's Talk
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Right Scrolling Images */}
-      <div className="image-section w-1/2 ">
-        <div className="images space-y-12">
-          <img
-            src="https://cdn.sanity.io/images/u1e81n72/production/c1107f72536e7bbce9dc86527ff0057edd8f787c-1074x816.jpg/astellas_6-r8y4l6-1920x0.jpeg?q=95&fit=clip&auto=format&w=1439"
-            alt="Work 1"
-            className="scroll-image w-full h-auto"
-          />
-          <img
-            src="https://cdn.sanity.io/images/u1e81n72/production/5addc75bef476305d7ee2f1c8238a15685203c28-1200x1600.jpg/Hololens.jpg?q=95&fit=clip&auto=format&w=1439"
-            alt="Work 2"
-            className="scroll-image w-full h-auto"
-          />
-          <img
-            src="https://cdn.sanity.io/images/u1e81n72/production/5addc75bef476305d7ee2f1c8238a15685203c28-1200x1600.jpg/Hololens.jpg?q=95&fit=clip&auto=format&w=1439"
-            alt="Work 2"
-            className="scroll-image w-full h-auto"
-          />
+        {/* Right Section */}
+        <div className="w-full lg:w-1/2 relative flex items-center justify-center rounded-md bg-custom-green overflow-hidden mb-10">
+          <video
+            className="w-full h-auto max-w-full sm:max-w-md lg:max-w-lg"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="flower.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
-    </div>
     </section>
   );
-};
+}
 
-export default test;
+export default Test;

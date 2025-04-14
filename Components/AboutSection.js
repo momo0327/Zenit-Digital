@@ -94,12 +94,12 @@ const AboutSection = () => {
       <section
         className="about-section h-screen flex items-center justify-center"
         data-bg="var(--custom-blue)"
-        data-text="var(--custom-pink)"
+        data-text="white"
         data-button-bg="var(--custom-pink)"
         data-button-text="var(--custom-blue)"
       >
         <div className="container mx-auto px-4 text-center">
-          <h2 className="about-text text-8xl font-medium text-left">
+          <h2 className="about-text text-5xl md:text-8xl lg:text-8xl font-normal text-left">
             We create elevating digital experiences that inspire and connect with people through development and design.
           </h2>
         </div>
