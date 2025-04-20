@@ -1,0 +1,39 @@
+/* Lenis smooth scrolling styles */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Add additional styles to prevent flickering during scroll */
+.lenis.lenis-smooth {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Support for elements that should be excluded from smooth scroll */
+[data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+[data-lenis-prevent-wheel] {
+  overscroll-behavior: contain;
+}
+
+[data-lenis-prevent-touch] {
+  touch-action: none;
+}

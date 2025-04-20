@@ -1,0 +1,71 @@
+/* Transition animations between sections */
+.transitioning {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Apply better 3D rendering for transitions */
+.selected-works-section {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  contain: layout paint; /* Improve rendering performance */
+  will-change: transform, opacity; /* Hint browser about changing properties */
+}
+
+.selected-works-section.transitioning {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  contain: layout paint;
+}
+
+/* Ensure smooth transitions */
+.services-section {
+  backface-visibility: hidden;
+  transition: filter 0.3s ease-out; /* Faster transition */
+  contain: layout paint; /* Improve rendering performance */
+  will-change: transform, opacity, scale;
+}
+
+/* Enhance performance for animated elements */
+.title-letter,
+.services-title-letter,
+.animated-text {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Force hardware acceleration for better performance */
+.scroll-container,
+.text-section,
+.image-section {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Animated overlay for transitions */
+.section-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+  transform: translateZ(0);
+}
+
+.section-overlay.visible {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Prevent potential flickering with transforms */
+body.transitioning-sections {
+  overflow-x: hidden;
+}
+
+/* Add smooth opacity transition to all relevant elements */
+.transitioning * {
+  transition: opacity 0.3s ease;
+}

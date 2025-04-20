@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import { CursorProvider } from "../utils/CursorContext";
 import ClientCursorWrapper from "../Components/ClientCursorWrapper";
+import SmoothScroll from "../components/SmoothScroll";
+import "../styles/lenis.css";
 
 export const metadata: Metadata = {
   title: "Zenit Digital",
@@ -32,7 +34,7 @@ export default function RootLayout({
       <body>
         <CursorProvider>
           <Navbar />
-          {children}
+          <SmoothScroll>{children}</SmoothScroll>
           <ClientCursorWrapper />
         </CursorProvider>
       </body>
