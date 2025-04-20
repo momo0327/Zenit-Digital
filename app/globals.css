@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +11,7 @@
   --custom-pink: #a494f3;
   --custom-green: #09282a;
   --custom-lightGreen: #0fb190;
-  
+
   /* Secondary colors */
   --secondary-50: #f9fafb;
   --secondary-75: #f2f4f7;
@@ -33,10 +33,20 @@
 
 body {
   /* font-family: "Arial", sans-serif; */
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   color: var(--foreground);
   background: var(--background);
   transition: background-color 0.5s ease, color 0.5s ease;
+  cursor: none; /* Hide default cursor when our custom cursor is active */
+}
+
+/* Make sure all interactive elements have consistent cursor behavior */
+a,
+button,
+input[type="button"],
+input[type="submit"],
+.interactive {
+  cursor: none; /* Hide default cursor on interactive elements */
 }
 
 .custom-blue {
