@@ -68,25 +68,40 @@ const HeroSection = () => {
 
       // Additional animations for desktop screens
       mm.add("(min-width: 768px)", () => {
-        // Desktop video animation
+        // Calculate responsive scale based on window width
+        const videoScale = window.innerWidth > 1440 ? 0.85 : 1; // Scale down slightly on very large screens
+
+        // Desktop video animation with responsive scaling
         gsap.from(".desktop-video", {
           opacity: 0,
           x: 50,
+          scale: videoScale * 0.9, // Start slightly smaller based on scale
           duration: 1.2,
           delay: 1,
         });
 
-        // Add a subtle parallax effect on scroll
+        // Set initial position and opacity
+        gsap.set(".desktop-video", {
+          opacity: 1,
+          scale: 1,
+          x: 0,
+          y: 0,
+        });
+
+        // Add a subtle parallax effect on scroll with improved visibility control
         gsap.to(".desktop-video", {
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
+            start: "top bottom", // Start animation when top of section hits bottom of viewport
+            end: "bottom top", // End animation when bottom of section hits top of viewport
+            scrub: 0.5, // Smooth scrolling effect
+            toggleActions: "play none none reverse", // Play when entering, reverse when leaving
           },
-          y: 100,
-          opacity: 0.8,
-          scale: 0.95,
+          y: 40 * videoScale, // Reduced vertical movement
+          x: -20 * videoScale, // Slight leftward movement
+          scale: videoScale * 0.95, // Slight scale reduction
+          opacity: 0.85, // Keep good opacity throughout
+          ease: "power1.out", // Smoother easing
         });
       });
     }, sectionRef); // Scope the context to our section
@@ -176,14 +191,27 @@ const HeroSection = () => {
             </div>
 
             {/* Video for medium and large screens */}
-            <div className="absolute right-0 mt-36 top-24 w-1/2 h-full hidden md:block">
-              <div className="relative w-full h-full flex items-center justify-end">
+            <div className="absolute right-0 mt-36 top-24 w-2/5 h-full hidden md:block overflow-hidden">
+              {/* Apply clip-path and mask for hard containment */}
+              <div
+                className="relative w-full h-full flex items-center justify-end overflow-hidden"
+                style={{
+                  clipPath: "inset(0 0 0 10%)", // Hard clipping from the left side
+                  maskImage:
+                    "linear-gradient(to right, black 5%, black 65%, transparent 100%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to right, black 5%, black 65%, transparent 100%)",
+                }}
+              >
                 <video
-                  className="desktop-video w-full h-auto object-contain"
+                  className="desktop-video h-auto object-contain"
                   style={{
                     filter:
                       "brightness(0) saturate(100%) invert(50%) sepia(40%) saturate(900%) hue-rotate(200deg) brightness(80%) contrast(100%)",
                     opacity: 1,
+                    width: "85%",
+                    marginRight: "15%",
+                    maxHeight: "80%",
                   }}
                   autoPlay
                   muted

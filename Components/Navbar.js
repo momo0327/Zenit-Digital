@@ -292,11 +292,14 @@ const Navbar = () => {
             }
 
             if (desktopButton) {
-              gsap.to(desktopButton, {
-                backgroundColor: entering ? buttonBgColor : buttonBgColor,
-                color: entering ? buttonTextColor : buttonTextColor,
-                duration: 0.3,
-              });
+              // Don't change the color of the desktop button if it has the keep-purple class
+              if (!desktopButton.classList.contains("keep-purple")) {
+                gsap.to(desktopButton, {
+                  backgroundColor: entering ? buttonBgColor : buttonBgColor,
+                  color: entering ? buttonTextColor : buttonTextColor,
+                  duration: 0.3,
+                });
+              }
             }
           };
 
@@ -343,6 +346,50 @@ const Navbar = () => {
     "Nyheter",
   ];
 
+  useEffect(() => {
+    // Find the "Let's Talk" button and ensure it keeps its purple styling
+    const talkButton = document.querySelector(".desktop-button");
+
+    if (talkButton) {
+      // Add a specific class to target this button
+      talkButton.classList.add("keep-purple");
+
+      // Set initial purple color
+      talkButton.style.backgroundColor = "rgb(168, 162, 246)";
+      talkButton.style.color = "#ffffff";
+    }
+
+    // Scroll handling logic
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const header =
+        document.querySelector("header") || document.querySelector("nav");
+
+      if (header) {
+        if (scrollPosition > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      }
+
+      // Always ensure the button stays purple regardless of scroll position
+      const purpleButton = document.querySelector(".keep-purple");
+      if (purpleButton) {
+        purpleButton.style.backgroundColor = "rgb(168, 162, 246)";
+        purpleButton.style.color = "#ffffff";
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Run once to set initial state
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       {/* Desktop Navbar */}
@@ -367,7 +414,10 @@ const Navbar = () => {
 
         {/* Button - Right */}
         <div className="hidden md:flex items-center ml-auto z-50">
-          <button className="desktop-button px-6 py-2 bg-custom-blue text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500">
+          <button
+            className="desktop-button px-6 py-2 text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500"
+            style={{ backgroundColor: "rgb(168, 162, 246)" }}
+          >
             Let&apos;s Talk
           </button>
         </div>
