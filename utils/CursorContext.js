@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 
 // Create the context
 const CursorContext = createContext({
@@ -15,8 +15,15 @@ const CursorContext = createContext({
 export const CursorProvider = ({ children }) => {
   const [cursorType, setCursorType] = useState("default");
 
+  // Memoize setCursorType to prevent unnecessary rerenders
+  const memoizedSetCursorType = useCallback((type) => {
+    setCursorType(type);
+  }, []);
+
   return (
-    <CursorContext.Provider value={{ cursorType, setCursorType }}>
+    <CursorContext.Provider
+      value={{ cursorType, setCursorType: memoizedSetCursorType }}
+    >
       {children}
     </CursorContext.Provider>
   );
