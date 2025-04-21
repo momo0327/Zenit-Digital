@@ -8,6 +8,7 @@ import {
   createDepthStagger,
 } from "../utils/ScrollAnimations";
 import "../styles/animations.css";
+import useThemeColors from "../Components/useThemeColors";
 
 import Group5Image from "../assets/Group5.png";
 
@@ -43,6 +44,12 @@ const projects = [
 const SelectedWorks = () => {
   const [currentImage, setCurrentImage] = useState(1);
 
+  // Reference to the header element
+  const headerRef = useRef(null);
+
+  // Use our theme colors hook - using it ensures the hook is active
+  useThemeColors();
+
   // Refs instead of DOM queries
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
@@ -51,8 +58,80 @@ const SelectedWorks = () => {
   const textSectionRef = useRef(null);
   const imageSectionRef = useRef(null);
 
+  // Direct header styling function
+  const applyHeaderStyle = () => {
+    if (!headerRef.current) {
+      headerRef.current = document.querySelector("header");
+      if (!headerRef.current) return false;
+    }
+
+    // Apply purple theme to header directly
+    headerRef.current.style.backgroundColor = "var(--custom-blue)";
+    headerRef.current.style.color = "white";
+
+    // Find and update nav links
+    const navLinks = headerRef.current.querySelectorAll("a");
+    navLinks.forEach((link) => {
+      link.style.color = "white";
+    });
+
+    // Style any buttons in the header
+    const headerButtons = headerRef.current.querySelectorAll("button");
+    headerButtons.forEach((button) => {
+      if (button.classList.contains("mobile-menu-button")) {
+        // Style the hamburger menu differently if needed
+        button.style.color = "white";
+      }
+    });
+
+    console.log("Direct header styling successfully applied in SelectedWorks");
+    return true;
+  };
+
+  // Apply header style immediately on mount and whenever section is in view
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    // Apply the style immediately
+    applyHeaderStyle();
+
+    // Create an observer to apply style when the section comes into view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            applyHeaderStyle();
+          }
+        });
+      },
+      { threshold: 0.1 } // Trigger when even a small part is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    // Also set up a scroll listener as a backup
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          applyHeaderStyle();
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Create interval to periodically check if header style is correct
+    // This helps when navigating directly to this section
+    const styleInterval = setInterval(applyHeaderStyle, 500);
+
+    // After 5 seconds, reduce the interval frequency
+    const slowInterval = setTimeout(() => {
+      clearInterval(styleInterval);
+      setInterval(applyHeaderStyle, 2000);
+    }, 5000);
 
     // Store cleanup functions
     const cleanupFunctions = [];
@@ -66,7 +145,7 @@ const SelectedWorks = () => {
 
       if (!selectedWorksSection || !servicesSection) return;
 
-      // Section styling
+      // Section styling - add higher z-index
       gsap.set(selectedWorksSection, {
         backgroundColor: "var(--custom-blue)",
         zIndex: 30,
@@ -85,6 +164,7 @@ const SelectedWorks = () => {
             trigger: selectedWorksSection,
             start: "top 80%",
             toggleActions: "play none none none",
+            onEnter: applyHeaderStyle, // Apply header style when animation triggers
           },
         });
 
@@ -105,6 +185,7 @@ const SelectedWorks = () => {
           trigger: selectedWorksSection,
           start: "top 80%",
           toggleActions: "play none none none",
+          onEnter: applyHeaderStyle, // Apply header style when animation triggers
         },
       });
 
@@ -122,44 +203,19 @@ const SelectedWorks = () => {
             trigger: projectElement,
             start: "top center",
             end: "bottom center",
-            onEnter: () => setCurrentImage(index + 1),
-            onEnterBack: () => setCurrentImage(index + 1),
+            onEnter: () => {
+              setCurrentImage(index + 1);
+              applyHeaderStyle(); // Apply header style when switching projects
+            },
+            onEnterBack: () => {
+              setCurrentImage(index + 1);
+              applyHeaderStyle(); // Apply header style when switching projects
+            },
           });
 
           cleanupFunctions.push(() => trigger.kill());
         }
       });
-
-      // Handle color updates when services section is visible
-      const colorTrigger = ScrollTrigger.create({
-        trigger: servicesSection,
-        start: "top 70%",
-        onEnter: () => {
-          // Update colors when services section is significantly visible
-          document.documentElement.style.setProperty(
-            "--current-bg-color",
-            "white"
-          );
-          document.documentElement.style.setProperty(
-            "--current-text-color",
-            "var(--custom-green)"
-          );
-          document.documentElement.style.setProperty(
-            "--current-button-bg",
-            "var(--custom-green)"
-          );
-          document.documentElement.style.setProperty(
-            "--current-button-text",
-            "var(--custom-lightGreen)"
-          );
-          document.documentElement.style.setProperty(
-            "--current-nav-text",
-            "var(--custom-lightGreen)"
-          );
-        },
-      });
-
-      cleanupFunctions.push(() => colorTrigger.kill());
 
       // Enhanced fade-out animation when approaching Service section
       const fadeOutTrigger = ScrollTrigger.create({
@@ -267,6 +323,11 @@ const SelectedWorks = () => {
       cleanupFunctions.forEach(
         (cleanup) => typeof cleanup === "function" && cleanup()
       );
+      // Clear all intervals and listeners
+      clearInterval(styleInterval);
+      clearTimeout(slowInterval);
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
       // Revert GSAP context
       ctx.revert();
     };
@@ -276,11 +337,16 @@ const SelectedWorks = () => {
     <section
       ref={sectionRef}
       className="selected-works-section relative min-h-screen py-24 md:py-32"
+      data-theme="selectedWorks"
       data-bg="var(--custom-blue)"
       data-text="white"
       data-button-bg="white"
       data-button-text="var(--custom-blue)"
       data-nav-text="white"
+      style={{
+        zIndex: 30, // Higher z-index to ensure section stands out
+        backgroundColor: "var(--custom-blue)", // Explicitly set background color
+      }}
     >
       {/* Section overlay for enhanced transitions */}
       <div className="section-overlay" id="works-overlay"></div>
@@ -328,10 +394,13 @@ const SelectedWorks = () => {
               >
                 {/* Image */}
                 {typeof project.image === "string" ? (
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-auto rounded-md"
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto rounded-md object-cover"
+                    unoptimized={project.image.startsWith("https://")}
                   />
                 ) : (
                   <Image
