@@ -1,22 +1,28 @@
 "use client";
 
-import React from "react";
-import { useTheme } from "./ThemeContext";
+import React, { useEffect, useState } from "react";
+
+// Default theme configuration
+const defaultTheme = {
+  bg: "var(--color-blue)",
+  text: "white",
+  navText: "white",
+};
 
 const Header = () => {
-  const { currentThemeConfig } = useTheme();
+  const [currentTheme, setCurrentTheme] = useState(defaultTheme);
 
   return (
     <header
       style={{
-        backgroundColor: currentThemeConfig.bg,
-        color: currentThemeConfig.text,
+        backgroundColor: currentTheme.bg,
+        color: currentTheme.text,
         transition: "background-color 0.3s ease, color 0.3s ease",
       }}
       className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center"
     >
       <div className="logo">
-        <a href="/" style={{ color: currentThemeConfig.navText }}>
+        <a href="/" style={{ color: currentTheme.navText }}>
           ZENIT DIGITAL
         </a>
       </div>
@@ -27,7 +33,7 @@ const Header = () => {
             <li key={item}>
               <a
                 href={`#${item.toLowerCase()}`}
-                style={{ color: currentThemeConfig.navText }}
+                style={{ color: currentTheme.navText }}
                 className="transition hover:opacity-80"
               >
                 {item}
@@ -39,7 +45,7 @@ const Header = () => {
 
       <button
         className="mobile-menu-button md:hidden"
-        style={{ color: currentThemeConfig.navText }}
+        style={{ color: currentTheme.navText }}
       >
         <span className="sr-only">Menu</span>
         <svg

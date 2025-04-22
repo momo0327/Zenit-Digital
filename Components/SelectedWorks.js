@@ -8,7 +8,6 @@ import {
   createDepthStagger,
 } from "../utils/ScrollAnimations";
 import "../styles/animations.css";
-import useThemeColors from "../Components/useThemeColors";
 
 import Group5Image from "../assets/Group5.png";
 
@@ -46,9 +45,6 @@ const SelectedWorks = () => {
 
   // Reference to the header element
   const headerRef = useRef(null);
-
-  // Use our theme colors hook - using it ensures the hook is active
-  useThemeColors();
 
   // Refs instead of DOM queries
   const sectionRef = useRef(null);
