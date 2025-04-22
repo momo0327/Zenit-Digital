@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,10 +14,10 @@ const SelectedWorks = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const titleLetters = document.querySelectorAll(".title-letter");
-      
+
       // IMPORTANT: Remove all GSAP setup for the section itself
       // This will now be handled by the parent container
-      
+
       // Title animation only
       if (titleLetters.length > 0) {
         gsap.set(titleLetters, { y: 160 });
@@ -33,17 +33,17 @@ const SelectedWorks = () => {
           },
         });
       }
-      
+
       // Update current image based on scroll position
       projects.forEach((project, index) => {
-        const projectElement = document.querySelectorAll('.scroll-item')[index];
+        const projectElement = document.querySelectorAll(".scroll-item")[index];
         if (projectElement) {
           ScrollTrigger.create({
             trigger: projectElement,
             start: "top center",
             end: "bottom center",
             onEnter: () => setCurrentImage(index + 1),
-            onEnterBack: () => setCurrentImage(index + 1)
+            onEnterBack: () => setCurrentImage(index + 1),
           });
         }
       });
@@ -60,14 +60,16 @@ const SelectedWorks = () => {
     },
     {
       id: 2,
-      image: "https://cdn.sanity.io/images/u1e81n72/production/5addc75bef476305d7ee2f1c8238a15685203c28-1200x1600.jpg/Hololens.jpg?q=95&fit=clip&auto=format&w=1439",
+      image:
+        "https://cdn.sanity.io/images/u1e81n72/production/5addc75bef476305d7ee2f1c8238a15685203c28-1200x1600.jpg/Hololens.jpg?q=95&fit=clip&auto=format&w=1439",
       title: "Hololens Project",
-      description: "Augmented Reality Experience", 
+      description: "Augmented Reality Experience",
       links: ["Design", "AR Development"],
     },
     {
       id: 3,
-      image: "https://cdn.sanity.io/images/u1e81n72/production/5addc75bef476305d7ee2f1c8238a15685203c28-1200x1600.jpg/Hololens.jpg?q=95&fit=clip&auto=format&w=1439",
+      image:
+        "https://cdn.sanity.io/images/u1e81n72/production/5addc75bef476305d7ee2f1c8238a15685203c28-1200x1600.jpg/Hololens.jpg?q=95&fit=clip&auto=format&w=1439",
       title: "Future Tech Showcase",
       description: "Technology Expo",
       links: ["UI/UX", "Prototyping"],
