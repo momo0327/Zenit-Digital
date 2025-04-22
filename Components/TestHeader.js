@@ -2,8 +2,12 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { gsap } from "gsap";
+import { useRouter } from 'next/navigation'; // Note: from 'next/navigation', not 'next/router'
+import Link from 'next/link';
 
  const TestHeader = () => {
+    const router = useRouter();
+
     useEffect(() => {
       gsap.from('.word', {
         opacity: 0,
@@ -34,12 +38,16 @@ import { gsap } from "gsap";
                 Looking to build payments into your software? Aria fixes that. Pick the
                 payment features you need for happy users and booming revenue.
               </p>
-              <button className="bg-custom-blue text-custom-pink hover:bg-teal-400 font-medium py-3 px-6 rounded-full inline-flex items-center">
-                Speak to sales
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </button>
+              <Link href="/booking">
+                <button 
+                  className="bg-custom-blue text-custom-pink hover:bg-teal-400 font-medium py-3 px-6 rounded-full inline-flex items-center"
+                >
+                  Speak to sales
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </Link>
             </div>
             
             {/* Video for small screens (below md breakpoint) */}

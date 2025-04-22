@@ -11,10 +11,10 @@ function Test() {
       data-nav-text="var(--custom-lightGreen)"
     >
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row flex-1 px-6 sm:px-10 lg:px-16 pt-8 lg:pt-12 gap-8">
+      <div className="flex flex-col lg:flex-row flex-1 px-6 sm:px-10 lg:px-16 pt-8 lg:pt-12 gap-8 bg-white">
         {/* Left Section */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center">
-          <h1 className="text-4xl lg:text-7xl font-medium mb-4 sm:mb-6">
+          <h1 className="text-4xl lg:text-7xl font-medium mb-4 sm:mb-6 text-custom-green">
             Need to <span className="text-custom-lightGreen">Grow</span> your digital presence? We are here to help you!
           </h1>
           <p className="text-custom-green text-base sm:text-lg mt-2 sm:mt-4">

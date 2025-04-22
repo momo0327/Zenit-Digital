@@ -13,20 +13,12 @@ const SelectedWorks = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const selectedWorksSection = document.querySelector(".selected-works-section");
       const titleLetters = document.querySelectorAll(".title-letter");
-      const servicesSection = document.querySelector(".services-section");
       
-      if (!selectedWorksSection || !servicesSection) return;
+      // IMPORTANT: Remove all GSAP setup for the section itself
+      // This will now be handled by the parent container
       
-      // FIXED: Don't use absolute positioning for the entire section
-      // Instead, create a wrapper with proper position in the layout flow
-      gsap.set(selectedWorksSection, { 
-        backgroundColor: "var(--custom-blue)",
-        zIndex: 30,
-      });
-      
-      // Title animation
+      // Title animation only
       if (titleLetters.length > 0) {
         gsap.set(titleLetters, { y: 160 });
         gsap.to(titleLetters, {
@@ -35,44 +27,12 @@ const SelectedWorks = () => {
           stagger: 0.04,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: selectedWorksSection,
+            trigger: ".selected-works-section",
             start: "top 80%",
             toggleActions: "play none none none",
           },
         });
       }
-      
-      // Initial section fade-in
-      gsap.to(selectedWorksSection, {
-        opacity: 1,
-        duration: 1.5,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: selectedWorksSection,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
-      
-      // FIXED: Create a pin-based animation sequence
-      // This keeps the section in the document flow while creating the sliding effect
-    
-      // Create transition animation between sections
-    
-
-      // Handle color updates when services section is visible
-      ScrollTrigger.create({
-        trigger: servicesSection,
-        start: "top 70%",
-        onEnter: () => {
-          // Update colors when services section is significantly visible
-          document.documentElement.style.setProperty('--current-bg-color', 'white');
-          document.documentElement.style.setProperty('--current-text-color', 'var(--custom-green)');
-          document.documentElement.style.setProperty('--current-button-bg', 'var(--custom-green)');
-          document.documentElement.style.setProperty('--current-button-text', 'var(--custom-lightGreen)');
-          document.documentElement.style.setProperty('--current-nav-text', 'var(--custom-lightGreen)');
-        }
-      });
       
       // Update current image based on scroll position
       projects.forEach((project, index) => {
@@ -116,7 +76,7 @@ const SelectedWorks = () => {
 
   return (
     <section
-      className="selected-works-section opacity-0 pt-40 relative"
+      className="selected-works-section opacity-100 pt-40"
       data-bg="var(--custom-blue)"
       data-text="var(--custom-pink)"
       data-button-bg="var(--custom-pink)"
@@ -198,9 +158,6 @@ const SelectedWorks = () => {
           </div>
         </div>
       </div>
-      
-      {/* Add space that helps with the transition */}
-      <div className="h-96"></div>
     </section>
   );
 };
