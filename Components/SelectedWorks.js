@@ -54,6 +54,14 @@ const SelectedWorks = () => {
   const textSectionRef = useRef(null);
   const imageSectionRef = useRef(null);
 
+  // Add missing variables
+  const cleanupFunctions = [];
+  let styleInterval;
+  let slowInterval;
+  let handleScroll = () => {};
+  let observer = new MutationObserver(() => {});
+  const ctx = gsap.context(() => {});
+
   // Direct header styling function
   const applyHeaderStyle = () => {
     if (!headerRef.current) {
@@ -86,69 +94,19 @@ const SelectedWorks = () => {
 
   // Apply header style immediately on mount and whenever section is in view
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // Apply the style immediately
-    applyHeaderStyle();
-
-    // Create an observer to apply style when the section comes into view
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            applyHeaderStyle();
-          }
-        });
-      },
-      { threshold: 0.1 } // Trigger when even a small part is visible
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    // Also set up a scroll listener as a backup
-    const handleScroll = () => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          applyHeaderStyle();
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Create interval to periodically check if header style is correct
-    // This helps when navigating directly to this section
-    const styleInterval = setInterval(applyHeaderStyle, 500);
-
-    // After 5 seconds, reduce the interval frequency
-    const slowInterval = setTimeout(() => {
-      clearInterval(styleInterval);
-      setInterval(applyHeaderStyle, 2000);
-    }, 5000);
-
-    // Store cleanup functions
-    const cleanupFunctions = [];
-
-    // Create GSAP context for proper cleanup
-    const ctx = gsap.context(() => {
-      const selectedWorksSection = sectionRef.current;
-      const titleLetters = titleRef.current?.querySelectorAll(".title-letter");
+    if (typeof window !== "undefined") {
+      const selectedWorksSection = document.querySelector(".selected-works-section");
       const servicesSection = document.querySelector(".services-section");
+      const titleLetters = document.querySelectorAll(".title-letter");
       const lastProject = projectRefs.current[projectRefs.current.length - 1];
-
+      
       if (!selectedWorksSection || !servicesSection) return;
-
-      // Section styling - add higher z-index
-      gsap.set(selectedWorksSection, {
-        backgroundColor: "var(--custom-blue)",
-        zIndex: 30,
-      });
-
-      // Title animation (kept from original code)
-      if (titleLetters?.length > 0) {
+      
+      // IMPORTANT: Remove all GSAP setup for the section itself
+      // This will now be handled by the parent container
+      
+      // Title animation only
+      if (titleLetters.length > 0) {
         gsap.set(titleLetters, { y: 160 });
 
         const titleAnimation = gsap.to(titleLetters, {
@@ -157,7 +115,7 @@ const SelectedWorks = () => {
           stagger: 0.04,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: selectedWorksSection,
+            trigger: ".selected-works-section",
             start: "top 80%",
             toggleActions: "play none none none",
             onEnter: applyHeaderStyle, // Apply header style when animation triggers
@@ -171,27 +129,7 @@ const SelectedWorks = () => {
           titleAnimation.kill();
         });
       }
-
-      // Initial section fade-in
-      const fadeInAnimation = gsap.to(selectedWorksSection, {
-        opacity: 1,
-        duration: 1.5,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: selectedWorksSection,
-          start: "top 80%",
-          toggleActions: "play none none none",
-          onEnter: applyHeaderStyle, // Apply header style when animation triggers
-        },
-      });
-
-      cleanupFunctions.push(() => {
-        if (fadeInAnimation.scrollTrigger) {
-          fadeInAnimation.scrollTrigger.kill();
-        }
-        fadeInAnimation.kill();
-      });
-
+      
       // Update current image based on scroll position
       projectRefs.current.forEach((projectElement, index) => {
         if (projectElement) {
@@ -311,7 +249,7 @@ const SelectedWorks = () => {
       });
 
       cleanupFunctions.push(() => mm.revert());
-    }, sectionRef); // Scope context to section
+    }
 
     // Return cleanup function
     return () => {
@@ -331,9 +269,7 @@ const SelectedWorks = () => {
 
   return (
     <section
-      ref={sectionRef}
-      className="selected-works-section relative min-h-screen py-24 md:py-32"
-      data-theme="selectedWorks"
+      className="selected-works-section opacity-100 pt-40"
       data-bg="var(--custom-blue)"
       data-text="white"
       data-button-bg="white"
@@ -435,9 +371,6 @@ const SelectedWorks = () => {
           </div>
         </div>
       </div>
-
-      {/* Add space that helps with the transition */}
-      <div className="h-24"></div>
     </section>
   );
 };

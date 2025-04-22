@@ -1,33 +1,29 @@
-"use client";
+'use client';
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutSection from "../components/AboutSection";
-import SelectedWorks from "../components/SelectedWorks";
-import Service from "../Components/StackedFolders/Service";
+import StackedCardsContainer from "../components/SectionsContainer";
 import Test from "../components/test";
 import Footer from "../components/Footer";
 import TextScroll from "../components/TextScroll";
 import Cookiebot from "../Components/Cookiebot";
-import HeroSection from "../Components/HeroSection";
-import "../styles/animations.css"; // Import animations CSS
+import Testimonials from "../components/Testimonials";
+import Page2 from "../components/Page2";  
+import TestHeader from "../components/TestHeader";
+import HeroSection from "../components/HeroSection";
 // import Home from "../components/Home";
+import Booking from "../Components/Booking";
 
 export default function Page() {
   useEffect(() => {
     // Register GSAP plugins inside useEffect to ensure it only runs client-side
     gsap.registerPlugin(ScrollTrigger);
 
-    const sections = document.querySelectorAll("section");
-
-    // Create a master timeline for section transitions
-    const masterTimeline = gsap.timeline();
-
-    // Get references to specific sections
-    const selectedWorksSection = document.querySelector(
-      ".selected-works-section"
-    );
+    const sections = document.querySelectorAll("section:not(.selected-works-section):not(.services-section)");
+    const selectedWorksSection = document.querySelector(".selected-works-section");
     const servicesSection = document.querySelector(".services-section");
+    const masterTimeline = gsap.timeline();
 
     sections.forEach((section, index) => {
       const bgColor = section.getAttribute("data-bg") || "white";
@@ -118,8 +114,10 @@ export default function Page() {
       {/* <HeaderLogo /> */}
       <HeroSection />
       <AboutSection />
-      <SelectedWorks />
-      <Service />
+      
+      {/* Replace individual sections with the stacked container */}
+      <StackedCardsContainer />
+      
       <TextScroll />
       {/* <Testimonials /> */}
       <Test />
