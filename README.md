@@ -1,3 +1,43 @@
+# Zenit Digital Booking Form with SendGrid
+
+This project includes a booking form that sends confirmation emails using SendGrid.
+
+## Setup SendGrid for Email Functionality
+
+To enable email sending with the booking form, you need to set up SendGrid API:
+
+1. Create a SendGrid account at [sendgrid.com](https://sendgrid.com)
+2. Create an API key with mail sending permissions
+3. Verify a sender email address in SendGrid
+4. Create a `.env.local` file in the project root with the following environment variables:
+
+```env
+# SendGrid Configuration
+SENDGRID_API_KEY=your_sendgrid_api_key_here
+SENDGRID_FROM_EMAIL=your_verified_sender_email@example.com
+SENDGRID_ADMIN_EMAIL=admin@yourcompany.com
+```
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+```
+
+Open [http://localhost:3000/booking](http://localhost:3000/booking) to view the booking form.
+
+## Features
+
+- Responsive booking form
+- Form validation
+- SendGrid email integration
+- Confirmation emails to customers
+- Notification emails to administrators
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
