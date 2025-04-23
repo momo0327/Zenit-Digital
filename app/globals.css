@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +11,7 @@
   --custom-pink: #a494f3;
   --custom-green: #09282a;
   --custom-lightGreen: #0fb190;
-  
+
   /* Secondary colors */
   --secondary-50: #f9fafb;
   --secondary-75: #f2f4f7;
@@ -33,10 +33,57 @@
 
 body {
   /* font-family: "Arial", sans-serif; */
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   color: var(--foreground);
   background: var(--background);
   transition: background-color 0.5s ease, color 0.5s ease;
+  cursor: none; /* Hide default cursor when our custom cursor is active */
+}
+
+/* Make sure all interactive elements have consistent cursor behavior */
+a,
+button,
+input[type="button"],
+input[type="submit"],
+.interactive {
+  cursor: none !important; /* Hide default cursor on interactive elements */
+  transition: transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent; /* Remove touch highlight on mobile */
+  position: relative; /* Ensure position for z-index to work */
+  z-index: 10; /* Place interactive elements above normal content */
+}
+
+/* Small adjustment on click to provide feedback without affecting cursor */
+a:active,
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+.interactive:active {
+  transform: scale(0.98);
+}
+
+/* Custom cursor prevention on nested interactive elements */
+a *,
+button *,
+input[type="button"] *,
+input[type="submit"] *,
+.interactive * {
+  pointer-events: none;
+}
+
+/* Fix iOS touchscreen highlight issues */
+@media (hover: none) {
+  body {
+    cursor: auto; /* Restore default cursor on touch devices */
+  }
+
+  a,
+  button,
+  input[type="button"],
+  input[type="submit"],
+  .interactive {
+    cursor: auto !important; /* Restore default cursor on interactive elements for touch devices */
+  }
 }
 
 .custom-blue {
@@ -57,9 +104,110 @@ body {
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
+}
+
+html,
+body {
+  min-height: 100%;
+  overscroll-behavior: none; /* Prevent scroll bouncing which can affect cursor position */
+}
+
+/* Fix for custom cursor not showing at the right spot after click */
+* {
+  cursor: none !important; /* Use !important to ensure no default cursors appear */
+  -webkit-touch-callout: none; /* Disable callouts */
+  -webkit-user-select: none; /* Disable text selection */
+  -webkit-tap-highlight-color: transparent; /* Remove touch highlight */
+}
+
+/* Allow text selection for specific elements that need it */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+input[type="text"],
+textarea,
+[data-selectable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Ensures form elements are still usable */
+input,
+textarea,
+select,
+button {
+  -webkit-user-select: auto;
+  user-select: auto;
+}
+
+@media (hover: none) {
+  * {
+    cursor: auto !important; /* Restore default cursor on touch devices */
+    -webkit-user-select: auto;
+    user-select: auto;
+  }
 }
 
 .animated-text {
   overflow: hidden;
   display: inline-block;
+}
+
+/* Additional styles for custom cursor on buttons and links */
+button,
+a,
+[role="button"],
+.btn {
+  cursor: none !important;
+  position: relative;
+  z-index: 10;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  overflow: visible;
+}
+
+/* Improve visibility when buttons overlap with cursor */
+button:hover,
+a:hover,
+[role="button"]:hover,
+.btn:hover {
+  transform: scale(1.05);
+  z-index: 20; /* Raise z-index on hover to ensure it's above other elements */
+}
+
+/* Ensure buttons are clickable when hovered */
+button:hover::after,
+a:hover::after,
+[role="button"]:hover::after,
+.btn:hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1; /* Place behind the button content but still catchable for events */
+}
+
+/* Ensure children of interactive elements don't break cursor functionality */
+button *,
+a *,
+[role="button"] *,
+.btn * {
+  pointer-events: none;
+}
+
+/* Fix iOS/mobile click issues */
+@media (hover: none) {
+  button,
+  a,
+  [role="button"],
+  .btn {
+    cursor: auto !important;
+  }
 }
