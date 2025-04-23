@@ -22,7 +22,7 @@ const BookingForm = () => {
               </svg>
             </div>
             <div>
-              <p className="text-base md:text-lg font-medium">Integrate Aria's B2B payments to fit your flow and use cases</p>
+              <p className="text-base md:text-lg font-medium">Integrate Aria&apos;s B2B payments to fit your flow and use cases</p>
             </div>
           </div>
           
@@ -48,7 +48,7 @@ const BookingForm = () => {
               </svg>
             </div>
             <div>
-              <p className="text-base md:text-lg font-medium">Increase your platform's revenue, GMV and ARR</p>
+              <p className="text-base md:text-lg font-medium">Increase your platform&apos;s revenue, GMV and ARR</p>
             </div>
           </div>
         </div>

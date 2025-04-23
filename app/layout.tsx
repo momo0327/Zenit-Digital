@@ -1,8 +1,11 @@
-import { Metadata } from 'next';
-import Script from 'next/script';
-import './globals.css';
+import { Metadata } from "next";
+import Script from "next/script";
+import "./globals.css";
 import Navbar from "../components/Navbar";
-
+import { CursorProvider } from "../utils/CursorContext";
+import ClientCursorWrapper from "../components/ClientCursorWrapper";
+import { SmoothScroll } from "../components/SmoothScroll";
+import "../styles/lenis.css";
 
 export const metadata: Metadata = {
   title: "Zenit Digital",
@@ -29,8 +32,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Navbar />
-        {children}
+        <CursorProvider>
+          <Navbar />
+          <SmoothScroll>{children}</SmoothScroll>
+          <ClientCursorWrapper />
+        </CursorProvider>
       </body>
     </html>
   );

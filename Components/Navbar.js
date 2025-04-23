@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import logo from "../assets/logo.png";
+import Link from "next/link";
 gsap.registerPlugin(ScrollTrigger);
 
 // TextReveal Component for animated text
@@ -189,122 +190,103 @@ const Navbar = () => {
     };
   };
 
+  const updateNavStyles = (index, entering = true) => {
+    // Get the current section or the previous one if leaving
+    const sections = document.querySelectorAll("section");
+    const currentSection = entering ? sections[index] : sections[index - 1];
+
+    if (!currentSection) return;
+
+    const bgColor = currentSection.getAttribute("data-bg") || "white";
+    const textColor = currentSection.getAttribute("data-text") || "black";
+    const buttonBgColor =
+      currentSection.getAttribute("data-button-bg") || "var(--custom-blue)";
+    const buttonTextColor =
+      currentSection.getAttribute("data-button-text") || "white";
+    const navText = currentSection.getAttribute("data-nav-text") || textColor;
+
+    // Get menu colors based on section colors
+    const { menuBgColor, menuTextColor } = getMenuColors(bgColor, textColor);
+
+    // Update state with new styles
+    setNavStyles({
+      bgColor,
+      textColor,
+      buttonBgColor,
+      buttonTextColor,
+      menuBgColor,
+      menuTextColor,
+    });
+
+    // Apply styles directly to elements
+    const navbar = navbarRef.current;
+    const menuButton = menuButtonRef.current;
+    const desktopButton = document.querySelector(".desktop-button");
+
+    if (navbar) {
+      gsap.to(navbar, {
+        backgroundColor: bgColor,
+        color: navText,
+        duration: 0.3,
+      });
+    }
+
+    if (menuButton) {
+      gsap.to(menuButton, {
+        backgroundColor: entering ? buttonBgColor : buttonBgColor,
+        color: entering ? buttonTextColor : buttonTextColor,
+        duration: 0.3,
+      });
+    }
+
+    if (desktopButton && !desktopButton.classList.contains("keep-purple")) {
+      gsap.to(desktopButton, {
+        backgroundColor: entering ? buttonBgColor : buttonBgColor,
+        color: entering ? buttonTextColor : buttonTextColor,
+        duration: 0.3,
+      });
+    }
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Create a gsap context to manage animations and cleanup
+      // Create a proper GSAP context for better cleanup
       const ctx = gsap.context(() => {
-        // Use matchMedia to handle responsive behavior
+        // Use matchMedia for responsive handling
         const mm = gsap.matchMedia();
 
-        // Get references to DOM elements
-        const navbar = navbarRef.current;
-        const menuButton = menuButtonRef.current;
-        const desktopButton = document.querySelector(".desktop-button");
-        const sections = document.querySelectorAll("section");
-
-        // Initial animation for all screen sizes
         mm.add("(min-width: 0px)", () => {
-          // GSAP Animation for Navbar using a timeline
-          const navTl = gsap.timeline();
-          navTl
-            .set(navbar, {
-              y: -100,
-              opacity: 0,
-            })
-            .to(navbar, {
-              y: 0,
-              opacity: 1,
-              delay: 0.8,
-              duration: 2,
-              ease: "power4.out",
-            });
+          // Get references to DOM elements
+          const navbar = navbarRef.current;
+          const menuButton = menuButtonRef.current;
+          const sections = document.querySelectorAll("section");
 
+          // Initial animation for navbar
+          const navTl = gsap.timeline();
+          navTl.set(navbar, { y: -100, opacity: 0 }).to(navbar, {
+            y: 0,
+            opacity: 1,
+            delay: 0.8,
+            duration: 2,
+            ease: "power4.out",
+          });
+
+          // Menu button animation
           if (menuButton) {
-            // GSAP Animation for Menu Button using the same timeline
-            navTl
-              .set(
-                menuButton,
-                {
-                  scale: 0,
-                  opacity: 0,
-                },
-                0
-              )
-              .to(
-                menuButton,
-                {
-                  scale: 1,
-                  opacity: 1,
-                  delay: 1.2,
-                  duration: 1.5,
-                  ease: "elastic.out(1, 0.3)",
-                },
-                0
-              );
+            navTl.set(menuButton, { scale: 0, opacity: 0 }, 0).to(
+              menuButton,
+              {
+                scale: 1,
+                opacity: 1,
+                delay: 1.2,
+                duration: 1.5,
+                ease: "elastic.out(1, 0.3)",
+              },
+              0
+            );
           }
 
-          // Consolidate section ScrollTriggers by grouping them
-          // Define the update function that will be used for all sections
-          const updateNavStyles = (index, entering = true) => {
-            // Get the current section or the previous one if leaving
-            const currentSection = entering
-              ? sections[index]
-              : sections[index - 1];
-            if (!currentSection) return;
-
-            const bgColor = currentSection.getAttribute("data-bg") || "white";
-            const textColor =
-              currentSection.getAttribute("data-text") || "black";
-            const buttonBgColor =
-              currentSection.getAttribute("data-button-bg") ||
-              "var(--custom-blue)";
-            const buttonTextColor =
-              currentSection.getAttribute("data-button-text") || "white";
-
-            const { menuBgColor, menuTextColor } = getMenuColors(
-              bgColor,
-              textColor
-            );
-
-            setNavStyles({
-              bgColor,
-              textColor,
-              buttonBgColor,
-              buttonTextColor,
-              menuBgColor,
-              menuTextColor,
-            });
-
-            if (navbar) {
-              gsap.to(navbar, {
-                backgroundColor: bgColor,
-                color: textColor,
-                duration: 0.3,
-              });
-            }
-
-            if (menuButton) {
-              gsap.to(menuButton, {
-                backgroundColor: entering ? buttonBgColor : buttonBgColor,
-                color: entering ? buttonTextColor : buttonTextColor,
-                duration: 0.3,
-              });
-            }
-
-            if (desktopButton) {
-              // Don't change the color of the desktop button if it has the keep-purple class
-              if (!desktopButton.classList.contains("keep-purple")) {
-                gsap.to(desktopButton, {
-                  backgroundColor: entering ? buttonBgColor : buttonBgColor,
-                  color: entering ? buttonTextColor : buttonTextColor,
-                  duration: 0.3,
-                });
-              }
-            }
-          };
-
-          // Create consolidated ScrollTrigger for color changes
-          // Instead of creating one ScrollTrigger per section
+          // ScrollTrigger setup with consolidated approach
           Array.from(sections).forEach((section, index) => {
             ScrollTrigger.create({
               trigger: section,
@@ -315,14 +297,10 @@ const Navbar = () => {
             });
           });
         });
+      }, navbarRef);
 
-        // Return the cleanup function
-        return () => {
-          // Clean up all ScrollTriggers and animations
-          mm.revert();
-          ctx.revert(); // This will clean up all GSAP animations created in this context
-        };
-      });
+      // Clean return function
+      return () => ctx.revert();
     }
   }, []);
 
@@ -406,28 +384,54 @@ const Navbar = () => {
         {/* Centered Nav Links - Desktop Only */}
         <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
           <ul className="flex gap-10">
-            <li className="hover:text-custom-blue cursor-pointer">About</li>
-            <li className="hover:text-custom-blue cursor-pointer">Cases</li>
-            <li className="hover:text-custom-blue cursor-pointer">Services</li>
+            <li>
+              <Link
+                href="/about"
+                className="hover:text-custom-blue cursor-pointer"
+              >
+                About
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/cases"
+                className="hover:text-custom-blue cursor-pointer"
+              >
+                Cases
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/services"
+                className="hover:text-custom-blue cursor-pointer"
+              >
+                Services
+              </Link>
+            </li>
           </ul>
         </div>
 
         {/* Button - Right */}
-        <div className="hidden md:flex items-center ml-auto z-50">
-          <button
-            className="desktop-button px-6 py-2 text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500"
-            style={{ backgroundColor: "rgb(168, 162, 246)" }}
-          >
+        <Link
+          href="/contact"
+          className="hidden md:flex items-center ml-auto z-50"
+        >
+          <button className="desktop-button px-6 py-2 text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500">
             Let&apos;s Talk
           </button>
-        </div>
+        </Link>
       </nav>
 
       {/* Circular Menu Button - Visible only on small screens */}
       <button
         ref={menuButtonRef}
         onClick={toggleMenu}
-        className="menu-button md:hidden fixed bottom-6 right-6 w-16 h-16 bg-custom-blue text-white rounded-full flex items-center justify-center z-50 shadow-lg transition-all duration-300"
+        aria-expanded={isMenuOpen}
+        aria-controls="mobile-menu"
+        aria-label={
+          isMenuOpen ? "Close navigation menu" : "Open navigation menu"
+        }
+        className="menu-button md:hidden fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center z-50 shadow-lg transition-all duration-300"
         style={{
           backgroundColor: isMenuOpen
             ? navStyles.menuTextColor
@@ -470,7 +474,11 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay with Animation */}
       <div
+        id="mobile-menu"
         ref={menuOverlayRef}
+        role="navigation"
+        aria-hidden={!isMenuOpen}
+        aria-label="Mobile navigation menu"
         className="fixed inset-0 md:hidden pointer-events-none"
         style={{
           backgroundColor: navStyles.menuBgColor,
