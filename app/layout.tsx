@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import { CursorProvider } from "../utils/CursorContext";
 import ClientCursorWrapper from "../components/ClientCursorWrapper";
 import { SmoothScroll } from "../components/SmoothScroll";
+import DebugInfo from "../components/Navigation/DebugInfo";
 import "../styles/lenis.css";
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Navbar />
           <SmoothScroll>{children}</SmoothScroll>
           <ClientCursorWrapper />
+          <DebugInfo isDev={process.env.NODE_ENV === "development"} />
         </CursorProvider>
       </body>
     </html>

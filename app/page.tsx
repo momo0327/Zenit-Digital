@@ -51,11 +51,17 @@ export default function Page() {
       <Cookiebot />
       {/* <HeaderLogo /> */}
       <HeroSection />
-      <AboutSection />
-      <StackedCardsContainer />
+      <section id="about-section">
+        <AboutSection />
+      </section>
+      <section id="cases-section">
+        <StackedCardsContainer />
+      </section>
       <TextScroll />
+      <section id="services-section">
+        <Test />
+      </section>
       {/* <Testimonials /> */}
-      <Test />
       {/* <Page2/> */}
       <Footer />
     </main>

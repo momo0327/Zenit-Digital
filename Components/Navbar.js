@@ -5,91 +5,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import logo from "../assets/logo.png";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import DesktopNav from "./Navigation/DesktopNav";
+import MobileNav from "./Navigation/MobileNav";
+
 gsap.registerPlugin(ScrollTrigger);
 
-// TextReveal Component for animated text
-const TextReveal = ({
-  text,
-  className = "",
-  textClassName = "",
-  tag = "div",
-  splitLines = false,
-  staggerDelay = 0.04,
-  duration = 1,
-  onComplete = () => {},
-}) => {
-  const containerRef = useRef(null);
-  const TextTag = tag;
-
-  // Split text into lines if requested
-  const lines = splitLines
-    ? text.split(" ").reduce((acc, word) => {
-        if (acc.length === 0) return [word];
-        const lastLine = acc[acc.length - 1].split(" ");
-        if (lastLine.length > 3) {
-          return [...acc, word];
-        } else {
-          acc[acc.length - 1] += " " + word;
-          return acc;
-        }
-      }, [])
-    : [text];
-
-  useEffect(() => {
-    // Get all letter elements
-    const container = containerRef.current;
-    if (!container) return;
-
-    const letters = container.querySelectorAll(".reveal-letter");
-
-    // Using a timeline for the animation
-    const tl = gsap.timeline({
-      onComplete: onComplete,
-    });
-
-    // Initial setup - hide letters below their position
-    tl.set(letters, { y: 60, opacity: 0 }).to(letters, {
-      y: 0,
-      opacity: 1,
-      duration: duration,
-      stagger: staggerDelay,
-      ease: "power3.out",
-    });
-
-    return () => {
-      // Clean up the timeline
-      tl.kill();
-    };
-  }, [text, duration, staggerDelay, onComplete]);
-
-  return (
-    <div ref={containerRef} className={className}>
-      <TextTag className={textClassName}>
-        {lines.map((line, lineIndex) => (
-          <div key={`line-${lineIndex}`} className="overflow-hidden">
-            {Array.from(line).map((letter, letterIndex) => (
-              <span
-                key={`letter-${lineIndex}-${letterIndex}`}
-                className="reveal-letter inline-block"
-              >
-                {letter === " " ? "\u00A0" : letter}
-              </span>
-            ))}
-          </div>
-        ))}
-      </TextTag>
-    </div>
-  );
-};
-
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showMenuContent, setShowMenuContent] = useState(false);
-  const menuOverlayRef = useRef(null);
-  const menuContentRef = useRef(null);
-  const contactInfoRef = useRef(null);
+  console.log("Navbar component initialized");
+  const router = useRouter();
   const navbarRef = useRef(null);
-  const menuButtonRef = useRef(null);
 
   const [navStyles, setNavStyles] = useState({
     bgColor: "white",
@@ -99,63 +24,6 @@ const Navbar = () => {
     menuBgColor: "var(--custom-pink)",
     menuTextColor: "var(--custom-blue)",
   });
-
-  const toggleMenu = () => {
-    if (!isMenuOpen) {
-      // Open the menu with animation using a timeline
-      setIsMenuOpen(true);
-
-      // Get button position for animation origin
-      const menuButton = menuButtonRef.current;
-      const buttonRect = menuButton.getBoundingClientRect();
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-
-      // Create a timeline for menu reveal
-      const tl = gsap.timeline({
-        onComplete: () => setShowMenuContent(true),
-      });
-
-      // Add animations to the timeline
-      tl.set(menuOverlayRef.current, {
-        clipPath: `circle(0px at ${buttonRect.left + buttonRect.width / 2}px ${
-          buttonRect.top + buttonRect.height / 2
-        }px)`,
-        opacity: 1,
-      }).to(menuOverlayRef.current, {
-        clipPath: `circle(${Math.sqrt(
-          windowWidth * windowWidth + windowHeight * windowHeight
-        )}px at ${buttonRect.left + buttonRect.width / 2}px ${
-          buttonRect.top + buttonRect.height / 2
-        }px)`,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-    } else {
-      // Hide text first
-      setShowMenuContent(false);
-
-      // After a small delay, animate the circle closed with a timeline
-      setTimeout(() => {
-        const menuButton = menuButtonRef.current;
-        const buttonRect = menuButton.getBoundingClientRect();
-
-        // Create a timeline for menu close
-        const tl = gsap.timeline({
-          onComplete: () => setIsMenuOpen(false),
-        });
-
-        // Add close animation to the timeline
-        tl.to(menuOverlayRef.current, {
-          clipPath: `circle(0px at ${
-            buttonRect.left + buttonRect.width / 2
-          }px ${buttonRect.top + buttonRect.height / 2}px)`,
-          duration: 0.6,
-          ease: "power3.in",
-        });
-      }, 300);
-    }
-  };
 
   // Helper function to determine menu colors based on navbar colors
   const getMenuColors = (bgColor, textColor) => {
@@ -220,7 +88,7 @@ const Navbar = () => {
 
     // Apply styles directly to elements
     const navbar = navbarRef.current;
-    const menuButton = menuButtonRef.current;
+    const menuButton = document.querySelector(".menu-button");
     const desktopButton = document.querySelector(".desktop-button");
 
     if (navbar) {
@@ -249,6 +117,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    console.log("Navbar useEffect for ScrollTrigger setup");
     if (typeof window !== "undefined") {
       // Create a proper GSAP context for better cleanup
       const ctx = gsap.context(() => {
@@ -258,7 +127,7 @@ const Navbar = () => {
         mm.add("(min-width: 0px)", () => {
           // Get references to DOM elements
           const navbar = navbarRef.current;
-          const menuButton = menuButtonRef.current;
+          const menuButton = document.querySelector(".menu-button");
           const sections = document.querySelectorAll("section");
 
           // Initial animation for navbar
@@ -304,27 +173,8 @@ const Navbar = () => {
     }
   }, []);
 
-  // Animation timing for contact info
-  const handleMenuItemsComplete = () => {
-    // Animate contact info after menu items animation completes using a timeline
-    const tl = gsap.timeline();
-    tl.fromTo(
-      contactInfoRef.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
-    );
-  };
-
-  const menuItems = [
-    "Case",
-    "Tjänster",
-    "Om oss",
-    "Kontakt",
-    "Karriär",
-    "Nyheter",
-  ];
-
   useEffect(() => {
+    console.log("Navbar useEffect for button styling");
     // Find the "Let's Talk" button and ensure it keeps its purple styling
     const talkButton = document.querySelector(".desktop-button");
 
@@ -377,156 +227,30 @@ const Navbar = () => {
       >
         {/* Logo - Mobile center, desktop left */}
         <div className="flex flex-1 justify-center md:justify-start items-center gap-2 z-50">
-          <Image src={logo} alt="Zenit Logo" width={20} height={20} />
-          <span className="font-bold text-md">ZENIT</span>
+          <Link href="/">
+            <div className="flex items-center gap-2 cursor-pointer">
+              <Image src={logo} alt="Zenit Logo" width={20} height={20} />
+              <span className="font-bold text-md">ZENIT</span>
+            </div>
+          </Link>
         </div>
 
-        {/* Centered Nav Links - Desktop Only */}
-        <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
-          <ul className="flex gap-10">
-            <li>
-              <Link
-                href="/about"
-                className="hover:text-custom-blue cursor-pointer"
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/cases"
-                className="hover:text-custom-blue cursor-pointer"
-              >
-                Cases
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/services"
-                className="hover:text-custom-blue cursor-pointer"
-              >
-                Services
-              </Link>
-            </li>
-          </ul>
-        </div>
+        {/* Desktop Navigation */}
+        <DesktopNav />
 
         {/* Button - Right */}
-        <Link
-          href="/contact"
-          className="hidden md:flex items-center ml-auto z-50"
-        >
-          <button className="desktop-button px-6 py-2 text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500">
+        <div className="hidden md:flex items-center ml-auto z-50">
+          <button
+            onClick={() => router.push("/booking")}
+            className="desktop-button px-6 py-2 text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500"
+          >
             Let&apos;s Talk
           </button>
-        </Link>
+        </div>
       </nav>
 
-      {/* Circular Menu Button - Visible only on small screens */}
-      <button
-        ref={menuButtonRef}
-        onClick={toggleMenu}
-        aria-expanded={isMenuOpen}
-        aria-controls="mobile-menu"
-        aria-label={
-          isMenuOpen ? "Close navigation menu" : "Open navigation menu"
-        }
-        className="menu-button md:hidden fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center z-50 shadow-lg transition-all duration-300"
-        style={{
-          backgroundColor: isMenuOpen
-            ? navStyles.menuTextColor
-            : navStyles.buttonBgColor,
-          color: isMenuOpen ? navStyles.menuBgColor : navStyles.buttonTextColor,
-        }}
-      >
-        {isMenuOpen ? (
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 8h16M4 16h16"
-            />
-          </svg>
-        )}
-      </button>
-
-      {/* Mobile Menu Overlay with Animation */}
-      <div
-        id="mobile-menu"
-        ref={menuOverlayRef}
-        role="navigation"
-        aria-hidden={!isMenuOpen}
-        aria-label="Mobile navigation menu"
-        className="fixed inset-0 md:hidden pointer-events-none"
-        style={{
-          backgroundColor: navStyles.menuBgColor,
-          color: navStyles.menuTextColor,
-          zIndex: 45,
-          opacity: 0,
-        }}
-      >
-        {/* Menu Content - Only render when needed */}
-        {isMenuOpen && (
-          <div
-            ref={menuContentRef}
-            className="pl-12 pr-6 pt-32 flex-grow flex flex-col h-full pointer-events-auto"
-          >
-            {showMenuContent && (
-              <>
-                {/* Menu Items with TextReveal Effect */}
-                <ul className="text-5xl font-medium flex flex-col gap-6">
-                  {menuItems.map((item, index) => (
-                    <li
-                      key={index}
-                      className="cursor-pointer transition-colors duration-300 hover:opacity-70"
-                    >
-                      <TextReveal
-                        text={item}
-                        staggerDelay={0.03}
-                        duration={0.8}
-                        onComplete={
-                          index === menuItems.length - 1
-                            ? handleMenuItemsComplete
-                            : undefined
-                        }
-                      />
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Contact Info - Will be animated after menu items */}
-                <div ref={contactInfoRef} className="mt-auto mb-12 opacity-0">
-                  <div className="text-lg mb-3">hello@zenitdigital.se</div>
-                  <div className="text-lg mb-3">08-31 70 00</div>
-                  <div className="text-lg">LinkedIn</div>
-                </div>
-              </>
-            )}
-          </div>
-        )}
-      </div>
+      {/* Mobile Navigation */}
+      <MobileNav navStyles={navStyles} />
     </>
   );
 };
