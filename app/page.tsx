@@ -6,7 +6,7 @@ import HeaderLogo from "../components/HeaderLogo";
 import AboutSection from "../components/AboutSection";
 import StackedCardsContainer from "../components/SectionsContainer";
 import Test from "../components/test";
-import Footer from "../components/Footer";
+import Footer from "../Components/Footer/Footer";
 import TextScroll from "../components/TextScroll";
 import Cookiebot from "../Components/Cookiebot";
 import Testimonials from "../components/Testimonials";
