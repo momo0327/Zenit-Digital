@@ -5,11 +5,53 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SelectedWorks from "../components/SelectedWorks";
 import Service from "../Components/StackedFolders/Service";
 
+// Helper function to keep GSAP running even when tab is hidden
+function tickGSAPWhileHidden(value) {
+  if (value === false) {
+    document.removeEventListener("visibilitychange", tickGSAPWhileHidden.fn);
+    return clearInterval(tickGSAPWhileHidden.id);
+  }
+  const onChange = () => {
+    clearInterval(tickGSAPWhileHidden.id);
+    if (document.hidden) {
+      gsap.ticker.lagSmoothing(0); // keep the time moving forward
+      tickGSAPWhileHidden.id = setInterval(gsap.ticker.tick, 500);
+    } else {
+      gsap.ticker.lagSmoothing(500, 33); // restore lag smoothing
+    }
+  };
+  document.addEventListener("visibilitychange", onChange);
+  tickGSAPWhileHidden.fn = onChange;
+  onChange(); // in case document is currently hidden
+}
+
 export default function StackedCardsContainer() {
   const containerRef = useRef(null);
 
+  // Set initial background color before any JS runs
+  useEffect(() => {
+    // Immediately set document background to prevent flash
+    document.documentElement.style.backgroundColor = "var(--custom-blue)";
+    document.documentElement.style.color = "var(--custom-pink)";
+
+    // Handle cleanup to prevent memory leaks
+    return () => {
+      // Clean up any ScrollTrigger instances
+      if (typeof window !== "undefined" && ScrollTrigger) {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
+      // Keep GSAP working even when tab is not visible
+      tickGSAPWhileHidden(true);
+
+      // Set initial colors immediately to prevent flash on load
+      document.body.style.backgroundColor = "var(--custom-blue)";
+      document.body.style.color = "var(--custom-pink)";
+
       gsap.registerPlugin(ScrollTrigger);
 
       // Get our sections
@@ -73,8 +115,8 @@ export default function StackedCardsContainer() {
         );
       };
 
-      // Call this after a short delay to ensure it runs after parent page setup
-      setTimeout(disableParentColorTransitions, 500);
+      // Call this immediately to ensure there's no delay in color management
+      disableParentColorTransitions();
 
       // Set up our sections exactly as they should be
       gsap.set(selectedWorksSection, {
@@ -141,12 +183,24 @@ export default function StackedCardsContainer() {
           // When in Selected Works, use blue/pink
           document.body.style.backgroundColor = "var(--custom-blue)";
           document.body.style.color = "var(--custom-pink)";
+          document.documentElement.style.backgroundColor = "var(--custom-blue)";
+          document.documentElement.style.color = "var(--custom-pink)";
         } else if (section === "services" || section === "test") {
           // When in Services OR Test, use white/green
           document.body.style.backgroundColor = "white";
           document.body.style.color = "var(--custom-green)";
+          document.documentElement.style.backgroundColor = "white";
+          document.documentElement.style.color = "var(--custom-green)";
         }
       };
+
+      // Force initial color based on scroll position
+      const scrollPos = window.scrollY || window.pageYOffset;
+      const servicesPos =
+        servicesSection.getBoundingClientRect().top + scrollPos;
+      const initialSection =
+        scrollPos >= servicesPos ? "services" : "selected-works";
+      updateBodyColors(initialSection);
 
       // Set up triggers for color changes
       ScrollTrigger.create({
@@ -155,6 +209,8 @@ export default function StackedCardsContainer() {
         end: "bottom 30%",
         onEnter: () => updateBodyColors("selected-works"),
         onEnterBack: () => updateBodyColors("selected-works"),
+        // Force immediate evaluation to ensure colors are correct
+        immediateRender: true,
       });
 
       ScrollTrigger.create({
@@ -163,6 +219,7 @@ export default function StackedCardsContainer() {
         end: "bottom 30%",
         onEnter: () => updateBodyColors("services"),
         onEnterBack: () => updateBodyColors("services"),
+        immediateRender: true,
       });
 
       // Find and set up color changes for the Test section
@@ -180,8 +237,30 @@ export default function StackedCardsContainer() {
             console.log("Test section entered back - setting WHITE");
             updateBodyColors("test");
           },
+          immediateRender: true,
         });
       }
+
+      // Ensure smooth page transitions with a refresh
+      if (ScrollTrigger.isScrolling()) {
+        // If we're already scrolling when the component mounts, refresh to ensure proper color state
+        ScrollTrigger.refresh();
+      }
+
+      // Handle window load event to catch any timing issues
+      const handleWindowLoad = () => {
+        // Force refresh to ensure correct colors
+        ScrollTrigger.refresh();
+        // Determine the correct colors based on current scroll position
+        const scrollPos = window.scrollY || window.pageYOffset;
+        const servicesPos =
+          servicesSection.getBoundingClientRect().top + scrollPos;
+        updateBodyColors(
+          scrollPos >= servicesPos ? "services" : "selected-works"
+        );
+      };
+
+      window.addEventListener("load", handleWindowLoad);
 
       // Add navbar animation for medium and large screens
       if (window.innerWidth >= 768 && navbar) {
@@ -244,10 +323,14 @@ export default function StackedCardsContainer() {
 
       // Clean up
       return () => {
+        // Stop the GSAP ticker for hidden tabs
+        tickGSAPWhileHidden(false);
+
         if (triggerMarker.parentNode) {
           triggerMarker.parentNode.removeChild(triggerMarker);
         }
         window.removeEventListener("resize", handleResize);
+        window.removeEventListener("load", handleWindowLoad);
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       };
     }
