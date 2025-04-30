@@ -110,7 +110,7 @@ export default function StackedCardsContainer() {
       tl.to(selectedWorksSection, {
         y: "-100vh",
         width: "80%",
-        borderRadius: "40px",
+        borderRadius: "50px",
         duration: 0.7,
         ease: "none",
         onUpdate: function() {

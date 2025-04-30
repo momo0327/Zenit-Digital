@@ -7,9 +7,9 @@ import Navbar from "../components/Navbar";
 export const metadata: Metadata = {
   title: "Zenit Digital",
   description: "Landing page for Zenit Digital",
-  // icons: {
-  //   icon: "/favicon.svg", // This should be in `public/`
-  // },
+  icons: {
+    icon: "/favicon.svg", // This should be in `public/`
+  },
 };
 
 export default function RootLayout({

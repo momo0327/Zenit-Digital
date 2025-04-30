@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 
 const Footer = () => {
   // Create refs to store our animation instances
@@ -105,7 +106,7 @@ const Footer = () => {
           
           <p className="text-white mb-4">- Change starts here -</p>
           
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-12 text-center text-custom-green leading-tight">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl 2xl:text-[10rem] font-bold mb-12 text-center text-custom-green leading-tight">
             <div className="overflow-hidden">
               {Array.from("LET'S MAKE").map((letter, index) => (
                 <span key={`make-${index}`} className="footer-title-letter inline-block">
@@ -121,10 +122,12 @@ const Footer = () => {
               ))}
             </div>
           </h1>
-          
-          <button className="bg-custom-green hover:bg-zinc-600 text-white rounded-full px-7 py-5 text-lg transition-colors flex items-center">
+
+          <Link href="/booking">
+          <button className="bg-custom-green hover:bg-[#135050] text-white rounded-full px-7 py-5 text-lg transition-colors flex items-center">
             BOOK A CALL <span className="ml-1">↗</span>
           </button>
+          </Link>
           
           {/* Working Globally Section - with MP4 video replacing the globe emoji */}
           <div className="absolute bottom-8 left-8 flex justify-end items-center">
@@ -141,15 +144,15 @@ const Footer = () => {
               </video>
             </div>
             <div>
-              <p className="text-sm text-custom-green">Working Globally</p>
-              <p className="text-sm text-white">Available Apr '25</p>
+              <p className="text-sm 2xl:text-xl text-custom-green">Working Globally</p>
+              <p className="text-sm text-white">Based in Sweden</p>
             </div>
           </div>
           
           {/* For Further Inquiries */}
           <div className="absolute bottom-8 right-8 text-right">
-            <h4 className="text-sm mb-1">FOR FURTHER INQUIRIES</h4>
-            <p className="text-sm flex items-center justify-end">
+            <h4 className="text-sm 2xl:text-xl mb-1">FOR FURTHER INQUIRIES</h4>
+            <p className="text-sm flex items-center justify-en 2xl:text-lg">
               <span className="mr-1">→</span> hello@zenitdigital.se
             </p>
           </div>

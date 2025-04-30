@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import logo from "../assets/logo.png";
+import Link from "next/link";
 gsap.registerPlugin(ScrollTrigger);
 
 // TextReveal Component for animated text
@@ -205,6 +206,8 @@ const Navbar = () => {
         const textColor = section.getAttribute("data-text") || "black";
         const buttonBgColor = section.getAttribute("data-button-bg") || "var(--custom-blue)";
         const buttonTextColor = section.getAttribute("data-button-text") || "white";
+        const navbarTextColor = section.getAttribute("data-navbar-text") || textColor; // Add specific navbar text color
+
         
         const { menuBgColor, menuTextColor } = getMenuColors(bgColor, textColor);
         
@@ -219,12 +222,14 @@ const Navbar = () => {
               buttonBgColor,
               buttonTextColor,
               menuBgColor,
-              menuTextColor
+              menuTextColor,
+              navbarTextColor // Add to the state object
+
             });
             
             if (navbar) {
               navbar.style.backgroundColor = bgColor;
-              navbar.style.color = textColor;
+              navbar.style.color = navbarTextColor; // Use navbar-specific text color
             }
             if (menuButton) {
               menuButton.style.backgroundColor = buttonBgColor;
@@ -242,6 +247,8 @@ const Navbar = () => {
               const prevTextColor = prevSection.getAttribute("data-text") || "black";
               const prevButtonBgColor = prevSection.getAttribute("data-button-bg") || "var(--custom-blue)";
               const prevButtonTextColor = prevSection.getAttribute("data-button-text") || "white";
+              const prevNavTextColor = prevSection.getAttribute("data-navbar-text") || prevTextColor;
+
               
               const { menuBgColor: prevMenuBgColor, menuTextColor: prevMenuTextColor } = 
                 getMenuColors(prevBgColor, prevTextColor);
@@ -252,12 +259,14 @@ const Navbar = () => {
                 buttonBgColor: prevButtonBgColor,
                 buttonTextColor: prevButtonTextColor,
                 menuBgColor: prevMenuBgColor,
-                menuTextColor: prevMenuTextColor
+                menuTextColor: prevMenuTextColor,
+                navbarTextColor: prevNavTextColor // Fixed variable name
+
               });
               
               if (navbar) {
                 navbar.style.backgroundColor = prevBgColor;
-                navbar.style.color = prevTextColor;
+                navbar.style.color = prevNavTextColor; // Fixed variable name
               }
               if (menuButton) {
                 menuButton.style.backgroundColor = prevButtonBgColor;
@@ -284,12 +293,12 @@ const Navbar = () => {
     );
   };
   
-  const menuItems = ['Case', 'Tjänster', 'Om oss', 'Kontakt', 'Karriär', 'Nyheter'];
+  const menuItems = ['About', 'Work', 'Services', 'Contact'];
   
   return (
     <>
       {/* Desktop Navbar */}
- <nav className="navbar w-full flex items-center px-6 py-4 z-40 transition-colors duration-500 bg-white md:fixed md:top-0 md:left-0">
+ <nav className="navbar w-full flex items-center px-6 py-4 z-40 transition-colors cursor-pointer duration-500 bg-white md:fixed md:top-0 md:left-0 ">
   {/* Logo - Mobile center, desktop left */}
   <div className="flex flex-1 justify-center md:justify-start items-center gap-2 z-50">
     <Image src={logo} alt="Zenit Logo" width={20} height={20} />
@@ -297,19 +306,24 @@ const Navbar = () => {
   </div>
 
   {/* Centered Nav Links - Desktop Only */}
-  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
+  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 ">
     <ul className="flex gap-10">
-      <li className="hover:text-custom-blue cursor-pointer">About</li>
+      <li className="hover:text-custom-blue cursor-pointer" href="#about">
+      <a href="#about" >About</a>
+      </li>
       <li className="hover:text-custom-blue cursor-pointer">Cases</li>
       <li className="hover:text-custom-blue cursor-pointer">Services</li>
     </ul>
   </div>
 
   {/* Button - Right */}
-  <div className="hidden md:flex items-center ml-auto z-50">
-    <button className="desktop-button px-6 py-2 bg-custom-blue text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500">
+  <div className="hidden md:flex items-center ml-auto z-50 ">
+  <Link href="/booking">
+
+    <button className="desktop-button px-6 py-2  text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500">
       Let's Talk
     </button>
+  </Link>
   </div>
 </nav>
 

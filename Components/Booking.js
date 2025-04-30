@@ -9,7 +9,7 @@ const BookingForm = () => {
       {/* Left content area */}
       <div className="w-full md:w-1/2 p-6 md:p-16 flex flex-col justify-center">
         <div className="mb-8 md:mb-14">
-          <h1 className="text-3xl md:text-5xl font-bold mb-1">
+          <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-bold mb-1">
             Chat to a<br />payment <span className="italic">expert</span>
           </h1>
         </div>
@@ -22,7 +22,7 @@ const BookingForm = () => {
               </svg>
             </div>
             <div>
-              <p className="text-base md:text-lg font-medium">Integrate Aria's B2B payments to fit your flow and use cases</p>
+              <p className="text-base md:text-lg 2xl:text-2xl font-medium">Integrate Aria's B2B payments to fit your flow and use cases</p>
             </div>
           </div>
           
@@ -34,7 +34,7 @@ const BookingForm = () => {
               </svg>
             </div>
             <div>
-              <p className="text-base md:text-lg font-medium">Embed invoice financing and pay later with just one API</p>
+              <p className="text-base md:text-lg 2xl:text-2xl  font-medium">Embed invoice financing and pay later with just one API</p>
             </div>
           </div>
           
@@ -48,7 +48,7 @@ const BookingForm = () => {
               </svg>
             </div>
             <div>
-              <p className="text-base md:text-lg font-medium">Increase your platform's revenue, GMV and ARR</p>
+              <p className="text-base md:text-lg 2xl:text-2xl  font-medium">Increase your platform's revenue, GMV and ARR</p>
             </div>
           </div>
         </div>
@@ -64,102 +64,102 @@ const BookingForm = () => {
           
           {/* Form container */}
           <div className="relative py-8 md:h-full flex items-center justify-center p-4 md:p-10">
-            <div className="bg-white p-6 md:p-8 w-full max-w-md rounded-lg shadow-lg">
-              <form className="space-y-4 md:space-y-6">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium mb-1">
-                    First Name<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium mb-1">
-                    Last Name<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-1">
-                    Email<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="mobile" className="block text-sm font-medium mb-1">
-                    Mobile<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="mobile"
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium mb-1">
-                    Company<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="jobTitle" className="block text-sm font-medium mb-1">
-                    Job Title<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="jobTitle"
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="comments" className="block text-sm font-medium mb-1">
-                    Comments
-                  </label>
-                  <textarea
-                    id="comments"
-                    rows="3"
-                    className="w-full p-2 border border-gray-300 rounded"
-                  ></textarea>
-                </div>
-                
-                <div>
-                  <button
-                    type="submit"
-                    className="w-full bg-custom-blue text-custom-pink py-2 px-4 rounded hover:bg-gray-800 transition"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+  <div className="bg-white p-6 md:p-8 2xl:p-12 w-full max-w-md 2xl:max-w-2xl rounded-lg shadow-lg">
+    <form className="space-y-4 md:space-y-6 2xl:space-y-8">
+      <div>
+        <label htmlFor="firstName" className="block text-sm 2xl:text-base font-medium mb-1 2xl:mb-2">
+          First Name<span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="firstName"
+          className="w-full p-2 2xl:p-3 2xl:text-lg border border-gray-300 rounded"
+          required
+        />
+      </div>
+      
+      <div>
+        <label htmlFor="lastName" className="block text-sm 2xl:text-base font-medium mb-1 2xl:mb-2">
+          Last Name<span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="lastName"
+          className="w-full p-2 2xl:p-3 2xl:text-lg border border-gray-300 rounded"
+          required
+        />
+      </div>
+      
+      <div>
+        <label htmlFor="email" className="block text-sm 2xl:text-base font-medium mb-1 2xl:mb-2">
+          Email<span className="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          className="w-full p-2 2xl:p-3 2xl:text-lg border border-gray-300 rounded"
+          required
+        />
+      </div>
+      
+      <div>
+        <label htmlFor="mobile" className="block text-sm 2xl:text-base font-medium mb-1 2xl:mb-2">
+          Mobile<span className="text-red-500">*</span>
+        </label>
+        <input
+          type="tel"
+          id="mobile"
+          className="w-full p-2 2xl:p-3 2xl:text-lg border border-gray-300 rounded"
+          required
+        />
+      </div>
+      
+      <div>
+        <label htmlFor="company" className="block text-sm 2xl:text-base font-medium mb-1 2xl:mb-2">
+          Company<span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text" 
+          id="company"
+          className="w-full p-2 2xl:p-3 2xl:text-lg border border-gray-300 rounded"
+          required
+        />
+      </div>
+      
+      <div>
+        <label htmlFor="jobTitle" className="block text-sm 2xl:text-base font-medium mb-1 2xl:mb-2">
+          Job Title<span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="jobTitle"
+          className="w-full p-2 2xl:p-3 2xl:text-lg border border-gray-300 rounded"
+          required
+        />
+      </div>
+      
+      <div>
+        <label htmlFor="comments" className="block text-sm 2xl:text-base font-medium mb-1 2xl:mb-2">
+          Comments
+        </label>
+        <textarea
+          id="comments"
+          rows="3"
+          className="w-full p-2 2xl:p-3 2xl:text-lg border border-gray-300 rounded"
+        ></textarea>
+      </div>
+      
+      <div>
+        <button
+          type="submit"
+          className="w-full bg-custom-blue text-custom-pink py-2 px-4 2xl:py-3 2xl:px-6 2xl:text-lg rounded hover:bg-gray-800 transition"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
         </div>
       </div>
     </div>
