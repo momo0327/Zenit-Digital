@@ -124,7 +124,7 @@ export default function Service() {
               </div>
               <div className="grid-gap flex min-h-[30vh] flex-col pt-space-3xs md:grid md:min-h-[40vh] md:grid-cols-12">
                 <div className="col-span-7 col-start-6 flex w-full flex-col gap-y-space-sm pt-space-sm">
-                  <p className="max-w-[40ch]  ml-5 text-2sm lg:text-xl font-normal leading-relaxed text-custom-green animated-text">
+                  <p className="max-w-[40ch]  ml-5 text-sm lg:text-xl font-normal leading-relaxed text-custom-green animated-text">
                   A powerful mobile app can transform how users experience your brand—right in the palm of their hand. We craft sleek, high-performing apps with custom code and intuitive design, built to engage, retain, and scale with your vision.
                   </p>
                   
@@ -166,7 +166,7 @@ export default function Service() {
               </div>
               <div className="grid-gap flex min-h-[30vh] flex-col pt-space-3xs md:grid md:min-h-[40vh] md:grid-cols-12">
                 <div className="col-span-7 col-start-6 flex w-full flex-col gap-y-space-sm pt-space-sm">
-                  <p className="max-w-[40ch] ml-5 text-2sm lg:text-xl font-normal leading-relaxed text-custom-green animated-text">
+                  <p className="max-w-[40ch] ml-5 text-sm lg:text-xl font-normal leading-relaxed text-custom-green animated-text">
                   From backend logic to front-end finesse, We build complete digital solutions tailored to your unique challenges. 
                   Our full-stack approach combines custom software development with thoughtful design, ensuring seamless performance across every layer of your product.
                   </p>
