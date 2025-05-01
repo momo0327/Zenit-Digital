@@ -144,8 +144,8 @@ const Footer = () => {
               </video>
             </div>
             <div>
-              <p className="text-sm 2xl:text-xl text-custom-green">Working Globally</p>
-              <p className="text-sm text-white">Based in Sweden</p>
+              <p className="text-sm  2xl:text-xl text-custom-green">Working Globally</p>
+              <p className="text-sm font-normal text-white">Based in Sweden</p>
             </div>
           </div>
           

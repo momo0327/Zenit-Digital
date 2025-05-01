@@ -62,9 +62,9 @@ export default function Service() {
               style={{ top: "calc(20vh + 0em)", marginBottom: "17.25em" }}
             >
               <div className="flex grid-cols-12 items-center gap-x-space-xs text-left md:grid md:gap-x-fluid">
-                <span className="col-span-2 text-2xl lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">01</span>
-                <div className="col-span-6 col-start-6 flex flex-col">
-                  <h3 className="py-8 text-4xl lg:text-5xl 2xl:text-8xl  md:text-6xl font-medium text-custom-green">
+                <span className="col-span-2 text-2xl hidden md:block lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">01</span>
+                <div className="col-span-6 col-start-6 flex flex-col ">
+                  <h3 className="py-8 text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0   md:text-6xl font-bold lg:font-medium  text-custom-green">
                     Web Development
                   </h3>
                   {/* Technology containers placed directly under the title */}
@@ -73,34 +73,34 @@ export default function Service() {
               </div>
               <div className="grid-gap flex min-h-[30vh] flex-col pt-space-3xs md:grid md:min-h-[40vh] md:grid-cols-12">
                 <div className="col-span-7 col-start-6 flex flex-col gap-y-space-sm pt-space-sm">
-                  <p className="max-w-[40ch]  ml-5 text-2sm lg:text-xl font-normal leading-relaxed text-custom-green animated-text">
+                  <p className="max-w-[40ch]  ml-5 text-sm lg:text-xl font-normal leading-relaxed text-custom-green animated-text">
                   We offer end-to-end web development services tailored to your business needs. 
                   Our focus is on delivering high-performance websites with clean, scalable code and a custom look and feel.
                   </p>
                   
                   <div className=" space-y-0  ml-5 text-sm">
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4 lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">01</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">NextJs</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">NextJs</h4>
                       </div>
                     </div>
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4 lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">02</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">CMS Integration</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">CMS Integration</h4>
                       </div>
                     </div>
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4 lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">03</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">UI/UX Design</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">UI/UX Design</h4>
                       </div>
                     </div>
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4 lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">04</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">SEO</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">SEO</h4>
                       </div>
                     </div>
                   </div>
@@ -113,10 +113,10 @@ export default function Service() {
               style={{ top: "calc(20vh + 5.75em)", marginBottom: "11.5em" }}
             >
               <div className="flex grid-cols-12 items-center justify-start gap-x-space-xs text-left md:grid md:gap-x-fluid">
-                <span className="col-span-2 text-2xl lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">02</span>
+                <span className="col-span-2 text-2xl hidden md:block lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">02</span>
                 <div className="col-span-6 col-start-6 flex flex-col">
-                  <h3 className="py-8 text-4xl lg:text-5xl 2xl:text-8xl  md:text-6xl font-medium text-custom-green">
-                    Mobile App Development
+                <h3 className="py-8 text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0 md:text-6xl font-bold lg:font-medium  text-custom-green">
+                Mobile App Development
                   </h3>
                   {/* Technology containers placed directly under the title */}
                   
@@ -129,22 +129,22 @@ export default function Service() {
                   </p>
                   
                   <div className=" space-y-0  ml-5">
-                    <div className="border-t border-gray-800 py-6 ">
+                    <div className="border-t border-gray-800 py-4 lg:py-6 ">
                       <div className="flex items-center ">
                         <span className="text-base text-custom-green font-normal pr-6 ">01</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">React Native & Expo</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">React Native & Expo</h4>
                       </div>
                     </div>
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4 lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">02</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">UI/UX Design</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">UI/UX Design</h4>
                       </div>
                     </div>
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4 lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">03</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">IOS & Android</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">IOS & Android</h4>
                       </div>
                     </div>
                   </div>
@@ -157,9 +157,9 @@ export default function Service() {
               style={{ top: "calc(20vh + 11.5em)", marginBottom: "5.75em" }}
             >
               <div className="flex grid-cols-12 items-center justify-start gap-x-space-xs text-left md:grid md:gap-x-fluid">
-                <span className="col-span-2 text-2xl lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">03</span>
+                <span className="col-span-2 text-2xl hidden md:block lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">03</span>
                 <div className="col-span-6 col-start-6 flex flex-col">
-                  <h3 className="py-8 text-4xl lg:text-5xl 2xl:text-8xl  md:text-6xl font-medium text-custom-green">
+                  <h3 className="py-8 text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0  md:text-6xl font-bold lg:font-medium text-custom-green">
                     Fullstack Development
                   </h3>              
                 </div>
@@ -172,28 +172,28 @@ export default function Service() {
                   </p>
                   
                   <div className=" space-y-0  ml-5">
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4 lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">01</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">NextJS</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">NextJS</h4>
                       </div>
                     </div>
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4  lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">02</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">Node.Js</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">Node.Js</h4>
                       </div>
                     </div>
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4  lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">03</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">UI/UX Design</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">UI/UX Design</h4>
                       </div>
                     </div>
-                    <div className="border-t border-gray-800 py-6">
+                    <div className="border-t border-gray-800 py-4 lg:py-6">
                       <div className="flex items-center">
                         <span className="text-base text-custom-green font-normal pr-6">03</span>
-                        <h4 className="text-xl lg:text-2xl font-normal text-custom-green">Supabase</h4>
+                        <h4 className="text-lg lg:text-2xl font-normal text-custom-green">Supabase</h4>
                       </div>
                     </div>
                   </div>
