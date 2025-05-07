@@ -5,7 +5,6 @@ import { gsap } from "gsap";
 import Link from "next/link";
 
  const TestHeader = () => {
-    const router = useRouter();
 
     useEffect(() => {
         const tl = gsap.timeline();

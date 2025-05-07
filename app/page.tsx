@@ -1,23 +1,26 @@
-"use client";
+'use client';
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import HeaderLogo from "../components/HeaderLogo";
 import AboutSection from "../components/AboutSection";
 import StackedCardsContainer from "../components/SectionsContainer";
 import Test from "../components/test";
 import Footer from "../components/Footer";
 import TextScroll from "../components/TextScroll";
 import Cookiebot from "../Components/Cookiebot";
+import Testimonials from "../components/Testimonials";
+import Page2 from "../components/Page2";  
 import TestHeader from "../components/TestHeader";
+// import Home from "../components/Home";
+import Booking from "../Components/Booking";
 
 export default function Page() {
   useEffect(() => {
     // Register GSAP plugins inside useEffect to ensure it only runs client-side
     gsap.registerPlugin(ScrollTrigger);
 
-    const sections = document.querySelectorAll(
-      "section:not(.selected-works-section):not(.services-section)"
-    );
+    const sections = document.querySelectorAll("section:not(.selected-works-section):not(.services-section)");
 
     sections.forEach((section, index) => {
       const bgColor = section.getAttribute("data-bg") || "white";
@@ -47,14 +50,17 @@ export default function Page() {
   return (
     <main>
       <Cookiebot />
-      <TestHeader />
+      {/* <HeaderLogo /> */}
+      <TestHeader />  
       <AboutSection />
-
+      
       {/* Replace individual sections with the stacked container */}
       <StackedCardsContainer />
-
+      
       <TextScroll />
+      {/* <Testimonials /> */}
       <Test />
+      {/* <Page2/> */}
       <Footer />
     </main>
   );
