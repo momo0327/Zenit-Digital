@@ -85,7 +85,7 @@ const Navbar = () => {
   const menuContentRef = useRef(null);
   const contactInfoRef = useRef(null);
   const logoRef = useRef(null);
-  
+
   const [navStyles, setNavStyles] = useState({
     bgColor: "white",
     textColor: "black",
@@ -221,12 +221,18 @@ const Navbar = () => {
       sections.forEach((section, index) => {
         const bgColor = section.getAttribute("data-bg") || "white";
         const textColor = section.getAttribute("data-text") || "black";
-        const buttonBgColor = section.getAttribute("data-button-bg") || "var(--custom-blue)";
-        const buttonTextColor = section.getAttribute("data-button-text") || "white";
-        const navbarTextColor = section.getAttribute("data-navbar-text") || textColor; // Add specific navbar text color
-        
-        const { menuBgColor, menuTextColor } = getMenuColors(bgColor, textColor);
-        
+        const buttonBgColor =
+          section.getAttribute("data-button-bg") || "var(--custom-blue)";
+        const buttonTextColor =
+          section.getAttribute("data-button-text") || "white";
+        const navbarTextColor =
+          section.getAttribute("data-navbar-text") || textColor; // Add specific navbar text color
+
+        const { menuBgColor, menuTextColor } = getMenuColors(
+          bgColor,
+          textColor
+        );
+
         ScrollTrigger.create({
           trigger: section,
           start: "top center",
@@ -239,7 +245,7 @@ const Navbar = () => {
               buttonTextColor,
               menuBgColor,
               menuTextColor,
-              navbarTextColor
+              navbarTextColor,
             });
 
             if (navbar) {
@@ -258,15 +264,23 @@ const Navbar = () => {
           onLeaveBack: () => {
             const prevSection = sections[index - 1];
             if (prevSection) {
-              const prevBgColor = prevSection.getAttribute("data-bg") || "white";
-              const prevTextColor = prevSection.getAttribute("data-text") || "black";
-              const prevButtonBgColor = prevSection.getAttribute("data-button-bg") || "var(--custom-blue)";
-              const prevButtonTextColor = prevSection.getAttribute("data-button-text") || "white";
-              const prevNavTextColor = prevSection.getAttribute("data-navbar-text") || prevTextColor;
-              
-              const { menuBgColor: prevMenuBgColor, menuTextColor: prevMenuTextColor } = 
-                getMenuColors(prevBgColor, prevTextColor);
-              
+              const prevBgColor =
+                prevSection.getAttribute("data-bg") || "white";
+              const prevTextColor =
+                prevSection.getAttribute("data-text") || "black";
+              const prevButtonBgColor =
+                prevSection.getAttribute("data-button-bg") ||
+                "var(--custom-blue)";
+              const prevButtonTextColor =
+                prevSection.getAttribute("data-button-text") || "white";
+              const prevNavTextColor =
+                prevSection.getAttribute("data-navbar-text") || prevTextColor;
+
+              const {
+                menuBgColor: prevMenuBgColor,
+                menuTextColor: prevMenuTextColor,
+              } = getMenuColors(prevBgColor, prevTextColor);
+
               setNavStyles({
                 bgColor: prevBgColor,
                 textColor: prevTextColor,
@@ -274,7 +288,7 @@ const Navbar = () => {
                 buttonTextColor: prevButtonTextColor,
                 menuBgColor: prevMenuBgColor,
                 menuTextColor: prevMenuTextColor,
-                navbarTextColor: prevNavTextColor
+                navbarTextColor: prevNavTextColor,
               });
 
               if (navbar) {
@@ -305,9 +319,9 @@ const Navbar = () => {
       { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
     );
   };
-  
-  const menuItems = ['About', 'Work', 'Services', 'Contact'];
-  
+
+  const menuItems = ["About", "Work", "Services", "Contact"];
+
   return (
     <>
       {/* Desktop Navbar */}
@@ -317,29 +331,35 @@ const Navbar = () => {
           {/* Alternative logo images that switch based on the navbar color */}
           <div className="relative w-5 h-5">
             {/* First logo (default/dark version) - visible when navbarTextColor is dark */}
-            <Image 
+            <Image
               src={logo2}
-              alt="Zenit Logo light" 
-              width={20} 
+              alt="Zenit Logo light"
+              width={20}
               height={20}
               className="absolute top-0 left-0 transition-opacity duration-500"
-              style={{ 
-                opacity: navStyles.navbarTextColor?.includes('custom-pink') || 
-                         navStyles.navbarTextColor?.includes('white') || 
-                         navStyles.navbarTextColor?.includes('light') ? 1 : 0 
+              style={{
+                opacity:
+                  navStyles.navbarTextColor?.includes("custom-pink") ||
+                  navStyles.navbarTextColor?.includes("white") ||
+                  navStyles.navbarTextColor?.includes("light")
+                    ? 1
+                    : 0,
               }}
             />
             {/* Second logo (light version) - visible when navbarTextColor is light */}
-            <Image 
+            <Image
               src={logo}
-              alt="Zenit Logo dark" 
-              width={20} 
+              alt="Zenit Logo dark"
+              width={20}
               height={20}
               className="absolute top-0 left-0 transition-opacity duration-500"
-              style={{ 
-                opacity: navStyles.navbarTextColor?.includes('custom-pink') || 
-                         navStyles.navbarTextColor?.includes('white') || 
-                         navStyles.navbarTextColor?.includes('light') ? 0 : 1 
+              style={{
+                opacity:
+                  navStyles.navbarTextColor?.includes("custom-pink") ||
+                  navStyles.navbarTextColor?.includes("white") ||
+                  navStyles.navbarTextColor?.includes("light")
+                    ? 0
+                    : 1,
               }}
             />
           </div>
@@ -361,7 +381,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center ml-auto z-50 ">
           <Link href="/booking">
             <button className="desktop-button px-6 py-2 text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500">
-              Let's Talk
+              Let&apos;s Talk
             </button>
           </Link>
         </div>

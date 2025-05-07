@@ -120,23 +120,100 @@ const BookingForm = () => {
 
   return (
     <section
-      className="w-full h-screen overflow-hidden"
+      className="w-full min-h-screen overflow-x-hidden"
       data-bg="white"
       data-text="black"
       data-button-bg="var(--custom-blue)"
       data-button-text="var(--custom-pink)"
       data-navbar-text="black"
     >
-      <div className="flex flex-col md:flex-row w-full h-screen overflow-hidden">
-        {/* Left content area */}
-        <div className="w-full md:w-1/2 p-4 md:p-8 lg:p-12 flex flex-col justify-center bg-white text-black">
+      {/* Full-width purple background for mobile */}
+      <div className="bg-[#A494F3] w-full py-12 px-6 md:hidden">
+        <div className="max-w-lg mx-auto text-center">
+          <h1 className="text-4xl font-bold text-white mb-8 pt-8">
+            Chat to a<br />
+            <span className="italic">payment expert</span>
+          </h1>
+
+          <div className="space-y-6 text-left mt-12">
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black mr-4 mt-1 flex-shrink-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6l-7 10h14l-7-10z"
+                  />
+                </svg>
+              </div>
+              <p className="text-white text-lg font-medium">
+                Integrate Aria&apos;s B2B payments to fit your flow and use
+                cases
+              </p>
+            </div>
+
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black mr-4 mt-1 flex-shrink-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <p className="text-white text-lg font-medium">
+                Embed invoice financing and pay later with just one API
+              </p>
+            </div>
+
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black mr-4 mt-1 flex-shrink-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                  <line x1="9" y1="9" x2="9.01" y2="9" />
+                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                </svg>
+              </div>
+              <p className="text-white text-lg font-medium">
+                Increase your platform&apos;s revenue, GMV and ARR
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main desktop layout */}
+      <div className="flex flex-col md:flex-row w-full min-h-screen md:h-screen">
+        {/* Left content area - hidden on mobile */}
+        <div className="w-full md:w-1/2 p-4 md:p-8 lg:p-12 flex-col justify-center bg-white text-black hidden md:flex">
           <div className="mb-4 md:mb-8">
-            <h1 className="text-2xl md:text-4xl lg:text-5xl 2xl:text-7xl font-bold">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-7xl font-bold">
               Chat to a<br />
               payment <span className="italic">expert</span>
             </h1>
           </div>
 
+          {/* Benefits list - only visible on desktop */}
           <div className="space-y-3 md:space-y-4">
             <div className="flex items-start">
               <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-black flex items-center justify-center text-white mr-3 mt-1">
@@ -208,17 +285,18 @@ const BookingForm = () => {
             </div>
           </div>
         </div>
-        {/* Right form area with purple background */}
-        <div className="w-full md:w-1/2 h-screen">
-          <div className="w-full h-full bg-[#A494F3] relative overflow-hidden">
-            {/* Abstract geometric shapes */}
-            <div className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 rotate-45 -top-20 -right-20 opacity-50"></div>
-            <div className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 -rotate-12 bottom-40 -left-20 opacity-50"></div>
-            <div className="absolute w-60 md:w-72 h-60 md:h-72 bg-purple-300 rotate-12 -bottom-40 -right-20 opacity-50"></div>
+
+        {/* Right form area */}
+        <div className="w-full md:w-1/2 bg-[#A494F3] md:h-screen">
+          <div className="w-full h-full relative overflow-hidden">
+            {/* Abstract geometric shapes - visible on desktop */}
+            <div className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 rotate-45 -top-20 -right-20 opacity-50 hidden md:block"></div>
+            <div className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 -rotate-12 bottom-40 -left-20 opacity-50 hidden md:block"></div>
+            <div className="absolute w-60 md:w-72 h-60 md:h-72 bg-purple-300 rotate-12 -bottom-40 -right-20 opacity-50 hidden md:block"></div>
 
             {/* Form container */}
-            <div className="relative h-full flex items-center justify-center p-4 md:px-6 md:py-4 flex-col mt-8 ">
-              <div className="bg-white p-6 md:p-7 lg:p-9 w-full max-w-md md:max-w-lg rounded-lg shadow-lg overflow-y-auto max-h-[90vh] md:max-h-[85vh] mx-auto my-auto">
+            <div className="relative w-full md:h-full flex items-center justify-center p-4 md:px-6 md:py-4 mt-8">
+              <div className="bg-white p-6 md:p-7 lg:p-9 w-full max-w-md md:max-w-lg rounded-lg shadow-lg overflow-y-auto mx-auto my-10 md:my-auto">
                 {submitSuccess ? (
                   <div className="text-center py-6">
                     <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -264,6 +342,7 @@ const BookingForm = () => {
                         </div>
                       )}
 
+                      {/* Responsive grid - stacked on mobile, side-by-side on larger screens */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                           <label
