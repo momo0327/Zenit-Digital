@@ -4,6 +4,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import logo from "../assets/logo.png";
+import logo2 from "../assets/logo2.png";
+
+import Link from "next/link";
 gsap.registerPlugin(ScrollTrigger);
 
 // TextReveal Component for animated text
@@ -81,7 +84,8 @@ const Navbar = () => {
   const menuOverlayRef = useRef(null);
   const menuContentRef = useRef(null);
   const contactInfoRef = useRef(null);
-
+  const logoRef = useRef(null);
+  
   const [navStyles, setNavStyles] = useState({
     bgColor: "white",
     textColor: "black",
@@ -217,16 +221,12 @@ const Navbar = () => {
       sections.forEach((section, index) => {
         const bgColor = section.getAttribute("data-bg") || "white";
         const textColor = section.getAttribute("data-text") || "black";
-        const buttonBgColor =
-          section.getAttribute("data-button-bg") || "var(--custom-blue)";
-        const buttonTextColor =
-          section.getAttribute("data-button-text") || "white";
-
-        const { menuBgColor, menuTextColor } = getMenuColors(
-          bgColor,
-          textColor
-        );
-
+        const buttonBgColor = section.getAttribute("data-button-bg") || "var(--custom-blue)";
+        const buttonTextColor = section.getAttribute("data-button-text") || "white";
+        const navbarTextColor = section.getAttribute("data-navbar-text") || textColor; // Add specific navbar text color
+        
+        const { menuBgColor, menuTextColor } = getMenuColors(bgColor, textColor);
+        
         ScrollTrigger.create({
           trigger: section,
           start: "top center",
@@ -239,11 +239,12 @@ const Navbar = () => {
               buttonTextColor,
               menuBgColor,
               menuTextColor,
+              navbarTextColor
             });
 
             if (navbar) {
               navbar.style.backgroundColor = bgColor;
-              navbar.style.color = textColor;
+              navbar.style.color = navbarTextColor;
             }
             if (menuButton) {
               menuButton.style.backgroundColor = buttonBgColor;
@@ -257,21 +258,15 @@ const Navbar = () => {
           onLeaveBack: () => {
             const prevSection = sections[index - 1];
             if (prevSection) {
-              const prevBgColor =
-                prevSection.getAttribute("data-bg") || "white";
-              const prevTextColor =
-                prevSection.getAttribute("data-text") || "black";
-              const prevButtonBgColor =
-                prevSection.getAttribute("data-button-bg") ||
-                "var(--custom-blue)";
-              const prevButtonTextColor =
-                prevSection.getAttribute("data-button-text") || "white";
-
-              const {
-                menuBgColor: prevMenuBgColor,
-                menuTextColor: prevMenuTextColor,
-              } = getMenuColors(prevBgColor, prevTextColor);
-
+              const prevBgColor = prevSection.getAttribute("data-bg") || "white";
+              const prevTextColor = prevSection.getAttribute("data-text") || "black";
+              const prevButtonBgColor = prevSection.getAttribute("data-button-bg") || "var(--custom-blue)";
+              const prevButtonTextColor = prevSection.getAttribute("data-button-text") || "white";
+              const prevNavTextColor = prevSection.getAttribute("data-navbar-text") || prevTextColor;
+              
+              const { menuBgColor: prevMenuBgColor, menuTextColor: prevMenuTextColor } = 
+                getMenuColors(prevBgColor, prevTextColor);
+              
               setNavStyles({
                 bgColor: prevBgColor,
                 textColor: prevTextColor,
@@ -279,11 +274,12 @@ const Navbar = () => {
                 buttonTextColor: prevButtonTextColor,
                 menuBgColor: prevMenuBgColor,
                 menuTextColor: prevMenuTextColor,
+                navbarTextColor: prevNavTextColor
               });
 
               if (navbar) {
                 navbar.style.backgroundColor = prevBgColor;
-                navbar.style.color = prevTextColor;
+                navbar.style.color = prevNavTextColor;
               }
               if (menuButton) {
                 menuButton.style.backgroundColor = prevButtonBgColor;
@@ -309,40 +305,65 @@ const Navbar = () => {
       { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
     );
   };
-
-  const menuItems = [
-    "Case",
-    "Tjänster",
-    "Om oss",
-    "Kontakt",
-    "Karriär",
-    "Nyheter",
-  ];
-
+  
+  const menuItems = ['About', 'Work', 'Services', 'Contact'];
+  
   return (
     <>
       {/* Desktop Navbar */}
-      <nav className="navbar w-full flex items-center px-6 py-4 z-40 transition-colors duration-500 bg-white md:fixed md:top-0 md:left-0">
+      <nav className="navbar w-full flex items-center px-6 py-4 z-40 transition-colors cursor-pointer duration-500 bg-white md:fixed md:top-0 md:left-0 ">
         {/* Logo - Mobile center, desktop left */}
         <div className="flex flex-1 justify-center md:justify-start items-center gap-2 z-50">
-          <Image src={logo} alt="Zenit Logo" width={20} height={20} />
+          {/* Alternative logo images that switch based on the navbar color */}
+          <div className="relative w-5 h-5">
+            {/* First logo (default/dark version) - visible when navbarTextColor is dark */}
+            <Image 
+              src={logo2}
+              alt="Zenit Logo light" 
+              width={20} 
+              height={20}
+              className="absolute top-0 left-0 transition-opacity duration-500"
+              style={{ 
+                opacity: navStyles.navbarTextColor?.includes('custom-pink') || 
+                         navStyles.navbarTextColor?.includes('white') || 
+                         navStyles.navbarTextColor?.includes('light') ? 1 : 0 
+              }}
+            />
+            {/* Second logo (light version) - visible when navbarTextColor is light */}
+            <Image 
+              src={logo}
+              alt="Zenit Logo dark" 
+              width={20} 
+              height={20}
+              className="absolute top-0 left-0 transition-opacity duration-500"
+              style={{ 
+                opacity: navStyles.navbarTextColor?.includes('custom-pink') || 
+                         navStyles.navbarTextColor?.includes('white') || 
+                         navStyles.navbarTextColor?.includes('light') ? 0 : 1 
+              }}
+            />
+          </div>
           <span className="font-bold text-md">ZENIT</span>
         </div>
 
         {/* Centered Nav Links - Desktop Only */}
-        <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
+        <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 ">
           <ul className="flex gap-10">
-            <li className="hover:text-custom-blue cursor-pointer">About</li>
+            <li className="hover:text-custom-blue cursor-pointer" href="#about">
+              <a href="#about">About</a>
+            </li>
             <li className="hover:text-custom-blue cursor-pointer">Cases</li>
             <li className="hover:text-custom-blue cursor-pointer">Services</li>
           </ul>
         </div>
 
         {/* Button - Right */}
-        <div className="hidden md:flex items-center ml-auto z-50">
-          <button className="desktop-button px-6 py-2 bg-custom-blue text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500">
-            Let's Talk
-          </button>
+        <div className="hidden md:flex items-center ml-auto z-50 ">
+          <Link href="/booking">
+            <button className="desktop-button px-6 py-2 text-white rounded-2xl hover:bg-gray-800 transition-colors duration-500">
+              Let's Talk
+            </button>
+          </Link>
         </div>
       </nav>
 

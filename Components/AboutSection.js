@@ -67,7 +67,9 @@ const AboutSection = () => {
   return (
     <>
       {/* Scroll Indicator */}
-      <div className="scroll-indicator fixed bottom-5 right-5 w-16 h-16 flex justify-center items-center z-10 opacity-0 transition-opacity duration-300">
+      <div
+        // Add this ID for navigation
+        className="scroll-indicator fixed bottom-5 right-5  w-16 h-16 flex justify-center items-center z-10 opacity-0 transition-opacity duration-300 ">
         <svg className="rotate-[-90deg]" width="64" height="64">
           <circle
             className="stroke-custom-blue"
@@ -92,15 +94,17 @@ const AboutSection = () => {
       </div>
 
       <section
+       id="about"
         className="about-section h-screen flex items-center justify-center"
         data-bg="var(--custom-blue)"
         data-text="white"
         data-button-bg="var(--custom-pink)"
         data-button-text="var(--custom-blue)"
+        data-navbar-text="var(--custom-pink)"
       >
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="about-text text-5xl md:text-8xl lg:text-8xl font-normal text-left">
-            We create elevating digital experiences that inspire and connect with people through development and design.
+        <div className="container 2xl:max-w-[90%] mx-auto px-4 2xl:px-0 text-center">
+          <h2 className="about-text 2xl:text-[10rem]  text-5xl text-white md:text-8xl lg:text-8xl font-normal text-left ">
+          We create elevating digital solutions that empower startups through innovative software and purposeful design.          
           </h2>
         </div>
       </section>

@@ -110,7 +110,7 @@ export default function StackedCardsContainer() {
       tl.to(selectedWorksSection, {
         y: "-100vh",
         width: "80%",
-        borderRadius: "40px",
+        borderRadius: "50px",
         duration: 0.7,
         ease: "none",
         onUpdate: function() {
@@ -170,49 +170,68 @@ export default function StackedCardsContainer() {
       
       // Add navbar animation for medium and large screens
       if (window.innerWidth >= 768 && navbar) {
+        // Get all scroll items
         const projects = document.querySelectorAll('.scroll-item');
-        const lastProject = projects[projects.length - 1];
         
-        if (lastProject) {
-          setTimeout(() => {
-            // Find the 01 service item
-            const stickyItems = servicesSection.querySelectorAll('.sticky');
-            let service01Item = stickyItems[0];
-            
-            // Find by text content if possible
-            for(let i = 0; i < stickyItems.length; i++) {
-              const textElement = stickyItems[i].querySelector('span.text-2xl, span.text-5xl, span.col-span-2');
-              if (textElement && textElement.textContent.trim() === "01") {
-                service01Item = stickyItems[i];
-                break;
+        // Make the navbar rise earlier by using an earlier project as trigger
+        // Instead of using the last project, use one that's earlier in the sequence
+        // For example, if there are 4 projects, use the second-to-last one (index length-2)
+        const earlierProjectIndex = Math.max(0, projects.length - 3); // Use the third-to-last project, or first if less than 3
+        const earlierProject = projects[earlierProjectIndex];
+        
+        setTimeout(() => {
+          // Find the service sections (same as before)
+          const stickyItems = servicesSection.querySelectorAll('.sticky');
+          let service01Item = stickyItems[0];
+          
+          // Find the first service by text content if possible
+          for(let i = 0; i < stickyItems.length; i++) {
+            const textElement = stickyItems[i].querySelector('span.text-2xl, span.text-5xl, span.col-span-2');
+            if (textElement && textElement.textContent.trim() === "01") {
+              service01Item = stickyItems[i];
+              break;
+            }
+          }
+          
+          if (service01Item && earlierProject) {
+            // Create the navbar animation with adjusted trigger points
+            const updateNavbarState = (state) => {
+              if (window.matchMedia("(min-width: 768px)").matches) {
+                gsap.to(navbar, {
+                  y: state === "hidden" ? "-100%" : "0%",
+                  duration: 0.5,
+                  ease: state === "hidden" ? "power2.in" : "power2.out"
+                });
               }
-            }
+            };
             
-            if (service01Item) {
-              // Create the navbar animation
-              const updateNavbarState = (state) => {
-                if (window.matchMedia("(min-width: 768px)").matches) {
-                  gsap.to(navbar, {
-                    y: state === "hidden" ? "-100%" : "0%",
-                    duration: 0.5,
-                    ease: state === "hidden" ? "power2.in" : "power2.out"
-                  });
-                }
-              };
-              
-              ScrollTrigger.create({
-                trigger: lastProject,
-                endTrigger: service01Item,
-                start: "top center",
-                end: "top 20vh",
-                onEnter: () => updateNavbarState("hidden"),
-                onLeave: () => updateNavbarState("visible"),
-                onEnterBack: () => updateNavbarState("hidden"),
-                onLeaveBack: () => updateNavbarState("visible")
-              });
-            }
-          }, 1000);
-        }
+            // First ScrollTrigger: Hide navbar when entering projects section
+            ScrollTrigger.create({
+              trigger: earlierProject, 
+              start: "top 40%", 
+              end: "bottom top", 
+              onEnter: () => updateNavbarState("hidden"),
+              onLeaveBack: () => updateNavbarState("visible"),
+              markers: false
+            });
+            
+            // Find a later service item to use as the show trigger point
+            // Try to get the 3rd service item or the last one if fewer are available
+            const serviceItems = servicesSection.querySelectorAll('.sticky');
+            const laterServiceIndex = Math.min(serviceItems.length - 1, 2); // Get 3rd item (index 2) or last one
+            const laterServiceItem = serviceItems[laterServiceIndex];
+            
+            // Second ScrollTrigger: Show navbar after scrolling past service section
+            ScrollTrigger.create({
+              trigger: laterServiceItem || service01Item, // Use later service as trigger if available
+              start: "bottom 10%", // Only trigger when almost completely scrolled past
+              end: "bottom -20%",  // A bit of a buffer zone
+              onEnter: () => updateNavbarState("visible"),
+              onEnterBack: () => updateNavbarState("hidden"),
+              markers: false
+            });
+          }
+        }, 1000);
       }
       
       // Resize handler
