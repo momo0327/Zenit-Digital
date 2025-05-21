@@ -79,15 +79,12 @@ const TextReveal = ({
   );
 };
 
-
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMenuContent, setShowMenuContent] = useState(false);
   const menuOverlayRef = useRef(null);
   const menuContentRef = useRef(null);
   const contactInfoRef = useRef(null);
-  const logoRef = useRef(null);
 
   const [navStyles, setNavStyles] = useState({
     bgColor: "white",
@@ -101,7 +98,7 @@ const Navbar = () => {
   // Simple direct scroll function
   const navigateTo = (sectionId) => {
     console.log(`Navigating to: ${sectionId}`);
-    
+
     // Close menu first if open, then navigate
     if (isMenuOpen) {
       toggleMenu();
@@ -119,16 +116,17 @@ const Navbar = () => {
     const section = document.getElementById(sectionId);
     if (section) {
       console.log(`Found section: ${sectionId}`);
-      
+
       // Calculate position with offset for fixed navbar
       const headerOffset = 100; // Adjust based on your navbar height
       const elementPosition = section.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
+
       // Scroll to the adjusted position
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     } else {
       console.error(`Section not found: ${sectionId}`);
@@ -406,32 +404,30 @@ const Navbar = () => {
           </div>
 
           <span className="font-bold text-md">ZENIT</span>
-         
         </div>
-        
 
         {/* Centered Nav Links - Desktop Only */}
         <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 z-50">
           <ul className="flex gap-10">
             <li className="hover:text-custom-blue cursor-pointer">
-              <button 
-                onClick={() => navigateTo('about')}
+              <button
+                onClick={() => navigateTo("about")}
                 className="border-none bg-transparent p-0 m-0 text-inherit font-inherit hover:text-custom-blue cursor-pointer"
               >
                 About
               </button>
             </li>
             <li className="hover:text-custom-blue cursor-pointer">
-              <button 
-                onClick={() => navigateTo('work')}
+              <button
+                onClick={() => navigateTo("work")}
                 className="border-none bg-transparent p-0 m-0 text-inherit font-inherit hover:text-custom-blue cursor-pointer"
               >
                 Cases
               </button>
             </li>
             <li className="hover:text-custom-blue cursor-pointer">
-              <button 
-                onClick={() => navigateTo('services')}
+              <button
+                onClick={() => navigateTo("services")}
                 className="border-none bg-transparent p-0 m-0 text-inherit font-inherit hover:text-custom-blue cursor-pointer"
               >
                 Services

@@ -2,18 +2,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import HeaderLogo from "../components/HeaderLogo";
 import AboutSection from "../components/AboutSection";
 import StackedCardsContainer from "../components/SectionsContainer";
 import Test from "../components/test";
 import Footer from "../components/Footer";
 import TextScroll from "../components/TextScroll";
 import Cookiebot from "../Components/Cookiebot";
-import Testimonials from "../components/Testimonials";
-import Page2 from "../components/Page2";
+
 import TestHeader from "../components/TestHeader";
 // import Home from "../components/Home";
-import Booking from "../Components/Booking";
 import Image from "next/image";
 import loadiungLogo from "../assets/Frame.svg";
 

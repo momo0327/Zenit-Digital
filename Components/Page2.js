@@ -118,7 +118,7 @@ const Page2 = () => {
             <p className="text-white mb-4">- Change starts here -</p>
             
             <h1 className="text-6xl md:text-8xl font-bold mb-12 text-center text-custom-green">
-              LET'S MAKE<br />IT HAPPEN
+              Let&apos;s Make<br />It Happen
             </h1>
             
             <button className="bg-custom-green hover:bg-zinc-600 text-white rounded-full px-7 py-5 text-lg transition-colors flex items-center">
