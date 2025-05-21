@@ -14,7 +14,6 @@ const nextConfig: NextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  swcMinify: true,
   images: {
     domains: ['cdn.sanity.io'],
     remotePatterns: [
