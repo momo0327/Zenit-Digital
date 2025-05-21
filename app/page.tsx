@@ -13,7 +13,6 @@ import TestHeader from "../Components/TestHeader";
 // import Home from "../Components/Home";
 import Image from "next/image";
 import loadiungLogo from "../assets/Frame.svg";
-import { useRouter } from "next/navigation";
 
 export default function Page() {
   // Add loading state
@@ -31,14 +30,14 @@ export default function Page() {
   useEffect(() => {
     // Store the current path in sessionStorage when the component mounts
     const currentPath = window.location.pathname;
-    const previousPath = sessionStorage.getItem('previousPath');
-    
+    const previousPath = sessionStorage.getItem("previousPath");
+
     // If we've navigated back from a different path (e.g., booking), refresh the page
     if (previousPath && previousPath !== currentPath) {
-      sessionStorage.setItem('previousPath', currentPath);
+      sessionStorage.setItem("previousPath", currentPath);
       window.location.reload();
     } else {
-      sessionStorage.setItem('previousPath', currentPath);
+      sessionStorage.setItem("previousPath", currentPath);
     }
 
     // Listen for popstate events (back/forward navigation)
@@ -47,11 +46,11 @@ export default function Page() {
       window.location.reload();
     };
 
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener("popstate", handlePopState);
 
     // Clean up event listener
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, []);
 
@@ -61,7 +60,7 @@ export default function Page() {
 
     // Initial loading animation - simplified to just show the logo
     const tl = gsap.timeline();
-    
+
     // Create a function to hide the loading screen
     const hideLoadingScreen = () => {
       const exitTl = gsap.timeline({
@@ -70,17 +69,18 @@ export default function Page() {
           setLoading(false);
         },
       });
-      
-      exitTl.to(".loading-screen", {
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.inOut",
-      })
-      .to(".loading-screen", {
-        y: "-100%",
-        duration: 0.8,
-        ease: "power3.inOut",
-      });
+
+      exitTl
+        .to(".loading-screen", {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.inOut",
+        })
+        .to(".loading-screen", {
+          y: "-100%",
+          duration: 0.8,
+          ease: "power3.inOut",
+        });
     };
 
     // Setup scroll triggers
@@ -115,7 +115,7 @@ export default function Page() {
     // Event listener for document load complete (fallback)
     const handleLoad = () => {
       // Make sure all resources are loaded
-      if (document.readyState === 'complete') {
+      if (document.readyState === "complete") {
         // If content isn't ready yet (TestHeader animation hasn't started),
         // we'll still hide loading screen after a maximum wait time (4 seconds)
         if (!contentReady) {
@@ -129,11 +129,11 @@ export default function Page() {
       }
     };
 
-    window.addEventListener('load', handleLoad);
+    window.addEventListener("load", handleLoad);
 
     // Watch for contentReady state to change
     return () => {
-      window.removeEventListener('load', handleLoad);
+      window.removeEventListener("load", handleLoad);
     };
   }, []);
 
@@ -145,17 +145,18 @@ export default function Page() {
           setLoading(false);
         },
       });
-      
-      exitTl.to([".loading-screen", ".loading-content", ".loading-logo"], {
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.inOut",
-      })
-      .to(".loading-screen", {
-        y: "-100%",
-        duration: 0.8,
-        ease: "power3.inOut",
-      });
+
+      exitTl
+        .to([".loading-screen", ".loading-content", ".loading-logo"], {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.inOut",
+        })
+        .to(".loading-screen", {
+          y: "-100%",
+          duration: 0.8,
+          ease: "power3.inOut",
+        });
     }
   }, [contentReady, loading]);
 
@@ -163,17 +164,20 @@ export default function Page() {
     <main>
       {/* Loading Screen with base64 encoded SVG for immediate display */}
       {loading && (
-        <div ref={loadingScreenRef} className="loading-screen fixed top-0 left-0 w-full h-full bg-[#161616] z-50 flex items-center justify-center">
+        <div
+          ref={loadingScreenRef}
+          className="loading-screen fixed top-0 left-0 w-full h-full bg-[#161616] z-50 flex items-center justify-center"
+        >
           {/* 
             This img tag uses a base64-encoded SVG that's embedded directly in the HTML
             This guarantees it will display immediately without any external requests
           */}
-          <Image 
+          <Image
             src={loadiungLogo}
-            alt="Frame Logo" 
-            width="40" 
+            alt="Frame Logo"
+            width="40"
             height="40"
-            className="loading-logo" 
+            className="loading-logo"
           />
         </div>
       )}
