@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import Navbar from "../components/Navbar";
 import { CursorProvider } from "../utils/CursorContext";
 import ClientCursorWrapper from "../Components/ClientCursorWrapper";
+import NavbarWrapper from "../Components/NavbarWrapper";
 
 export const metadata: Metadata = {
   title: "Zenit Digital",
@@ -31,7 +31,7 @@ export default function RootLayout({
       </head>
       <body>
         <CursorProvider>
-          <Navbar />
+          <NavbarWrapper />
           {children}
           <ClientCursorWrapper />
         </CursorProvider>
