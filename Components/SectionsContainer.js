@@ -2,8 +2,8 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SelectedWorks from "../components/SelectedWorks";
-import Service from "../Components/StackedFolders/Service";
+import SelectedWorks from "./SelectedWorks";
+import Service from "./StackedFolders/Service";
 
 export default function StackedCardsContainer() {
   const containerRef = useRef(null);
