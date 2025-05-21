@@ -51,7 +51,7 @@ function Test() {
         {/* Left Section */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center">
           <h1 className="text-4xl lg:text-7xl font-medium mb-4 sm:mb-6 text-custom-green 2xl:text-8xl">
-            Want to <span className="text-custom-lightGreen">Grow</span> your digital presence? We're here to make it happen!
+            Want to <span className="text-custom-lightGreen">Grow</span> your digital presence? We&apos;re here to make it happen!
           </h1>
           <p className="text-custom-green lg:text-lg 2xl:text-2xl  mt-2 sm:mt-4">
             Book a free 45-minute consultation and discover <br/> how we can help you elevate your digital presence!
@@ -59,7 +59,7 @@ function Test() {
           <div className="mt-4 sm:mt-6">
             <Link href="/booking">
               <button className="bg-custom-green text-custom-lightGreen hover:bg-[#135050] px-6 sm:px-8 py-3 rounded-lg font-bold flex items-center">
-                Let's Talk
+                Let&apos;s Talk
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>

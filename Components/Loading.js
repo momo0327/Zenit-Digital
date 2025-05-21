@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion"; // Import Framer Motion for animation
-import Image from "next/image";
 import zenitLogo from "./../assets/Frame.svg"; // Adjust the path if needed
 
 export function Loading({ onLoaded }) {  // Change to named export

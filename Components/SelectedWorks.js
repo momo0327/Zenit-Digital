@@ -117,9 +117,12 @@ const SelectedWorks = () => {
               >
                 {/* Image */}
                 {typeof project.image === "string" ? (
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.title}
+                    width={1200}
+                    height={1600}
+                    unoptimized
                     className="w-full h-auto rounded-md"
                   />
                 ) : (
