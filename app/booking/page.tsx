@@ -34,7 +34,7 @@ export default function BookingPage() {
       data-text="black"
       data-button-bg="var(--custom-blue)"
       data-button-text="var(--custom-pink)"
-      data-navbar-text="black"
+      data-navbar-text="var(--custom-blue)"
     >
       <Booking />
     </main>

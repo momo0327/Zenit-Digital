@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeaderLogo from "../components/HeaderLogo";
@@ -14,12 +14,50 @@ import Page2 from "../components/Page2";
 import TestHeader from "../components/TestHeader";
 // import Home from "../components/Home";
 import Booking from "../Components/Booking";
+import Image from "next/image";
+import loadiungLogo from "../assets/Frame.svg";
 
 export default function Page() {
+  // Add loading state
+  const [loading, setLoading] = useState(true);
+  const [contentReady, setContentReady] = useState(false);
+  const pageContentRef = useRef(null);
+  const loadingScreenRef = useRef(null);
+
+  // This function will be called by TestHeader when its animations start
+  const handleContentAnimationStart = () => {
+    setContentReady(true);
+  };
+
   useEffect(() => {
     // Register GSAP plugins inside useEffect to ensure it only runs client-side
     gsap.registerPlugin(ScrollTrigger);
 
+    // Initial loading animation - simplified to just show the logo
+    const tl = gsap.timeline();
+    
+    // Create a function to hide the loading screen
+    const hideLoadingScreen = () => {
+      const exitTl = gsap.timeline({
+        onComplete: () => {
+          // Set loading to false once animation completes to remove from DOM
+          setLoading(false);
+        },
+      });
+      
+      exitTl.to(".loading-screen", {
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.inOut",
+      })
+      .to(".loading-screen", {
+        y: "-100%",
+        duration: 0.8,
+        ease: "power3.inOut",
+      });
+    };
+
+    // Setup scroll triggers
     const sections = document.querySelectorAll(
       "section:not(.selected-works-section):not(.services-section)"
     );
@@ -47,23 +85,88 @@ export default function Page() {
         },
       });
     });
+
+    // Event listener for document load complete (fallback)
+    const handleLoad = () => {
+      // Make sure all resources are loaded
+      if (document.readyState === 'complete') {
+        // If content isn't ready yet (TestHeader animation hasn't started),
+        // we'll still hide loading screen after a maximum wait time (4 seconds)
+        if (!contentReady) {
+          const timer = setTimeout(() => {
+            if (!contentReady) {
+              hideLoadingScreen();
+            }
+          }, 4000);
+          return () => clearTimeout(timer);
+        }
+      }
+    };
+
+    window.addEventListener('load', handleLoad);
+
+    // Watch for contentReady state to change
+    return () => {
+      window.removeEventListener('load', handleLoad);
+    };
   }, []);
+
+  // When contentReady changes to true, hide the loading screen
+  useEffect(() => {
+    if (contentReady && loading) {
+      const exitTl = gsap.timeline({
+        onComplete: () => {
+          setLoading(false);
+        },
+      });
+      
+      exitTl.to([".loading-screen", ".loading-content", ".loading-logo"], {
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.inOut",
+      })
+      .to(".loading-screen", {
+        y: "-100%",
+        duration: 0.8,
+        ease: "power3.inOut",
+      });
+    }
+  }, [contentReady, loading]);
 
   return (
     <main>
-      <Cookiebot />
-      {/* <HeaderLogo /> */}
-      <TestHeader />
-      <AboutSection />
+      {/* Loading Screen with base64 encoded SVG for immediate display */}
+      {loading && (
+        <div ref={loadingScreenRef} className="loading-screen fixed top-0 left-0 w-full h-full bg-[#161616] z-50 flex items-center justify-center">
+          {/* 
+            This img tag uses a base64-encoded SVG that's embedded directly in the HTML
+            This guarantees it will display immediately without any external requests
+          */}
+          <Image 
+            src={loadiungLogo}
+            alt="Frame Logo" 
+            width="40" 
+            height="40"
+            className="loading-logo" 
+          />
+        </div>
+      )}
 
-      {/* Replace individual sections with the stacked container */}
-      <StackedCardsContainer />
+      <div ref={pageContentRef} className={loading ? "invisible" : "visible"}>
+        <Cookiebot />
+        {/* <HeaderLogo /> */}
+        <TestHeader onAnimationStart={handleContentAnimationStart} />
+        <AboutSection />
 
-      <TextScroll />
-      {/* <Testimonials /> */}
-      <Test />
-      {/* <Page2/> */}
-      <Footer />
+        {/* Replace individual sections with the stacked container */}
+        <StackedCardsContainer />
+
+        <TextScroll />
+        {/* <Testimonials /> */}
+        <Test />
+        {/* <Page2/> */}
+        <Footer />
+      </div>
     </main>
   );
 }

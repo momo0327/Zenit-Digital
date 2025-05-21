@@ -5,11 +5,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import logo from "../assets/logo.png";
 import logo2 from "../assets/logo2.png";
-
 import Link from "next/link";
+
 gsap.registerPlugin(ScrollTrigger);
 
-// TextReveal Component for animated text
+// TextReveal Component for animated text (keep your existing code)
 const TextReveal = ({
   text,
   className = "",
@@ -20,6 +20,7 @@ const TextReveal = ({
   duration = 1,
   onComplete = () => {},
 }) => {
+  // Your existing TextReveal component code
   const containerRef = useRef(null);
   const TextTag = tag;
 
@@ -78,6 +79,8 @@ const TextReveal = ({
   );
 };
 
+
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMenuContent, setShowMenuContent] = useState(false);
@@ -94,6 +97,43 @@ const Navbar = () => {
     menuBgColor: "var(--custom-pink)",
     menuTextColor: "var(--custom-blue)",
   });
+
+  // Simple direct scroll function
+  const navigateTo = (sectionId) => {
+    console.log(`Navigating to: ${sectionId}`);
+    
+    // Close menu first if open, then navigate
+    if (isMenuOpen) {
+      toggleMenu();
+      // Use a timeout to allow the menu to close before scrolling
+      setTimeout(() => {
+        scrollToElement(sectionId);
+      }, 800);
+    } else {
+      scrollToElement(sectionId);
+    }
+  };
+
+  // Function to handle the actual scrolling
+  const scrollToElement = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      console.log(`Found section: ${sectionId}`);
+      
+      // Calculate position with offset for fixed navbar
+      const headerOffset = 100; // Adjust based on your navbar height
+      const elementPosition = section.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      // Scroll to the adjusted position
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    } else {
+      console.error(`Section not found: ${sectionId}`);
+    }
+  };
 
   const toggleMenu = () => {
     if (!isMenuOpen) {
@@ -329,6 +369,7 @@ const Navbar = () => {
         {/* Logo - Mobile center, desktop left */}
         <div className="flex flex-1 justify-center md:justify-start items-center gap-2 z-50">
           {/* Alternative logo images that switch based on the navbar color */}
+
           <div className="relative w-5 h-5">
             {/* First logo (default/dark version) - visible when navbarTextColor is dark */}
             <Image
@@ -363,17 +404,39 @@ const Navbar = () => {
               }}
             />
           </div>
+
           <span className="font-bold text-md">ZENIT</span>
+         
         </div>
+        
 
         {/* Centered Nav Links - Desktop Only */}
-        <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 ">
+        <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 z-50">
           <ul className="flex gap-10">
-            <li className="hover:text-custom-blue cursor-pointer" href="#about">
-              <a href="#about">About</a>
+            <li className="hover:text-custom-blue cursor-pointer">
+              <button 
+                onClick={() => navigateTo('about')}
+                className="border-none bg-transparent p-0 m-0 text-inherit font-inherit hover:text-custom-blue cursor-pointer"
+              >
+                About
+              </button>
             </li>
-            <li className="hover:text-custom-blue cursor-pointer">Cases</li>
-            <li className="hover:text-custom-blue cursor-pointer">Services</li>
+            <li className="hover:text-custom-blue cursor-pointer">
+              <button 
+                onClick={() => navigateTo('work')}
+                className="border-none bg-transparent p-0 m-0 text-inherit font-inherit hover:text-custom-blue cursor-pointer"
+              >
+                Cases
+              </button>
+            </li>
+            <li className="hover:text-custom-blue cursor-pointer">
+              <button 
+                onClick={() => navigateTo('services')}
+                className="border-none bg-transparent p-0 m-0 text-inherit font-inherit hover:text-custom-blue cursor-pointer"
+              >
+                Services
+              </button>
+            </li>
           </ul>
         </div>
 
@@ -456,6 +519,7 @@ const Navbar = () => {
                     <li
                       key={index}
                       className="cursor-pointer transition-colors duration-300 hover:opacity-70"
+                      onClick={() => navigateTo(item.toLowerCase())}
                     >
                       <TextReveal
                         text={item}

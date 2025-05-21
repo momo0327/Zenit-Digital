@@ -95,7 +95,7 @@ const AboutSection = () => {
 
       <section
        id="about"
-        className="about-section h-screen flex items-center justify-center"
+        className="about-section h-screen flex items-center justify-center "
         data-bg="var(--custom-blue)"
         data-text="white"
         data-button-bg="var(--custom-pink)"

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-
 import Group5Image from "../assets/Group5.png";
+import Group78Image from "../assets/Group78-2.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,10 +60,10 @@ const SelectedWorks = () => {
     },
     {
       id: 2,
-      image: "https://cdn.sanity.io/images/u1e81n72/production/5addc75bef476305d7ee2f1c8238a15685203c28-1200x1600.jpg/Hololens.jpg?q=95&fit=clip&auto=format&w=1439",
-      title: "Hololens Project",
+      image: Group78Image,
+      title: "ShelfWise",
       description: "Augmented Reality Experience", 
-      links: ["Design", "AR Development"],
+      links: ["Design", "Fullstack Development"],
     },
     {
       id: 3,
@@ -76,6 +76,7 @@ const SelectedWorks = () => {
 
   return (
     <section
+      id="work"
       className="selected-works-section opacity-100 pt-40"
       data-bg="var(--custom-blue)"
       data-text="var(--custom-pink)"
@@ -84,9 +85,9 @@ const SelectedWorks = () => {
       data-nav-text="var(--custom-pink)"
     >
       {/* Title Section */}
-      <div className="title-container relative left-4 md:left-8 lg:left-8 z-10">
+      <div className="title-container relative left-4 md:left-8 lg:left-8 2xl:left-20 z-10">
         <div className="overflow-hidden inline-block">
-          <h1 className="text-7xl md:text-9xl lg:text-9xl xs:text-6xl font-bold text-custom-pink">
+          <h1 className="text-7xl 2xl:text-[10rem] md:text-9xl lg:text-9xl xs:text-6xl font-bold text-custom-pink">
             {Array.from("SELECTED WORKS").map((letter, index) => (
               <span key={index} className="title-letter inline-block">
                 {letter === " " ? "\u00A0" : letter}
@@ -100,7 +101,7 @@ const SelectedWorks = () => {
         {/* Left Fixed Text - Hidden on mobile */}
         <div className="text-section w-full md:w-1/2 sticky top-0 h-screen hidden md:flex items-center">
           <div className="text-content px-8">
-            <div className="text-super-large font-medium text-custom-pink">
+            <div className="text-super-large 2xl:text-[30rem] font-normal text-custom-pink">
               {String(currentImage).padStart(2, "0")}
             </div>
           </div>

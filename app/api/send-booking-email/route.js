@@ -15,7 +15,7 @@ export async function POST(request) {
       "email",
       "mobile",
       "company",
-      "jobTitle",
+      "serviceRequired",
     ];
     for (const field of requiredFields) {
       if (!formData[field]) {
@@ -75,7 +75,7 @@ export async function POST(request) {
             <li><strong>Email:</strong> ${formData.email}</li>
             <li><strong>Mobile:</strong> ${formData.mobile}</li>
             <li><strong>Company:</strong> ${formData.company}</li>
-            <li><strong>Job Title:</strong> ${formData.jobTitle}</li>
+            <li><strong>Job Title:</strong> ${formData.serviceRequired}</li>
             ${
               formData.comments
                 ? `<li><strong>Comments:</strong> ${formData.comments}</li>`
@@ -107,7 +107,7 @@ export async function POST(request) {
             <li><strong>Email:</strong> ${formData.email}</li>
             <li><strong>Mobile:</strong> ${formData.mobile}</li>
             <li><strong>Company:</strong> ${formData.company}</li>
-            <li><strong>Job Title:</strong> ${formData.jobTitle}</li>
+            <li><strong>Service Required:</strong> ${formData.serviceRequired}</li>
             ${
               formData.comments
                 ? `<li><strong>Comments:</strong> ${formData.comments}</li>`

@@ -1,8 +1,17 @@
 "use client";
-import React, { useState } from "react";
-// Removing unused Image import
+import React, { useState, useEffect } from "react";
+// Import framer-motion for animations
+import { motion } from "framer-motion";
 
 const BookingForm = () => {
+  // Animation state
+  const [isVisible, setIsVisible] = useState(false);
+  
+  // Set animation visible on component mount
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   // Form state
   const [formData, setFormData] = useState({
     firstName: "",
@@ -10,7 +19,7 @@ const BookingForm = () => {
     email: "",
     mobile: "",
     company: "",
-    jobTitle: "",
+    serviceRequired: "",
     comments: "",
   });
 
@@ -56,8 +65,9 @@ const BookingForm = () => {
       errors.mobile = "Please enter a valid mobile number";
     }
     if (!formData.company.trim()) errors.company = "Company is required";
-    if (!formData.jobTitle.trim()) errors.jobTitle = "Job title is required";
-
+    if (!formData.serviceRequired || !formData.serviceRequired.trim()) {
+      errors.serviceRequired = "Service selection is required";
+    }
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -89,7 +99,7 @@ const BookingForm = () => {
           email: "",
           mobile: "",
           company: "",
-          jobTitle: "",
+          serviceRequired: "",
           comments: "",
         });
         setFormErrors({});
@@ -113,9 +123,30 @@ const BookingForm = () => {
       email: "",
       mobile: "",
       company: "",
-      jobTitle: "",
+      serviceRequired: "",
       comments: "",
     });
+  };
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { duration: 0.4 }
+    }
   };
 
   return (
@@ -128,16 +159,26 @@ const BookingForm = () => {
       data-navbar-text="black"
     >
       {/* Full-width purple background for mobile */}
-      <div className="bg-[#A494F3] w-full py-12 px-6 md:hidden">
-        <div className="max-w-lg mx-auto text-center">
-          <h1 className="text-4xl font-bold text-white mb-8 pt-8">
-            Chat to a<br />
-            <span className="italic">payment expert</span>
+      <div className="w-full py-12 px-6 md:hidden">
+        <motion.div 
+          className="max-w-lg mx-auto text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-4xl font-sm text-custom-blue mb-8 pt-8">
+            Book a<br />
+            <span >Digital consultation</span>
           </h1>
 
-          <div className="space-y-6 text-left mt-12">
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black mr-4 mt-1 flex-shrink-0">
+          <motion.div 
+            className="space-y-6 text-left mt-12"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+          >
+            <motion.div className="flex items-start" variants={itemVariants}>
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-custom-blue mr-4 mt-1 flex-shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -146,21 +187,18 @@ const BookingForm = () => {
                   stroke="currentColor"
                   strokeWidth="2"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6l-7 10h14l-7-10z"
-                  />
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
                 </svg>
               </div>
-              <p className="text-white text-lg font-medium">
-                Integrate Aria&apos;s B2B payments to fit your flow and use
-                cases
+              <p className="text-custom-blue text-lg font-medium">
+                Transform your digital presence with our expert team
               </p>
-            </div>
+            </motion.div>
 
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black mr-4 mt-1 flex-shrink-0">
+            <motion.div className="flex items-start" variants={itemVariants}>
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-custom-blue mr-4 mt-1 flex-shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -169,16 +207,18 @@ const BookingForm = () => {
                   stroke="currentColor"
                   strokeWidth="2"
                 >
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
+                  <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                  <path d="M2 2l7.586 7.586"></path>
+                  <circle cx="11" cy="11" r="2"></circle>
                 </svg>
               </div>
-              <p className="text-white text-lg font-medium">
-                Embed invoice financing and pay later with just one API
+              <p className="text-custom-blue text-lg font-medium">
+                Custom web design and development solutions
               </p>
-            </div>
+            </motion.div>
 
-            <div className="flex items-start">
+            <motion.div className="flex items-start" variants={itemVariants}>
               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black mr-4 mt-1 flex-shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -188,35 +228,46 @@ const BookingForm = () => {
                   stroke="currentColor"
                   strokeWidth="2"
                 >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                  <line x1="9" y1="9" x2="9.01" y2="9" />
-                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                  <line x1="6" y1="1" x2="6" y2="4"></line>
+                  <line x1="10" y1="1" x2="10" y2="4"></line>
+                  <line x1="14" y1="1" x2="14" y2="4"></line>
                 </svg>
               </div>
-              <p className="text-white text-lg font-medium">
-                Increase your platform&apos;s revenue, GMV and ARR
+              <p className="text-custom-blue text-lg font-medium">
+                Digital marketing that delivers measurable results
               </p>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Main desktop layout */}
       <div className="flex flex-col md:flex-row w-full min-h-screen md:h-screen">
         {/* Left content area - hidden on mobile */}
-        <div className="w-full md:w-1/2 p-4 md:p-8 lg:p-12 flex-col justify-center bg-white text-black hidden md:flex">
+        <motion.div 
+          className="w-full md:w-1/2 p-4 md:p-8 lg:p-12 flex-col justify-center bg-white text-black hidden md:flex"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -50 }}
+          transition={{ duration: 0.7 }}
+        >
           <div className="mb-4 md:mb-8">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-7xl font-bold">
-              Chat to a<br />
-              payment <span className="italic">expert</span>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-7xl font-md">
+              Book your<br />
+              digital <span >consultation</span>
             </h1>
           </div>
 
           {/* Benefits list - only visible on desktop */}
-          <div className="space-y-3 md:space-y-4">
-            <div className="flex items-start">
-              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-black flex items-center justify-center text-white mr-3 mt-1">
+          <motion.div 
+            className="space-y-3 md:space-y-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+          >
+            <motion.div className="flex items-start" variants={itemVariants}>
+              <div className="w-8 h-8 md:w-8 md:h-8 rounded-full  flex items-center justify-center text-black mr-3 mt-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-3 w-3 md:h-4 md:w-4"
@@ -225,23 +276,20 @@ const BookingForm = () => {
                   stroke="currentColor"
                   strokeWidth="2"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6l-7 10h14l-7-10z"
-                  />
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
                 </svg>
               </div>
               <div>
-                <p className="text-sm md:text-base lg:text-lg font-medium">
-                  Integrate Aria&apos;s B2B payments to fit your flow and use
-                  cases
+                <p className="text-sm md:text-base lg:text-lg font-sm">
+                  Transform your digital presence with our expert team
                 </p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex items-start">
-              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-black flex items-center justify-center text-white mr-3 mt-1">
+            <motion.div className="flex items-start" variants={itemVariants}>
+              <div className="w-8 h-8 md:w-8 md:h-8 rounded-full  flex items-center justify-center text-black mr-3 mt-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-3 w-3 md:h-4 md:w-4"
@@ -250,19 +298,21 @@ const BookingForm = () => {
                   stroke="currentColor"
                   strokeWidth="2"
                 >
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
+                  <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                  <path d="M2 2l7.586 7.586"></path>
+                  <circle cx="11" cy="11" r="2"></circle>
                 </svg>
               </div>
               <div>
-                <p className="text-sm md:text-base lg:text-lg font-medium">
-                  Embed invoice financing and pay later with just one API
+                <p className="text-sm md:text-base lg:text-lg font-sm">
+                  Custom web design and development solutions
                 </p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex items-start">
-              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-black flex items-center justify-center text-white mr-3 mt-1">
+            <motion.div className="flex items-start" variants={itemVariants}>
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full  flex items-center justify-center text-black mr-3 mt-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-3 w-3 md:h-4 md:w-4"
@@ -271,34 +321,60 @@ const BookingForm = () => {
                   stroke="currentColor"
                   strokeWidth="2"
                 >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                  <line x1="9" y1="9" x2="9.01" y2="9" />
-                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                  <line x1="6" y1="1" x2="6" y2="4"></line>
+                  <line x1="10" y1="1" x2="10" y2="4"></line>
+                  <line x1="14" y1="1" x2="14" y2="4"></line>
                 </svg>
               </div>
               <div>
-                <p className="text-sm md:text-base lg:text-lg font-medium">
-                  Increase your platform&apos;s revenue, GMV and ARR
+                <p className="text-sm md:text-base lg:text-lg font-sm">
+                  Digital marketing that delivers measurable results
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         {/* Right form area */}
         <div className="w-full md:w-1/2 bg-[#A494F3] md:h-screen">
           <div className="w-full h-full relative overflow-hidden">
-            {/* Abstract geometric shapes - visible on desktop */}
-            <div className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 rotate-45 -top-20 -right-20 opacity-50 hidden md:block"></div>
-            <div className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 -rotate-12 bottom-40 -left-20 opacity-50 hidden md:block"></div>
-            <div className="absolute w-60 md:w-72 h-60 md:h-72 bg-purple-300 rotate-12 -bottom-40 -right-20 opacity-50 hidden md:block"></div>
+            {/* Abstract geometric shapes - visible on mobile and desktop */}
+            <motion.div 
+              className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 rotate-45 -top-20 -right-20 opacity-50"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: isVisible ? 0.5 : 0, scale: isVisible ? 1 : 0.8 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            ></motion.div>
+            <motion.div 
+              className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 -rotate-12 bottom-40 -left-20 opacity-50"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: isVisible ? 0.5 : 0, scale: isVisible ? 1 : 0.8 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+            ></motion.div>
+            <motion.div 
+              className="absolute w-60 md:w-72 h-60 md:h-72 bg-purple-300 rotate-12 -bottom-40 -right-20 opacity-50"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: isVisible ? 0.5 : 0, scale: isVisible ? 1 : 0.8 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
+            ></motion.div>
 
             {/* Form container */}
             <div className="relative w-full md:h-full flex items-center justify-center p-4 md:px-6 md:py-4 mt-8">
-              <div className="bg-white p-6 md:p-7 lg:p-9 w-full max-w-md md:max-w-lg rounded-lg shadow-lg overflow-y-auto mx-auto my-10 md:my-auto">
+              <motion.div 
+                className="bg-white p-6 md:p-7 lg:p-9 w-full max-w-md md:max-w-lg rounded-lg shadow-lg overflow-y-auto mx-auto my-10 md:my-auto"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
                 {submitSuccess ? (
-                  <div className="text-center py-6">
+                  <motion.div 
+                    className="text-center py-6"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -315,23 +391,32 @@ const BookingForm = () => {
                         />
                       </svg>
                     </div>
-                    <h2 className="text-xl font-bold mb-2">Thank You!</h2>
+                    <h2 className="text-xl text-custom-blue font-bold mb-2">Thank You!</h2>
                     <p className="text-gray-600 mb-4">
-                      Your booking request has been submitted successfully.
-                      We&apos;ll get back to you shortly.
+                      Your consultation request has been submitted successfully.
+                      Our digital team will get back to you shortly.
                     </p>
-                    <button
+                    <motion.button
                       onClick={handleReset}
                       className="bg-custom-blue text-custom-pink py-2 px-6 rounded hover:bg-gray-800 transition"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      Book Another Call
-                    </button>
-                  </div>
+                      Book Another Consultation
+                    </motion.button>
+                  </motion.div>
                 ) : (
-                  <>
-                    <h2 className="text-xl md:text-2xl font-bold mb-5 text-black">
-                      Book Your Consultation
-                    </h2>
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={isVisible ? "visible" : "hidden"}
+                  >
+                    <motion.h2 
+                      className="text-xl md:text-2xl font-bold mb-5 text-black"
+                      variants={itemVariants}
+                    >
+                      {/* Book Your Digital Consultation */}
+                    </motion.h2>
                     <form onSubmit={handleSubmit} className="space-y-5">
                       {submitError && (
                         <div
@@ -343,7 +428,10 @@ const BookingForm = () => {
                       )}
 
                       {/* Responsive grid - stacked on mobile, side-by-side on larger screens */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <motion.div 
+                        className="space-y-5 mb-7"
+                        variants={itemVariants}
+                      >
                         <div>
                           <label
                             htmlFor="firstName"
@@ -413,9 +501,9 @@ const BookingForm = () => {
                             </p>
                           )}
                         </div>
-                      </div>
+                      </motion.div>
 
-                      <div>
+                      <motion.div variants={itemVariants}>
                         <label
                           htmlFor="email"
                           className="block text-sm md:text-base font-medium mb-1.5 text-black"
@@ -437,7 +525,7 @@ const BookingForm = () => {
                           aria-describedby={
                             formErrors.email ? "email-error" : undefined
                           }
-                          placeholder="your.email@example.com"
+                          placeholder="email@example.com"
                         />
                         {formErrors.email && (
                           <p
@@ -447,9 +535,9 @@ const BookingForm = () => {
                             {formErrors.email}
                           </p>
                         )}
-                      </div>
+                      </motion.div>
 
-                      <div>
+                      <motion.div variants={itemVariants}>
                         <label
                           htmlFor="mobile"
                           className="block text-sm md:text-base font-medium mb-1.5 text-black"
@@ -481,9 +569,12 @@ const BookingForm = () => {
                             {formErrors.mobile}
                           </p>
                         )}
-                      </div>
+                      </motion.div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <motion.div 
+                        className="grid grid-cols-1 md:grid-cols-2 gap-5"
+                        variants={itemVariants}
+                      >
                         <div>
                           <label
                             htmlFor="company"
@@ -520,40 +611,48 @@ const BookingForm = () => {
 
                         <div>
                           <label
-                            htmlFor="jobTitle"
+                            htmlFor="serviceRequired"
                             className="block text-sm md:text-base font-medium mb-1.5 text-black"
                           >
-                            Job Title<span className="text-red-500">*</span>
+                            Service Required<span className="text-red-500">*</span>
                           </label>
-                          <input
-                            type="text"
-                            id="jobTitle"
-                            value={formData.jobTitle}
+                          <select
+                            id="serviceRequired"
+                            value={formData.serviceRequired}
                             onChange={handleChange}
                             className={`w-full p-2.5 border rounded text-black ${
-                              formErrors.jobTitle
+                              formErrors.serviceRequired
                                 ? "border-red-500"
                                 : "border-gray-400"
-                            } bg-white focus:outline-none focus:ring-1 focus:ring-black focus:border-transparent`}
+                            } bg-white focus:outline-none focus:ring-1 focus:ring-black focus:border-transparent appearance-none cursor-pointer bg-no-repeat bg-right bg-[url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>')] pr-10`}
                             required
-                            aria-invalid={!!formErrors.jobTitle}
+                            aria-invalid={!!formErrors.serviceRequired}
                             aria-describedby={
-                              formErrors.jobTitle ? "jobTitle-error" : undefined
+                              formErrors.serviceRequired ? "serviceRequired-error" : undefined
                             }
-                            placeholder="Your position"
-                          />
-                          {formErrors.jobTitle && (
+                          >
+                            <option value="">Select a service</option>
+                            <option value="web-design">Web Design</option>
+                            <option value="web-development">Web Development</option>
+                            <option value="ecommerce">E-commerce Solutions</option>
+                            <option value="seo">SEO & Content Marketing</option>
+                            <option value="branding">Branding & Identity</option>
+                            <option value="mobile-app">Mobile App Development</option>
+                            <option value="social-media">Social Media Marketing</option>
+                            <option value="other">Other</option>
+                          </select>
+                          {formErrors.serviceRequired && (
                             <p
-                              id="jobTitle-error"
+                              id="serviceRequired-error"
                               className="mt-1 text-red-500 text-xs"
                             >
-                              {formErrors.jobTitle}
+                              {formErrors.serviceRequired}
                             </p>
                           )}
                         </div>
-                      </div>
+                      </motion.div>
 
-                      <div>
+                      <motion.div variants={itemVariants}>
                         <label
                           htmlFor="comments"
                           className="block text-sm md:text-base font-medium mb-1.5 text-black"
@@ -566,15 +665,17 @@ const BookingForm = () => {
                           onChange={handleChange}
                           rows="3"
                           className="w-full p-2.5 border border-gray-400 rounded text-black bg-white focus:outline-none focus:ring-1 focus:ring-black focus:border-transparent"
-                          placeholder="Any specific questions or requirements?"
+                          placeholder="Tell us about your project or requirements"
                         ></textarea>
-                      </div>
+                      </motion.div>
 
-                      <div>
-                        <button
+                      <motion.div variants={itemVariants}>
+                        <motion.button
                           type="submit"
                           disabled={isSubmitting}
                           className="w-full bg-custom-blue text-custom-pink py-2.5 px-5 rounded hover:bg-gray-800 transition flex justify-center items-center text-base"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
                         >
                           {isSubmitting ? (
                             <>
@@ -601,14 +702,14 @@ const BookingForm = () => {
                               Processing...
                             </>
                           ) : (
-                            "Submit"
+                            "Book Your Consultation"
                           )}
-                        </button>
-                      </div>
+                        </motion.button>
+                      </motion.div>
                     </form>
-                  </>
+                  </motion.div>
                 )}
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

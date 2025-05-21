@@ -1,33 +1,66 @@
-// testHeader.js
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import Link from "next/link";
 
- const TestHeader = () => {
+const TestHeader = ({ onAnimationStart }) => {
+  // Create refs for the video elements
+  const mobileVideoRef = useRef(null);
+  const desktopVideoRef = useRef(null);
 
-    useEffect(() => {
-        const tl = gsap.timeline();
+  useEffect(() => {
+    // Hide everything initially
+    gsap.set('.subtext, .cta-button', { autoAlpha: 0 });
+    gsap.set([mobileVideoRef.current, desktopVideoRef.current], { autoAlpha: 0, scale: 0.9, x: 30 });
+
+    // Number of words in the title
+    const words = document.querySelectorAll('.word');
+    const wordCount = words.length;
+    
+    // Create a single timeline for all animations
+    const tl = gsap.timeline({
+      onStart: () => {
+        // Notify parent component that animation has started
+        if (onAnimationStart && typeof onAnimationStart === 'function') {
+          onAnimationStart();
+        }
+      }
+    });
+    
+    // Animate title words one by one - slowed down
+    words.forEach((word, index) => {
+      tl.fromTo(word, 
+        { autoAlpha: 0, y: 50 },
+        { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out" }, 
+        index * 0.2
+      );
       
-        // Animate each word in the heading
-        tl.from('.word', {
-          opacity: 0,
-          y: 50,
-          stagger: 0.2,
-          duration: 1,
-          ease: 'power3.out',
-        });
-      
-        // Animate the paragraph and button together after heading
-        tl.from(['.subtext', '.cta-button'], {
-          opacity: 0,
-          y: 30,
-          duration: 1,
-          ease: 'power3.out',
-          stagger: 0.1,
-        },); 
-      }, []);
-      
+      // After the last word animation starts, immediately queue up the next elements
+      if (index === wordCount - 1) {
+        // Add animations for paragraph and button at the same time, immediately after the last word starts
+        tl.to(['.subtext', '.cta-button'], { 
+          autoAlpha: 1, 
+          duration: 0.8,
+          ease: "power2.out"
+        }, "-=0.4");
+        
+        // Add airplane animation after paragraph and button have finished
+        tl.to([mobileVideoRef.current, desktopVideoRef.current], { 
+          autoAlpha: 1, 
+          scale: 1, 
+          x: 0, 
+          delay: -0.4,
+          duration: 0.9,
+          ease: "power2.out" 
+        }, "+=0.1");
+      }
+    });
+    
+    return () => {
+      tl.kill();
+    };
+  }, [onAnimationStart]);
+
   return (
     <section
       className="relative h-screen w-full flex items-center justify-center"
@@ -36,41 +69,40 @@ import Link from "next/link";
       data-button-bg="var(--custom-blue)"
       data-button-text="white"
       data-navbar-text="var(--custom-blue)"
+      id="/"
     >
       <div className="w-full overflow-hidden mt-28">
         <div className="container mx-auto px-4 py-16 md:py-24 relative">
           <div className="flex flex-col items-center text-center">
-            <div className=" w-full 2xl:w-full lg:w-3/4 z-10">
-            <h1 className="text-6xl 2xl:text-[13rem] lg:text-9xl md:text-6xl font-medium lg:font-medium leading-none mb-6 text-custom-blue">
-  <span className="word">We</span> <span className="word">turn</span> <span className="word">dreams</span> <span className="word">into</span><br />
-  <span className="word">Digital</span> <span className="word">Reality</span>
-</h1>
-
-<p className="subtext text-md mb-8 text-custom-blue max-w-xl mx-auto">
-  Looking to build your next big idea? We craft custom software to help startups and businesses grow with style and speed.
-</p>
+            <div className="w-full 2xl:w-full lg:w-3/4 z-10">
+              <h1 className="text-6xl 2xl:text-[13rem] lg:text-9xl md:text-6xl font-medium lg:font-medium leading-none mb-6 text-custom-blue">
+                <span className="word">We</span> <span className="word">turn</span> <span className="word">dreams</span> <span className="word">into</span><br />
+                <span className="word">Digital</span> <span className="word">Reality</span>
+              </h1>
+              <p className="subtext text-md mb-8 text-custom-blue max-w-xl mx-auto">
+                Looking to build your next big idea? We craft custom software to help startups and businesses grow with style and speed.
+              </p>
 
               <Link href="/booking">
-  <button 
-    className="cta-button bg-custom-blue text-custom-pink hover:bg-[#2C2C75] font-medium py-3 px-6 rounded-full inline-flex items-center"
-  >
-    Contact Us
-    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-    </svg>
-  </button>
-</Link>
-
+                <button
+                  className="cta-button bg-custom-blue text-custom-pink hover:bg-[#2C2C75] font-medium py-3 px-6 rounded-full inline-flex items-center"
+                >
+                  Contact Us
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </Link>
             </div>
 
             {/* Video for small screens (below md breakpoint) */}
-            <div className="w-full  block md:hidden">
+            <div className="w-full block md:hidden">
               <video
-                className="w-full h-auto object-contain "
+                ref={mobileVideoRef}
+                className="w-full h-auto object-contain"
                 style={{
                   filter:
                     "brightness(0) saturate(100%) invert(50%) sepia(40%) saturate(900%) hue-rotate(200deg) brightness(80%) contrast(100%)",
-                  opacity: 1,
                 }}
                 autoPlay
                 muted
@@ -86,11 +118,11 @@ import Link from "next/link";
             <div className="absolute right-0 mt-36 2xl:mt-60 top-24 w-1/2 h-full hidden md:block">
               <div className="relative w-full h-full flex items-center justify-end">
                 <video
+                  ref={desktopVideoRef}
                   className="w-full h-auto object-contain 2xl:scale-125"
                   style={{
                     filter:
                       "brightness(0) saturate(100%) invert(50%) sepia(40%) saturate(900%) hue-rotate(200deg) brightness(80%) contrast(100%)",
-                    opacity: 1,
                   }}
                   autoPlay
                   muted
