@@ -16,6 +16,7 @@ import TestHeader from "../components/TestHeader";
 import Booking from "../Components/Booking";
 import Image from "next/image";
 import loadiungLogo from "../assets/Frame.svg";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   // Add loading state
@@ -23,11 +24,40 @@ export default function Page() {
   const [contentReady, setContentReady] = useState(false);
   const pageContentRef = useRef(null);
   const loadingScreenRef = useRef(null);
+  const router = useRouter();
 
   // This function will be called by TestHeader when its animations start
   const handleContentAnimationStart = () => {
     setContentReady(true);
   };
+
+  // Add this useEffect to handle page refresh on back navigation
+  useEffect(() => {
+    // Store the current path in sessionStorage when the component mounts
+    const currentPath = window.location.pathname;
+    const previousPath = sessionStorage.getItem('previousPath');
+    
+    // If we've navigated back from a different path (e.g., booking), refresh the page
+    if (previousPath && previousPath !== currentPath) {
+      sessionStorage.setItem('previousPath', currentPath);
+      window.location.reload();
+    } else {
+      sessionStorage.setItem('previousPath', currentPath);
+    }
+
+    // Listen for popstate events (back/forward navigation)
+    const handlePopState = () => {
+      // When user navigates back, reload the page
+      window.location.reload();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    // Clean up event listener
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
   useEffect(() => {
     // Register GSAP plugins inside useEffect to ensure it only runs client-side

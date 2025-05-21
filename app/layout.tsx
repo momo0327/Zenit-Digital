@@ -1,10 +1,17 @@
+"use client";
+
 import { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import { CursorProvider } from "../utils/CursorContext";
 import ClientCursorWrapper from "../Components/ClientCursorWrapper";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
+// Metadata needs to be in a separate file for Next.js App Router
+// Create a separate file called metadata.ts with this content:
+/*
 export const metadata: Metadata = {
   title: "Zenit Digital",
   description: "Landing page for Zenit Digital",
@@ -12,12 +19,30 @@ export const metadata: Metadata = {
     icon: "/favicon.svg", // This should be in `public/`
   },
 };
+*/
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Track navigation paths in sessionStorage
+    const previousPath = sessionStorage.getItem('previousPath');
+    const currentPath = pathname;
+    
+    // Check if we're coming back from a specific path like booking
+    if (previousPath && previousPath.includes('/booking') && currentPath === '/') {
+      // If coming back from booking page to home, reload
+      window.location.reload();
+    }
+    
+    // Store current path for next navigation
+    sessionStorage.setItem('previousPath', currentPath);
+  }, [pathname]);
+
   return (
     <html lang="en">
       <head>
