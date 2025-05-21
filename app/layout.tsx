@@ -1,6 +1,5 @@
 "use client";
 
-import { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { CursorProvider } from "../utils/CursorContext";
@@ -8,6 +7,9 @@ import ClientCursorWrapper from "../Components/ClientCursorWrapper";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import NavbarWrapper from "../Components/NavbarWrapper";
+import { Fonts } from "../Components/Fonts";
+import EnvironmentInfo from "../Components/EnvironmentInfo";
+import GsapInitializer from "../Components/GsapInitializer";
 
 // Metadata needs to be in a separate file for Next.js App Router
 // Create a separate file called metadata.ts with this content:
@@ -55,6 +57,9 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <Fonts />
+        <EnvironmentInfo />
+        <GsapInitializer />
         <CursorProvider>
           <NavbarWrapper />
           {children}
