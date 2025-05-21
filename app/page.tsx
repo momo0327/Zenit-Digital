@@ -2,15 +2,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import AboutSection from "../components/AboutSection";
-import StackedCardsContainer from "../components/SectionsContainer";
-import Test from "../components/test";
-import Footer from "../components/Footer";
-import TextScroll from "../components/TextScroll";
+import AboutSection from "../Components/AboutSection";
+import StackedCardsContainer from "../Components/SectionsContainer";
+import Test from "../Components/test";
+import Footer from "../Components/Footer";
+import TextScroll from "../Components/TextScroll";
 import Cookiebot from "../Components/Cookiebot";
 
-import TestHeader from "../components/TestHeader";
-// import Home from "../components/Home";
+import TestHeader from "../Components/TestHeader";
+// import Home from "../Components/Home";
 import Image from "next/image";
 import loadiungLogo from "../assets/Frame.svg";
 import { useRouter } from "next/navigation";
@@ -21,7 +21,6 @@ export default function Page() {
   const [contentReady, setContentReady] = useState(false);
   const pageContentRef = useRef(null);
   const loadingScreenRef = useRef(null);
-  const router = useRouter();
 
   // This function will be called by TestHeader when its animations start
   const handleContentAnimationStart = () => {
