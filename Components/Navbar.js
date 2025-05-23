@@ -6,6 +6,7 @@ import Image from "next/image";
 import logo from "../assets/logo.png";
 import logo2 from "../assets/logo2.png";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -85,6 +86,7 @@ const Navbar = () => {
   const menuOverlayRef = useRef(null);
   const menuContentRef = useRef(null);
   const contactInfoRef = useRef(null);
+  const router = useRouter();
 
   const [navStyles, setNavStyles] = useState({
     bgColor: "white",
@@ -95,11 +97,28 @@ const Navbar = () => {
     menuTextColor: "var(--custom-blue)",
   });
 
-  // Simple direct scroll function
-  const navigateTo = (sectionId) => {
-    console.log(`Navigating to: ${sectionId}`);
+  // Enhanced navigation function to handle both scrolling and routing
+  const navigateTo = (item) => {
+    console.log(`Navigating to: ${item}`);
 
-    // Close menu first if open, then navigate
+    // Handle Contact differently - navigate to booking page
+    if (item.toLowerCase() === "contact") {
+      if (isMenuOpen) {
+        toggleMenu();
+        // Use a timeout to allow the menu to close before navigating
+        setTimeout(() => {
+          router.push("/booking");
+        }, 800);
+      } else {
+        router.push("/booking");
+      }
+      return;
+    }
+
+    // For other items, use scroll navigation
+    const sectionId =
+      item.toLowerCase() === "work" ? "work" : item.toLowerCase();
+
     if (isMenuOpen) {
       toggleMenu();
       // Use a timeout to allow the menu to close before scrolling
@@ -515,7 +534,7 @@ const Navbar = () => {
                     <li
                       key={index}
                       className="cursor-pointer transition-colors duration-300 hover:opacity-70"
-                      onClick={() => navigateTo(item.toLowerCase())}
+                      onClick={() => navigateTo(item)}
                     >
                       <TextReveal
                         text={item}
@@ -535,7 +554,14 @@ const Navbar = () => {
                 <div ref={contactInfoRef} className="mt-auto mb-12 opacity-0">
                   <div className="text-lg mb-3">hello@zenitdigital.se</div>
                   <div className="text-lg mb-3">08-31 70 00</div>
-                  <div className="text-lg">LinkedIn</div>
+                  <Link
+                    href="https://www.linkedin.com/company/zenit-digital-studios"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-lg hover:opacity-70 transition-opacity duration-300"
+                  >
+                    LinkedIn ↗
+                  </Link>
                 </div>
               </>
             )}
