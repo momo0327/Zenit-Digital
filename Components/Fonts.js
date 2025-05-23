@@ -4,8 +4,21 @@ import { useEffect } from "react";
 
 export function Fonts() {
   useEffect(() => {
+    // Preload critical fonts immediately
+    const preloadFonts = ["/fonts/GeistVF.woff", "/fonts/GeistMonoVF.woff"];
+
+    preloadFonts.forEach((fontUrl) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "font";
+      link.type = "font/woff";
+      link.href = fontUrl;
+      link.crossOrigin = "anonymous";
+      document.head.appendChild(link);
+    });
+
     // This will create a <style> tag in the document <head> with the font definitions
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       @font-face {
         font-family: 'GeistVF';
@@ -26,11 +39,21 @@ export function Fonts() {
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap");
     `;
     document.head.appendChild(style);
-    
+
     return () => {
-      document.head.removeChild(style);
+      // Clean up preload links
+      preloadFonts.forEach((fontUrl) => {
+        const preloadLink = document.querySelector(`link[href="${fontUrl}"]`);
+        if (preloadLink) {
+          document.head.removeChild(preloadLink);
+        }
+      });
+
+      if (style.parentNode) {
+        document.head.removeChild(style);
+      }
     };
   }, []);
-  
+
   return null;
 }

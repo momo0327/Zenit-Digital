@@ -7,7 +7,9 @@
     "build": "next build",
     "vercel-build": "NODE_OPTIONS='--no-warnings' next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "chmod +x scripts/deploy.sh && ./scripts/deploy.sh",
+    "clear-cache": "rm -rf .next && npm cache clean --force"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.5",

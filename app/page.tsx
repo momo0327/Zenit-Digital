@@ -178,6 +178,8 @@ export default function Page() {
             width="40"
             height="40"
             className="loading-logo"
+            priority
+            style={{ width: "auto", height: "40px" }}
           />
         </div>
       )}
