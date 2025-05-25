@@ -387,7 +387,7 @@ const Navbar = () => {
         <div className="flex flex-1 justify-center md:justify-start items-center gap-2 z-50">
           {/* Alternative logo images that switch based on the navbar color */}
 
-      <div className="relative w-4 h-4 md:w-5 md:h-5">
+          <div className="relative w-4 h-4 md:w-5 md:h-5">
             {/* First logo (default/dark version) - visible when navbarTextColor is dark */}
             <Image
               src={logo2}
