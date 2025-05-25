@@ -11,7 +11,9 @@ const AboutSection = () => {
       const aboutText = document.querySelector(".about-text");
       const section = document.querySelector(".about-section");
       const scrollIndicator = document.querySelector(".scroll-indicator");
-      const circle = document.querySelector(".scroll-indicator circle:nth-child(2)");
+      const circle = document.querySelector(
+        ".scroll-indicator circle:nth-child(2)"
+      );
 
       // Wrap each letter in a span
       const textContent = aboutText.textContent;
@@ -41,12 +43,14 @@ const AboutSection = () => {
             const highlightIndex = Math.floor(progress * totalLetters);
 
             letters.forEach((letter, index) => {
-              letter.style.color = index <= highlightIndex ? "var(--custom-pink)" : "white";
+              letter.style.color =
+                index <= highlightIndex ? "var(--custom-pink)" : "white";
             });
 
             // **Sync Circle Progress Exactly with Text**
             const syncedProgress = highlightIndex / totalLetters;
-            circle.style.strokeDashoffset = maxOffset - (syncedProgress * maxOffset);
+            circle.style.strokeDashoffset =
+              maxOffset - syncedProgress * maxOffset;
           },
         },
       });
@@ -69,7 +73,8 @@ const AboutSection = () => {
       {/* Scroll Indicator */}
       <div
         // Add this ID for navigation
-        className="scroll-indicator fixed bottom-5 right-5  w-16 h-16 flex justify-center items-center z-10 opacity-0 transition-opacity duration-300 ">
+        className="scroll-indicator fixed bottom-5 right-5  w-16 h-16 flex justify-center items-center z-10 opacity-0 transition-opacity duration-300 "
+      >
         <svg className="rotate-[-90deg]" width="64" height="64">
           <circle
             className="stroke-custom-blue"
@@ -94,7 +99,7 @@ const AboutSection = () => {
       </div>
 
       <section
-       id="about"
+        id="about"
         className="about-section h-screen flex items-center justify-center "
         data-bg="var(--custom-blue)"
         data-text="white"
@@ -104,7 +109,8 @@ const AboutSection = () => {
       >
         <div className="container 2xl:max-w-[90%] mx-auto px-4 2xl:px-0 text-center">
           <h2 className="about-text 2xl:text-[10rem]  text-5xl text-white md:text-8xl lg:text-8xl font-normal text-left ">
-          We create elevating digital solutions that empower startups through innovative software and purposeful design.          
+            We create elevating digital solutions that empower startups through
+            innovative software and purposeful design.
           </h2>
         </div>
       </section>

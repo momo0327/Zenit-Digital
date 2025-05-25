@@ -10,52 +10,65 @@ const TestHeader = ({ onAnimationStart }) => {
 
   useEffect(() => {
     // Hide everything initially
-    gsap.set('.subtext, .cta-button', { autoAlpha: 0 });
-    gsap.set([mobileVideoRef.current, desktopVideoRef.current], { autoAlpha: 0, scale: 0.9, x: 30 });
+    gsap.set(".subtext, .cta-button", { autoAlpha: 0 });
+    gsap.set([mobileVideoRef.current, desktopVideoRef.current], {
+      autoAlpha: 0,
+      scale: 0.9,
+      x: 30,
+    });
 
     // Number of words in the title
-    const words = document.querySelectorAll('.word');
+    const words = document.querySelectorAll(".word");
     const wordCount = words.length;
-    
+
     // Create a single timeline for all animations
     const tl = gsap.timeline({
       onStart: () => {
         // Notify parent component that animation has started
-        if (onAnimationStart && typeof onAnimationStart === 'function') {
+        if (onAnimationStart && typeof onAnimationStart === "function") {
           onAnimationStart();
         }
-      }
+      },
     });
-    
+
     // Animate title words one by one - slowed down
     words.forEach((word, index) => {
-      tl.fromTo(word, 
+      tl.fromTo(
+        word,
         { autoAlpha: 0, y: 50 },
-        { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out" }, 
+        { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out" },
         index * 0.2
       );
-      
+
       // After the last word animation starts, immediately queue up the next elements
       if (index === wordCount - 1) {
         // Add animations for paragraph and button at the same time, immediately after the last word starts
-        tl.to(['.subtext', '.cta-button'], { 
-          autoAlpha: 1, 
-          duration: 0.8,
-          ease: "power2.out"
-        }, "-=0.4");
-        
+        tl.to(
+          [".subtext", ".cta-button"],
+          {
+            autoAlpha: 1,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          "-=0.4"
+        );
+
         // Add airplane animation after paragraph and button have finished
-        tl.to([mobileVideoRef.current, desktopVideoRef.current], { 
-          autoAlpha: 1, 
-          scale: 1, 
-          x: 0, 
-          delay: -0.4,
-          duration: 0.9,
-          ease: "power2.out" 
-        }, "+=0.1");
+        tl.to(
+          [mobileVideoRef.current, desktopVideoRef.current],
+          {
+            autoAlpha: 1,
+            scale: 1,
+            x: 0,
+            delay: -0.4,
+            duration: 0.9,
+            ease: "power2.out",
+          },
+          "+=0.1"
+        );
       }
     });
-    
+
     return () => {
       tl.kill();
     };
@@ -72,24 +85,38 @@ const TestHeader = ({ onAnimationStart }) => {
       id="/"
     >
       <div className="w-full overflow-hidden mt-10 md:mt-10 lg:mt-10">
-      <div className="container mx-auto px-4 py-16 md:py-24 relative">
+        <div className="container mx-auto px-4 py-16 md:py-24 relative">
           <div className="flex flex-col items-center text-center">
             <div className="w-full 2xl:w-full lg:w-3/4 z-10">
-            <h1 className="text-6xl 2xl:text-[13rem] lg:text-9xl md:text-6xl font-medium  lg:font-medium lg:leading-none leading-none mb-6 text-custom-blue">                
-              <span className="word">We</span> <span className="word">turn</span> <span className="word">dreams</span> <span className="word">into</span><br />
-                <span className="word">Digital</span> <span className="word">Reality</span>
+              <h1 className="text-6xl 2xl:text-[13rem] lg:text-9xl md:text-6xl font-medium  lg:font-medium lg:leading-none leading-none mb-6 text-custom-blue">
+                <span className="word">We</span>{" "}
+                <span className="word">turn</span>{" "}
+                <span className="word">dreams</span>{" "}
+                <span className="word">into</span>
+                <br />
+                <span className="word">Digital</span>{" "}
+                <span className="word">Reality</span>
               </h1>
               <p className="subtext text-lg lg:text-xl lg:font-light mb-8 text-custom-blue max-w-xl mx-auto">
-                Looking to build your next big idea? We craft custom software to help startups and businesses grow with style and speed.
+                Looking to build your next big idea? We craft custom software to
+                help startups and businesses grow with style and speed.
               </p>
 
               <Link href="/booking">
-                <button
-                  className="cta-button bg-custom-blue text-custom-pink hover:bg-[#2C2C75] font-medium py-3 px-6 rounded-full inline-flex items-center"
-                >
+                <button className="cta-button bg-custom-blue text-custom-pink hover:bg-[#2C2C75] font-medium py-3 px-6 rounded-full inline-flex items-center">
                   Contact Us
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  <svg
+                    className="w-4 h-4 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    ></path>
                   </svg>
                 </button>
               </Link>

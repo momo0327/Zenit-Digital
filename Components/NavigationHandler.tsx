@@ -11,14 +11,17 @@ export default function NavigationHandler() {
     const previousPath = sessionStorage.getItem("previousPath");
     const currentPath = pathname || "/";
 
-    // Check if we're coming back from a specific path like booking
+    // Only refresh when coming back from booking to home, not when going to booking
     if (
       previousPath &&
       previousPath.includes("/booking") &&
       currentPath === "/"
     ) {
-      // If coming back from booking page to home, reload
-      window.location.reload();
+      // If coming back from booking page to home, reload after a small delay
+      // to ensure the navigation is complete
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     }
 
     // Store current path for next navigation

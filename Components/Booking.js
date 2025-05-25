@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const BookingForm = () => {
   // Animation state
   const [isVisible, setIsVisible] = useState(false);
-  
+
   // Set animation visible on component mount
   useEffect(() => {
     setIsVisible(true);
@@ -131,22 +131,22 @@ const BookingForm = () => {
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
+        delayChildren: 0.2,
+      },
+    },
   };
-  
+
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
-      transition: { duration: 0.4 }
-    }
+      transition: { duration: 0.4 },
+    },
   };
 
   return (
@@ -159,19 +159,19 @@ const BookingForm = () => {
       data-navbar-text="black"
     >
       {/* Full-width purple background for mobile */}
-      <div className="w-full py-12 px-6 md:hidden">
-        <motion.div 
+      <div className="w-full py-12 px-6 md:hidden bg-[#A494F3]">
+        <motion.div
           className="max-w-lg mx-auto text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl font-sm text-custom-blue mb-8 pt-8">
+          <h1 className="text-4xl font-sm text-white mb-8 pt-8">
             Book a<br />
-            <span >Digital consultation</span>
+            <span>Digital consultation</span>
           </h1>
 
-          <motion.div 
+          <motion.div
             className="space-y-6 text-left mt-12"
             variants={containerVariants}
             initial="hidden"
@@ -192,7 +192,7 @@ const BookingForm = () => {
                   <line x1="12" y1="17" x2="12" y2="21"></line>
                 </svg>
               </div>
-              <p className="text-custom-blue text-lg font-medium">
+              <p className="text-white text-lg font-medium">
                 Transform your digital presence with our expert team
               </p>
             </motion.div>
@@ -213,13 +213,13 @@ const BookingForm = () => {
                   <circle cx="11" cy="11" r="2"></circle>
                 </svg>
               </div>
-              <p className="text-custom-blue text-lg font-medium">
+              <p className="text-white text-lg font-medium">
                 Custom web design and development solutions
               </p>
             </motion.div>
 
             <motion.div className="flex items-start" variants={itemVariants}>
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black mr-4 mt-1 flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-custom-blue mr-4 mt-1 flex-shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -235,7 +235,7 @@ const BookingForm = () => {
                   <line x1="14" y1="1" x2="14" y2="4"></line>
                 </svg>
               </div>
-              <p className="text-custom-blue text-lg font-medium">
+              <p className="text-white text-lg font-medium">
                 Digital marketing that delivers measurable results
               </p>
             </motion.div>
@@ -246,7 +246,7 @@ const BookingForm = () => {
       {/* Main desktop layout */}
       <div className="flex flex-col md:flex-row w-full min-h-screen md:h-screen">
         {/* Left content area - hidden on mobile */}
-        <motion.div 
+        <motion.div
           className="w-full md:w-1/2 p-4 md:p-8 lg:p-12 flex-col justify-center bg-white text-black hidden md:flex"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -50 }}
@@ -254,13 +254,14 @@ const BookingForm = () => {
         >
           <div className="mb-4 md:mb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-7xl font-md">
-              Book your<br />
-              digital <span >consultation</span>
+              Book your
+              <br />
+              digital <span>consultation</span>
             </h1>
           </div>
 
           {/* Benefits list - only visible on desktop */}
-          <motion.div 
+          <motion.div
             className="space-y-3 md:space-y-4"
             variants={containerVariants}
             initial="hidden"
@@ -341,35 +342,44 @@ const BookingForm = () => {
         <div className="w-full md:w-1/2 bg-[#A494F3] md:h-screen">
           <div className="w-full h-full relative overflow-hidden">
             {/* Abstract geometric shapes - visible on mobile and desktop */}
-            <motion.div 
+            <motion.div
               className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 rotate-45 -top-20 -right-20 opacity-50"
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: isVisible ? 0.5 : 0, scale: isVisible ? 1 : 0.8 }}
+              animate={{
+                opacity: isVisible ? 0.5 : 0,
+                scale: isVisible ? 1 : 0.8,
+              }}
               transition={{ duration: 0.7, delay: 0.2 }}
             ></motion.div>
-            <motion.div 
+            <motion.div
               className="absolute w-36 md:w-48 h-36 md:h-48 bg-purple-300 -rotate-12 bottom-40 -left-20 opacity-50"
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: isVisible ? 0.5 : 0, scale: isVisible ? 1 : 0.8 }}
+              animate={{
+                opacity: isVisible ? 0.5 : 0,
+                scale: isVisible ? 1 : 0.8,
+              }}
               transition={{ duration: 0.7, delay: 0.4 }}
             ></motion.div>
-            <motion.div 
+            <motion.div
               className="absolute w-60 md:w-72 h-60 md:h-72 bg-purple-300 rotate-12 -bottom-40 -right-20 opacity-50"
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: isVisible ? 0.5 : 0, scale: isVisible ? 1 : 0.8 }}
+              animate={{
+                opacity: isVisible ? 0.5 : 0,
+                scale: isVisible ? 1 : 0.8,
+              }}
               transition={{ duration: 0.7, delay: 0.6 }}
             ></motion.div>
 
             {/* Form container */}
             <div className="relative w-full md:h-full flex items-center justify-center p-4 md:px-6 md:py-4 mt-8">
-              <motion.div 
+              <motion.div
                 className="bg-white p-6 md:p-7 lg:p-9 w-full max-w-md md:max-w-lg rounded-lg shadow-lg overflow-y-auto mx-auto my-10 md:my-auto"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
                 {submitSuccess ? (
-                  <motion.div 
+                  <motion.div
                     className="text-center py-6"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -391,7 +401,9 @@ const BookingForm = () => {
                         />
                       </svg>
                     </div>
-                    <h2 className="text-xl text-custom-blue font-bold mb-2">Thank You!</h2>
+                    <h2 className="text-xl text-custom-blue font-bold mb-2">
+                      Thank You!
+                    </h2>
                     <p className="text-gray-600 mb-4">
                       Your consultation request has been submitted successfully.
                       Our digital team will get back to you shortly.
@@ -411,7 +423,7 @@ const BookingForm = () => {
                     initial="hidden"
                     animate={isVisible ? "visible" : "hidden"}
                   >
-                    <motion.h2 
+                    <motion.h2
                       className="text-xl md:text-2xl font-bold mb-5 text-black"
                       variants={itemVariants}
                     >
@@ -428,7 +440,7 @@ const BookingForm = () => {
                       )}
 
                       {/* Responsive grid - stacked on mobile, side-by-side on larger screens */}
-                      <motion.div 
+                      <motion.div
                         className="space-y-5 mb-7"
                         variants={itemVariants}
                       >
@@ -571,7 +583,7 @@ const BookingForm = () => {
                         )}
                       </motion.div>
 
-                      <motion.div 
+                      <motion.div
                         className="grid grid-cols-1 md:grid-cols-2 gap-5"
                         variants={itemVariants}
                       >
@@ -614,7 +626,8 @@ const BookingForm = () => {
                             htmlFor="serviceRequired"
                             className="block text-sm md:text-base font-medium mb-1.5 text-black"
                           >
-                            Service Required<span className="text-red-500">*</span>
+                            Service Required
+                            <span className="text-red-500">*</span>
                           </label>
                           <select
                             id="serviceRequired"
@@ -628,17 +641,29 @@ const BookingForm = () => {
                             required
                             aria-invalid={!!formErrors.serviceRequired}
                             aria-describedby={
-                              formErrors.serviceRequired ? "serviceRequired-error" : undefined
+                              formErrors.serviceRequired
+                                ? "serviceRequired-error"
+                                : undefined
                             }
                           >
                             <option value="">Select a service</option>
                             <option value="web-design">Web Design</option>
-                            <option value="web-development">Web Development</option>
-                            <option value="ecommerce">E-commerce Solutions</option>
+                            <option value="web-development">
+                              Web Development
+                            </option>
+                            <option value="ecommerce">
+                              E-commerce Solutions
+                            </option>
                             <option value="seo">SEO & Content Marketing</option>
-                            <option value="branding">Branding & Identity</option>
-                            <option value="mobile-app">Mobile App Development</option>
-                            <option value="social-media">Social Media Marketing</option>
+                            <option value="branding">
+                              Branding & Identity
+                            </option>
+                            <option value="mobile-app">
+                              Mobile App Development
+                            </option>
+                            <option value="social-media">
+                              Social Media Marketing
+                            </option>
                             <option value="other">Other</option>
                           </select>
                           {formErrors.serviceRequired && (

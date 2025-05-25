@@ -29,20 +29,19 @@ export default function Page() {
   useEffect(() => {
     // Store the current path in sessionStorage when the component mounts
     const currentPath = window.location.pathname;
-    const previousPath = sessionStorage.getItem("previousPath");
 
-    // If we've navigated back from a different path (e.g., booking), refresh the page
-    if (previousPath && previousPath !== currentPath) {
-      sessionStorage.setItem("previousPath", currentPath);
-      window.location.reload();
-    } else {
-      sessionStorage.setItem("previousPath", currentPath);
-    }
+    // Store current path for reference
+    sessionStorage.setItem("previousPath", currentPath);
 
     // Listen for popstate events (back/forward navigation)
     const handlePopState = () => {
-      // When user navigates back, reload the page
-      window.location.reload();
+      // Only reload if we're on the home page and coming back from somewhere else
+      if (window.location.pathname === "/") {
+        const timer = setTimeout(() => {
+          window.location.reload();
+        }, 100);
+        return () => clearTimeout(timer);
+      }
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -87,11 +86,13 @@ export default function Page() {
       "section:not(.selected-works-section):not(.services-section)"
     );
 
+    const scrollTriggers: ScrollTrigger[] = [];
+
     sections.forEach((section, index) => {
       const bgColor = section.getAttribute("data-bg") || "white";
       const textColor = section.getAttribute("data-text") || "black";
 
-      ScrollTrigger.create({
+      const trigger = ScrollTrigger.create({
         trigger: section,
         start: "top center",
         end: "bottom center",
@@ -109,6 +110,8 @@ export default function Page() {
           document.body.style.color = prevTextColor;
         },
       });
+
+      scrollTriggers.push(trigger);
     });
 
     // Event listener for document load complete (fallback)
@@ -130,11 +133,17 @@ export default function Page() {
 
     window.addEventListener("load", handleLoad);
 
-    // Watch for contentReady state to change
+    // Cleanup function
     return () => {
       window.removeEventListener("load", handleLoad);
+      // Kill all ScrollTriggers we created
+      scrollTriggers.forEach((trigger) => {
+        if (trigger) trigger.kill();
+      });
+      // Kill the timeline if it exists
+      if (tl) tl.kill();
     };
-  }, []);
+  }, [contentReady]);
 
   // When contentReady changes to true, hide the loading screen
   useEffect(() => {
@@ -172,7 +181,7 @@ export default function Page() {
             This guarantees it will display immediately without any external requests
           */}
           <Image
-            src='/favicon2.png'
+            src="/favicon2.png"
             alt="Frame Logo"
             width="40"
             height="40"
