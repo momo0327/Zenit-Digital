@@ -141,7 +141,7 @@ const SelectedWorks = () => {
                     <h2 className="text-md md:text-xl lg:text-xl font-light text-custom-pink">
                       {project.description}
                     </h2>
-                    <h3 className="text-2xl md:text-3xl font-bold text-custom-pink">
+                    <h3 className="text-2xl md:text-3xl font-medium text-custom-pink">
                       {project.title}
                     </h3>
                   </div>

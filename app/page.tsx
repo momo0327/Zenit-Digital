@@ -12,7 +12,6 @@ import Cookiebot from "../Components/Cookiebot";
 import TestHeader from "../Components/TestHeader";
 // import Home from "../Components/Home";
 import Image from "next/image";
-import loadiungLogo from "../assets/Frame.svg";
 
 export default function Page() {
   // Add loading state
@@ -173,13 +172,13 @@ export default function Page() {
             This guarantees it will display immediately without any external requests
           */}
           <Image
-            src={loadiungLogo}
+            src='/favicon2.png'
             alt="Frame Logo"
             width="40"
             height="40"
             className="loading-logo"
             priority
-            style={{ width: "auto", height: "40px" }}
+            style={{ width: "auto", height: "32px" }}
           />
         </div>
       )}

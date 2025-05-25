@@ -387,7 +387,7 @@ const Navbar = () => {
         <div className="flex flex-1 justify-center md:justify-start items-center gap-2 z-50">
           {/* Alternative logo images that switch based on the navbar color */}
 
-          <div className="relative w-5 h-5">
+      <div className="relative w-4 h-4 md:w-5 md:h-5">
             {/* First logo (default/dark version) - visible when navbarTextColor is dark */}
             <Image
               src={logo2}
@@ -553,7 +553,7 @@ const Navbar = () => {
                 {/* Contact Info - Will be animated after menu items */}
                 <div ref={contactInfoRef} className="mt-auto mb-12 opacity-0">
                   <div className="text-lg mb-3">hello@zenitdigital.se</div>
-                  <div className="text-lg mb-3">08-31 70 00</div>
+                  <div className="text-lg mb-3">072-336 43 84</div>
                   <Link
                     href="https://www.linkedin.com/company/zenit-digital-studios"
                     target="_blank"

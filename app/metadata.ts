@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     title: "Zenit Digital",
     description: "Landing page for Zenit Digital",
     icons: {
-        icon: "/favicon.svg",
+        icon: "/favicon2.png",
     },
     robots: "index, follow",
     openGraph: {
