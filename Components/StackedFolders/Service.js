@@ -61,19 +61,24 @@ export default function Service() {
           <div className="mt-12 flex flex-col">
             {/* Web Development Card */}
             <div
-              className="sticky top-0 border-t border-t-gray-800"
-              style={{ top: "calc(20vh + 0em)", marginBottom: "14em" }}
-            >
-              <div className="flex grid-cols-12 items-center gap-x-space-xs text-left md:grid md:gap-x-fluid">
-                <span className="col-span-2 text-2xl hidden md:block lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">
-                  01
-                </span>
-                <div className="col-span-6 col-start-6 flex flex-col ">
-                  <h3 className="py-8 text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0   md:text-6xl font-bold lg:font-medium  text-custom-green">
+            className="sticky top-0 border-t border-t-gray-800"
+            style={{ top: "calc(20vh + 0em)", marginBottom: "14em" }}
+          >
+            <div className="flex grid-cols-12 items-center gap-x-space-xs text-left md:grid md:gap-x-fluid">
+              <span className="col-span-2 text-2xl hidden md:block lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">
+                01
+              </span>
+              <div className="col-span-6 col-start-6 flex flex-col ">
+                <div className="flex items-center justify-between py-8">
+                  <h3 className="text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0 md:text-6xl font-bold lg:font-medium text-custom-green">
                     Web Development
                   </h3>
-                  {/* Technology containers placed directly under the title */}
+                  {/* Globe Icon */}
+                  <svg className="w-8 h-8 lg:w-12 lg:h-12 text-gray-400 hidden md:block mr-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
                 </div>
+              </div>
               </div>
               <div className="grid-gap flex min-h-[30vh] flex-col pt-space-3xs md:grid md:min-h-[40vh] md:grid-cols-12">
                 <div className="col-span-7 col-start-6 flex flex-col gap-y-space-sm pt-space-sm">
@@ -139,11 +144,16 @@ export default function Service() {
                   02
                 </span>
                 <div className="col-span-6 col-start-6 flex flex-col">
-                  <h3 className="py-8 text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0 md:text-6xl font-bold lg:font-medium  text-custom-green">
-                    Mobile App Development
-                  </h3>
-                  {/* Technology containers placed directly under the title */}
-                </div>
+                  <div className="flex items-center justify-between py-8">
+                    <h3 className="text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0 md:text-6xl font-bold lg:font-medium text-custom-green">
+                      Mobile App Development
+                    </h3>
+                    {/* Phone Icon */}
+                    <svg className="w-8 h-8 lg:w-12 lg:h-12 hidden md:block text-gray-400 mr-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+              </div>
               </div>
               <div className="grid-gap flex min-h-[30vh] flex-col pt-space-3xs md:grid md:min-h-[40vh] md:grid-cols-12">
                 <div className="col-span-7 col-start-6 flex w-full flex-col gap-y-space-sm pt-space-sm">
@@ -191,17 +201,24 @@ export default function Service() {
             </div>
 
             <div
-              className="sticky top-0 border-t border-t-gray-800 bg-white"
-              style={{ top: "calc(20vh + 11.5em)", marginBottom: "-2em" }}
+              className="sticky top-0 border-t border-t-gray-800 bg-white mb-[1em] md:mb-[-2em]"
+              style={{ top: "calc(20vh + 5.75em)"}}
             >
               <div className="flex grid-cols-12 items-center justify-start gap-x-space-xs text-left md:grid md:gap-x-fluid">
                 <span className="col-span-2 text-2xl hidden md:block lg:text-5xl md:text-5xl 2xl:text-8xl font-light text-gray-400 ml-10">
                   03
                 </span>
                 <div className="col-span-6 col-start-6 flex flex-col">
-                  <h3 className="py-8 text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0  md:text-6xl font-bold lg:font-medium text-custom-green">
-                    Fullstack Development
-                  </h3>
+                  <div className="flex items-center justify-between py-8">
+                    <h3 className="text-3xl lg:text-5xl 2xl:text-8xl ml-5 lg:ml-0 md:text-6xl font-bold lg:font-medium text-custom-green">
+                      Fullstack Development
+                    </h3>
+                    {/* Tools/Wrench Icon */}
+                    <svg className="w-8 h-8 lg:w-12 lg:h-12 hidden md:block text-gray-400 mr-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div className="grid-gap flex min-h-[30vh] flex-col pt-space-3xs md:grid md:min-h-[40vh] md:grid-cols-12">

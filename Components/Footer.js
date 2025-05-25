@@ -132,8 +132,12 @@ const Footer = () => {
 
           <Link href="/booking">
             <button className="bg-custom-green hover:bg-[#135050] text-white rounded-full px-7 py-5 text-lg transition-colors flex items-center">
-              BOOK A CALL <span className="ml-1">↗</span>
+              BOOK A CALL 
+              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
             </button>
+            
           </Link>
 
           {/* Working Globally Section - with MP4 video replacing the globe emoji */}

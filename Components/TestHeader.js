@@ -79,7 +79,7 @@ const TestHeader = ({ onAnimationStart }) => {
               <span className="word">We</span> <span className="word">turn</span> <span className="word">dreams</span> <span className="word">into</span><br />
                 <span className="word">Digital</span> <span className="word">Reality</span>
               </h1>
-              <p className="subtext text-lg mb-8 text-custom-blue max-w-xl mx-auto">
+              <p className="subtext text-lg lg:text-xl lg:font-light mb-8 text-custom-blue max-w-xl mx-auto">
                 Looking to build your next big idea? We craft custom software to help startups and businesses grow with style and speed.
               </p>
 
