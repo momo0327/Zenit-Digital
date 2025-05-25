@@ -159,14 +159,14 @@ const BookingForm = () => {
       data-navbar-text="black"
     >
       {/* Full-width purple background for mobile */}
-      <div className="w-full py-12 px-6 md:hidden bg-[#A494F3]">
+      <div className="w-full py-12 px-6 md:hidden bg-[#ffffff]">
         <motion.div
           className="max-w-lg mx-auto text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl font-sm text-white mb-8 pt-8">
+          <h1 className="text-4xl font-sm text-black mb-8 pt-8">
             Book a<br />
             <span>Digital consultation</span>
           </h1>
@@ -192,7 +192,7 @@ const BookingForm = () => {
                   <line x1="12" y1="17" x2="12" y2="21"></line>
                 </svg>
               </div>
-              <p className="text-white text-lg font-medium">
+              <p className="text-black text-lg font-medium">
                 Transform your digital presence with our expert team
               </p>
             </motion.div>
@@ -213,7 +213,7 @@ const BookingForm = () => {
                   <circle cx="11" cy="11" r="2"></circle>
                 </svg>
               </div>
-              <p className="text-white text-lg font-medium">
+              <p className="text-black text-lg font-medium">
                 Custom web design and development solutions
               </p>
             </motion.div>
@@ -235,7 +235,7 @@ const BookingForm = () => {
                   <line x1="14" y1="1" x2="14" y2="4"></line>
                 </svg>
               </div>
-              <p className="text-white text-lg font-medium">
+              <p className="text-black text-lg font-medium">
                 Digital marketing that delivers measurable results
               </p>
             </motion.div>
